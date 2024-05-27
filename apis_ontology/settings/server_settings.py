@@ -3,11 +3,12 @@ from apis_acdhch_default_settings.settings import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-APIS_BASE_URI = "https://nomansland.acdh-ch-dev.oeaw.ac.at/"
+APIS_BASE_URI = "https://nomansland-dev.acdh-ch-dev.oeaw.ac.at/"
 
 ROOT_URLCONF = "apis_ontology.urls"
 CSRF_TRUSTED_ORIGINS = [
     "https://nomansland.acdh-ch-dev.oeaw.ac.at",
+    "https://nomansland-dev-main.acdh-ch-dev.oeaw.ac.at",
 ]
 
 INSTALLED_APPS += [
