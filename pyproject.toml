@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "nomansland"
+name = "nomansland-dev"
 version = "0.1.0"
 description = ""
 authors = ["Saranya Balasubramanian <saranya.balasubramanian@oeaw.ac.at>"]
