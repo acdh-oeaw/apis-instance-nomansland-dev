@@ -3,13 +3,15 @@ import logging
 from apis_core.apis_entities.abc import E53_Place
 from apis_core.apis_entities.models import AbstractEntity
 from apis_core.collections.models import SkosCollection, SkosCollectionContentObject
-from apis_core.history.models import VersionMixin
-from django.contrib.contenttypes.models import ContentType
-from django.db import models
-from django.utils.translation import gettext_lazy as _
 from apis_core.core.models import LegacyDateMixin
 from apis_core.generic.abc import GenericModel
+from apis_core.history.models import VersionMixin
+from apis_core.utils.helpers import create_object_from_uri
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +22,13 @@ class Source(GenericModel, models.Model):
     pubinfo = models.CharField(max_length=400, blank=True)
     author = models.CharField(max_length=255, blank=True)
     orig_id = models.PositiveIntegerField(blank=True, null=True)
+
+    review = models.BooleanField(
+        default=False,
+        help_text="Should be set to True, if the "
+        "data record holds up quality "
+        "standards.",
+    )
 
     content_type = models.ForeignKey(
         ContentType, on_delete=models.CASCADE, blank=True, null=True
@@ -33,6 +42,17 @@ class Source(GenericModel, models.Model):
                 retstr += f" stored by {self.author}"
             return retstr
         return f"(ID: {self.id})".format(self.id)
+
+    @classmethod
+    def get_or_create_uri(cls, uri):
+        logger.info(f"using custom get_or_create_uri with %s", uri)
+        return create_object_from_uri(uri, cls) or cls.objects.get(pk=uri)
+
+    @property
+    def uri(self):
+        contenttype = ContentType.objects.get_for_model(self)
+        uri = reverse("apis_core:generic:detail", args=[contenttype, self.pk])
+        return uri
 
 
 class NomanslandMixin(models.Model):
