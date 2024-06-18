@@ -54,3 +54,5 @@ CACHES = {
         "TIMEOUT": 60 * 60 * 24,  # Timeout set to 1 day (in seconds)
     },
 }
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
