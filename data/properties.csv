@@ -1,0 +1,95 @@
+pk,name_reverse,name_forward,vocabnames,subj_class,obj_class
+1,authored by,author of,PersonWorkRelation,apis_ontology.person,apis_ontology.work
+2,Ownered by,Owner of,PersonWorkRelation,apis_ontology.person,apis_ontology.work
+3,place of copy of,copied in,ManuscriptPlaceRelation,apis_ontology.manuscript,apis_ontology.place
+4,place of buying of,bought in,ManuscriptPlaceRelation,apis_ontology.manuscript,apis_ontology.place
+5,holding place of,held in,ManuscriptInstitutionRelation,apis_ontology.manuscript,apis_ontology.institution
+6,place of birth of,born in,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+7,place of study of,studied in,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+8,place of resicence of,lived in,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+9,place of death of,died in,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+10,father of,son of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+11,patronised by,patron of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+12,boss of,worked for,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+13,teacher of,studied with,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+14,colleague of,colleague of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+15,original work of,a copy of,ExpressionWorkRelation,apis_ontology.expression,apis_ontology.work
+16,contains copy of [REVERSE],contains copy of,ManuscriptWorkRelation,apis_ontology.manuscript,apis_ontology.work
+24,under the command of,commander of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+28,located in [REVERSE],located in,PlacePlaceRelation,apis_ontology.place,apis_ontology.place
+38,Location place of,Located at,InstitutionPlaceRelation,apis_ontology.institution,apis_ontology.place
+40,place of teaching of,teacher at,PersonInstitutionRelation,apis_ontology.person,apis_ontology.institution
+41,place of study of,studied at,PersonInstitutionRelation,apis_ontology.person,apis_ontology.institution
+42,Place of teaching of,taught in,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+49,Ruled by,Ruled over,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+50,Master of,Follower of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+52,Contains [REVERSE],Contains,ManuscriptExpressionRelation,apis_ontology.manuscript,apis_ontology.expression
+55,Composed in,place of composition of,PlaceWorkRelation,apis_ontology.place,apis_ontology.work
+58,owner of,owned by,ManuscriptPersonRelation,apis_ontology.manuscript,apis_ontology.person
+78,Place of Birth [REVERSE],Place of Birth,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+80,visited by,visited,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+90,place of work of,Worked at,PersonInstitutionRelation,apis_ontology.person,apis_ontology.institution
+91,dedicated to,dedicatee of,PersonWorkRelation,apis_ontology.person,apis_ontology.work
+95,located in [REVERSE],located in,InstitutionPlaceRelation,apis_ontology.institution,apis_ontology.place
+98,ancestral country of [REVERSE],ancestral country of,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+99,grandson of,grandfather of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+100,place of work of,Work in,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+102,place of bereavement of,buried in,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+103,place of execution of,executed in,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+104,place of assassination of,killed in,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+105,place of imprisonment of,imprisoned in,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+112,commented by,commentator of,PersonWorkRelation,apis_ontology.person,apis_ontology.work
+113,copyist of,copied by,ExpressionPersonRelation,apis_ontology.expression,apis_ontology.person
+122,author of,authored by,ExpressionPersonRelation,apis_ontology.expression,apis_ontology.person
+140,met with [REVERSE],met with,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+142,used in [REVERSE],used in,PlacePlaceRelation,apis_ontology.place,apis_ontology.place
+143,brother of [REVERSE],brother of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+144,place of pilgrimage of,made pilgrimage to,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+151,testrel [REVERSE],testrel,ManuscriptManuscriptpartRelation,apis_ontology.manuscript,apis_ontology.manuscriptpart
+155,a note of,Contains,ManuscriptManuscriptpartRelation,apis_ontology.manuscript,apis_ontology.manuscriptpart
+158,summary of [REVERSE],summary of,WorkWorkRelation,apis_ontology.work,apis_ontology.work
+177,spouse of,spouse of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+178,eulogized [REVERSE],eulogized,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+181,uncle of,nephew of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+184,Supplemented by,Supplement to,WorkWorkRelation,apis_ontology.work,apis_ontology.work
+185,rulerd by,Ruler of,PersonInstitutionRelation,apis_ontology.person,apis_ontology.institution
+188,editor of,edited by,ExpressionPersonRelation,apis_ontology.expression,apis_ontology.person
+189,grand-uncle of,grand-nephew of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+190,predecessor of,descendant of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+195,Copied in,place of copy of,PlaceExpressionRelation,apis_ontology.place,apis_ontology.expression
+196,commentated in,commentary of,WorkWorkRelation,apis_ontology.work,apis_ontology.work
+197,Explained in,Explanation of,WorkWorkRelation,apis_ontology.work,apis_ontology.work
+198,Classified in,Classification of,WorkWorkRelation,apis_ontology.work,apis_ontology.work
+211,a mention of,Mentioned in,PersonManuscriptpartRelation,apis_ontology.person,apis_ontology.manuscriptpart
+214,work about,subject of work,PersonWorkRelation,apis_ontology.person,apis_ontology.work
+216,connected to [REVERSE],connected to,PersonEventRelation,apis_ontology.person,apis_ontology.event
+222,place conquered by,participated in the conquest of,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+223,participated in the founding of [REVERSE],participated in the founding of,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+226,Exile place of,exiled from,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+230,Purchased by,Purchaser of,InstitutionManuscriptpartRelation,apis_ontology.institution,apis_ontology.manuscriptpart
+231,purchased in,Place of acquisition,PlaceManuscriptpartRelation,apis_ontology.place,apis_ontology.manuscriptpart
+242,text in the note by,author of content,PersonManuscriptpartRelation,apis_ontology.person,apis_ontology.manuscriptpart
+244,described by,biographer of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+245,biographer of,described by,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+248,Copyist of [REVERSE],Copyist of,PersonWorkRelation,apis_ontology.person,apis_ontology.work
+257,thaught by,teacher of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+259,In the library of [REVERSE],In the library of,ExpressionPersonRelation,apis_ontology.expression,apis_ontology.person
+265,commented work by,commented the work of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+268,commissioned for,commissioner of,PersonWorkRelation,apis_ontology.person,apis_ontology.work
+271,founded by,Founder of,PersonInstitutionRelation,apis_ontology.person,apis_ontology.institution
+272,Captured by,Captor of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+274,composed at,Place of composition of,InstitutionWorkRelation,apis_ontology.institution,apis_ontology.work
+275,Institution of copy of,copied in,ManuscriptInstitutionRelation,apis_ontology.manuscript,apis_ontology.institution
+278,Great grand-son of,Great grand-father of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+282,annotation in,annotated by,ExpressionManuscriptpartRelation,apis_ontology.expression,apis_ontology.manuscriptpart
+291,translated in,translation of,WorkWorkRelation,apis_ontology.work,apis_ontology.work
+292,cousin of,cousin of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+293,Succeeded by,successor of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+294,murderered by,murderer of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+295,Rival of [REVERSE],Rival of,PersonPersonRelation,apis_ontology.person,apis_ontology.person
+297,attributed to [REVERSE],attributed to,PersonWorkRelation,apis_ontology.person,apis_ontology.work
+299,Certified by,Certificate for,ExpressionPersonRelation,apis_ontology.expression,apis_ontology.person
+301,contains the name of,mentioned in,PersonWorkRelation,apis_ontology.person,apis_ontology.work
+302,Place mentioned in [REVERSE],Place mentioned in,PlaceWorkRelation,apis_ontology.place,apis_ontology.work
+307,Judge in [REVERSE],Judge in,PersonPlaceRelation,apis_ontology.person,apis_ontology.place
+314,contains,part of,InstitutionInstitutionRelation,apis_ontology.institution,apis_ontology.institution
