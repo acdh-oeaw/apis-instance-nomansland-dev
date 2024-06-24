@@ -107,6 +107,9 @@ class Person(
     profession = models.ManyToManyField(Profession, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)  # ported from text
 
+    def __str__(self):
+        return f"{self.forename} {self.surname}"
+
     class Meta:
         verbose_name = _("person")
         verbose_name_plural = _("Persons")
