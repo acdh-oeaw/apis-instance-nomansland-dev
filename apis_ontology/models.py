@@ -69,20 +69,20 @@ class Profession(GenericModel, models.Model):
         return self.name
 
     class Meta:
-        verbose_name = _("principal role")
-        verbose_name_plural = _("Principal roles")
+        verbose_name = _("profession")
+        verbose_name_plural = _("professions")
 
 
 class Title(GenericModel, models.Model):
     name = models.CharField(max_length=255, unique=True)
-    abbreviation = models.CharField(max_length=255, unique=True)
+    abbreviation = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = _("principal role")
-        verbose_name_plural = _("Principal roles")
+        verbose_name = _("title")
+        verbose_name_plural = _("titles")
 
 
 class Person(
@@ -107,12 +107,14 @@ class Person(
     profession = models.ManyToManyField(Profession, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)  # ported from text
 
+    def __str__(self):
+        return f"{self.forename} {self.surname}"
+
     class Meta:
         verbose_name = _("person")
         verbose_name_plural = _("Persons")
 
     # TODO AH date filter
-    #
 
 
 class PlaceType(GenericModel, models.Model):
