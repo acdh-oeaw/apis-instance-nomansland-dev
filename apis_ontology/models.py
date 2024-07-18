@@ -3,7 +3,6 @@ import logging
 from apis_core.apis_entities.abc import E21_Person, E53_Place
 from apis_core.apis_entities.models import AbstractEntity
 from apis_core.collections.models import SkosCollection, SkosCollectionContentObject
-from apis_core.core.models import LegacyDateMixin
 from apis_core.generic.abc import GenericModel
 from apis_core.history.models import VersionMixin
 from apis_core.utils.helpers import create_object_from_uri
@@ -15,17 +14,43 @@ from django.utils.translation import gettext_lazy as _
 logger = logging.getLogger(__name__)
 
 
+class NomansLandDateMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    start_date = models.DateField(blank=True, null=True, editable=False)
+    start_start_date = models.DateField(blank=True, null=True, editable=False)
+    start_end_date = models.DateField(blank=True, null=True, editable=False)
+    end_date = models.DateField(blank=True, null=True, editable=False)
+    end_start_date = models.DateField(blank=True, null=True, editable=False)
+    end_end_date = models.DateField(blank=True, null=True, editable=False)
+    start_date_written = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="Start",
+    )
+    end_date_written = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="End",
+    )
+
+
 class NomanslandMixin(models.Model):
     class Meta:
         abstract = True
 
+    pk_old = models.BigIntegerField(blank=True, null=True, editable=False)
     review = models.BooleanField(
         default=False,
         help_text="Should be set to True, if the "
         "data record holds up quality "
         "standards.",
     )
-
+    alternative_names = models.TextField(blank=True, null=True)
+    name_in_arabic = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True, verbose_name="Notes")
     published = models.BooleanField(default=False)
     status = models.CharField(max_length=100)
@@ -86,7 +111,7 @@ class Title(GenericModel, models.Model):
 
 
 class Person(
-    E21_Person, VersionMixin, LegacyDateMixin, NomanslandMixin, AbstractEntity
+    E21_Person, VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEntity
 ):
     GENDERS = [
         ("male", "Male"),
@@ -94,9 +119,7 @@ class Person(
         ("any", "any"),
     ]
     class_uri = "http://id.loc.gov/ontologies/bibframe/Person"
-    title = models.ManyToManyField(Title, blank=True, null=True)
-    alternative_names = models.TextField(blank=True, null=True)
-    name_in_arabic = models.CharField(max_length=255, blank=True, null=True)
+    title = models.ManyToManyField(Title, blank=True)
     laqab_kunya = models.CharField(max_length=255, blank=True, null=True)
     fathers_name = models.CharField(max_length=255, blank=True, null=True)
     grandfathers_name = models.CharField(max_length=255, blank=True, null=True)
@@ -104,7 +127,7 @@ class Person(
     principal_role = models.ForeignKey(
         PrincipalRole, blank=True, null=True, on_delete=models.SET_NULL
     )
-    profession = models.ManyToManyField(Profession, blank=True, null=True)
+    profession = models.ManyToManyField(Profession, blank=True)
     bio = models.TextField(blank=True, null=True)  # ported from text
 
     def __str__(self):
@@ -128,7 +151,9 @@ class PlaceType(GenericModel, models.Model):
         verbose_name_plural = _("Place types")
 
 
-class Place(E53_Place, VersionMixin, LegacyDateMixin, NomanslandMixin, AbstractEntity):
+class Place(
+    E53_Place, VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEntity
+):
     class_uri = "http://id.loc.gov/ontologies/bibframe/Place"
     kind = models.ForeignKey(
         PlaceType, blank=True, null=True, on_delete=models.SET_NULL
@@ -144,6 +169,9 @@ class Place(E53_Place, VersionMixin, LegacyDateMixin, NomanslandMixin, AbstractE
         super(Place, self).save(*args, **kwargs)
         return self
 
+    def __str__(self):
+        return self.label
+
 
 class InstitutionType(GenericModel, models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -156,7 +184,7 @@ class InstitutionType(GenericModel, models.Model):
         verbose_name_plural = _("Institution types")
 
 
-class Institution(VersionMixin, LegacyDateMixin, NomanslandMixin, AbstractEntity):
+class Institution(VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEntity):
     name = models.CharField(max_length=255)
     kind = models.ForeignKey(
         InstitutionType, blank=True, null=True, on_delete=models.SET_NULL
@@ -165,6 +193,9 @@ class Institution(VersionMixin, LegacyDateMixin, NomanslandMixin, AbstractEntity
     class Meta:
         verbose_name = _("institution")
         verbose_name_plural = _("Institutions")
+
+    def __str__(self):
+        return self.name
 
 
 class EventType(GenericModel, models.Model):
@@ -178,7 +209,7 @@ class EventType(GenericModel, models.Model):
         verbose_name_plural = _("Event types")
 
 
-class Event(VersionMixin, LegacyDateMixin, NomanslandMixin, AbstractEntity):
+class Event(VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEntity):
     name = models.CharField(max_length=255)
     kind = models.ForeignKey(
         EventType, blank=True, null=True, on_delete=models.SET_NULL
@@ -211,7 +242,7 @@ class SubjectHeading(GenericModel, models.Model):
         verbose_name_plural = _("Subject headings")
 
 
-class Work(VersionMixin, LegacyDateMixin, NomanslandMixin, AbstractEntity):
+class Work(VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEntity):
     name = models.CharField(max_length=255)
     kind = models.ForeignKey(WorkType, blank=True, null=True, on_delete=models.SET_NULL)
     subject_heading = models.ManyToManyField(SubjectHeading, blank=True)
@@ -233,22 +264,44 @@ class Language(GenericModel, models.Model):
         verbose_name_plural = _("Languages")
 
 
-class Expression(VersionMixin, LegacyDateMixin, NomanslandMixin, AbstractEntity):
+class ScriptType(GenericModel, models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("script type")
+        verbose_name_plural = _("Script type")
+
+
+class Expression(VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEntity):
     title = models.CharField(max_length=255, blank=True, null=True)
     locus = models.CharField(max_length=255, blank=True, null=True)
-    script_title = models.CharField(max_length=255, blank=True, null=True)
-    script_body = models.CharField(max_length=255, blank=True, null=True)
-    language = models.ManyToManyField(Language, blank=True, null=True)
-    # TODO: language of expression text?
+    script_type_title = models.ForeignKey(
+        ScriptType,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="script_type_title",
+    )
+    script_type_body = models.ForeignKey(
+        ScriptType,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="script_type_body",
+    )
+    language = models.ManyToManyField(Language, blank=True)
     description = models.TextField(blank=True, null=True)  # ported from text
 
     class Meta:
-        verbose_name = _("work")
-        verbose_name_plural = _("Works")
+        verbose_name = _("expression")
+        verbose_name_plural = _("expressions")
 
 
 class ManuscriptCondition(GenericModel, models.Model):
-    label = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.label
@@ -258,15 +311,14 @@ class ManuscriptCondition(GenericModel, models.Model):
         verbose_name_plural = _("manuscript conditions")
 
 
-class Manuscript(VersionMixin, LegacyDateMixin, NomanslandMixin, AbstractEntity):
+class Manuscript(VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEntity):
     name = models.CharField(max_length=255, blank=True, null=True)
     identifier = models.CharField(max_length=255, blank=True, null=True)
     extent = models.CharField(max_length=255, blank=True, null=True)
     leaf_dimension = models.CharField(max_length=255, blank=True, null=True)
     written_dimension = models.CharField(max_length=255, blank=True, null=True)
     foliation_type = models.CharField(max_length=255, blank=True, null=True)
-    condition = models.ManyToManyField(ManuscriptCondition, blank=True, null=True)
-    # TODO: are the following fields from apis_metainfo - one to one or one to many?
+    condition = models.ManyToManyField(ManuscriptCondition, blank=True)
     illustration_notes = models.TextField(blank=True, null=True)  # ported from text
     diagrams = models.TextField(blank=True, null=True)  # ported from text
     marginal_annotations = models.TextField(blank=True, null=True)  # ported from text
@@ -280,7 +332,7 @@ class Manuscript(VersionMixin, LegacyDateMixin, NomanslandMixin, AbstractEntity)
 
 
 class ManuscriptPartType(GenericModel, models.Model):
-    label = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.label
@@ -290,7 +342,9 @@ class ManuscriptPartType(GenericModel, models.Model):
         verbose_name_plural = _("manuscript part types")
 
 
-class ManuscriptPart(VersionMixin, LegacyDateMixin, NomanslandMixin, AbstractEntity):
+class ManuscriptPart(
+    VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEntity
+):
     name = models.CharField(max_length=255, blank=True)
     identifier = models.CharField(max_length=255)
     locus = models.CharField(max_length=255, blank=True)

@@ -1,15 +1,45 @@
+from collections import defaultdict
 from django.core.management.base import BaseCommand
 import pandas as pd
 from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
 from apis_core.apis_relations.models import Property
 import pandas as pd
-from pandas.io.sql import is_dict_like
 from tqdm.auto import tqdm
 
 from apis_core.collections.models import SkosCollection, SkosCollectionContentObject
+import apis_ontology
+from apis_ontology.models import (
+    Event,
+    EventType,
+    Institution,
+    InstitutionType,
+    Language,
+    Person,
+    Place,
+    PlaceType,
+    Profession,
+    PrincipalRole,
+    ScriptType,
+    SubjectHeading,
+    Title,
+    WorkType,
+    Work,
+    Expression,
+)
 
-from apis_ontology.models import Person, Profession, PrincipalRole, Title
+TEXT_TYPES = {
+    68: "illustration_notes",
+    69: "diagrams",
+    70: "marginal_annotations",
+    71: "additions",
+    72: "seal_description",
+    73: "bio",
+    149: "description",
+    205: "description",
+    206: "description",
+    264: "description",
+}
 
 
 class Command(BaseCommand):
@@ -17,41 +47,32 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         df = pd.read_json("data/dump_3105.json")
-        persons = df[df.model == "apis_entities.person"]
-        FIELDNAME_MAPPING = {"first_name": "forename", "name": "surname"}
+        FIELDNAME_MAPPING = {
+            "apis_entities.person": {"first_name": "forename", "name": "surname"},
+            "apis_entities.place": {
+                "lat": "latitude",
+                "lng": "longitude",
+                "name": "label",
+            },
+        }
         parent_skoscol, _ = SkosCollection.objects.get_or_create(name="nomansland")
-        ct = ContentType.objects.get_for_model(Person)
 
-        def get_profession(profession_id):
+        def get_base_vocab_data(vocab_pk):
             match = df[
-                (df.model == "apis_vocabularies.vocabsbaseclass")
-                & (df.pk == profession_id)
+                (df.model == "apis_vocabularies.vocabsbaseclass") & (df.pk == vocab_pk)
             ]
             if match.shape[0]:
                 return {"name": match.iloc[0].fields["name"]}
             return {}
 
-        def get_principal_role(role_pk):
-            match = df[
-                (df.model == "apis_vocabularies.vocabsbaseclass") & (df.pk == role_pk)
-            ]
-            if match.shape[0]:
-                return {"name": match.iloc[0].fields["name"]}
-            return {}
-
-        def get_title(title_id):
-            title_match = df[
-                (df.model == "apis_vocabularies.vocabsbaseclass") & (df.pk == title_id)
-            ]
-            if title_match.shape[0]:
-                return {"name": title_match.iloc[0].fields["name"]}
-            return {}
-
-        def get_texts(text_pk):
+        def get_text_field(text_pk):
             match = df[(df.model == "apis_metainfo.text") & (df.pk == text_pk)]
             if match.shape[0]:
-                if match.iloc[0].fields["kind"] == 73:
-                    return {"bio": match.iloc[0].fields["text"]}
+                return {
+                    TEXT_TYPES[match.iloc[0].fields["kind"]]: match.iloc[0].fields[
+                        "text"
+                    ]
+                }
 
             return {}
 
@@ -60,23 +81,16 @@ class Command(BaseCommand):
             labels_match = label_rows[
                 label_rows.apply(lambda row: row.fields["temp_entity"] == pk, axis=1)
             ]
-            alternative_names = ""
-            name_in_arabic = ""
-
+            labels = defaultdict(str)
             for i, row in labels_match.iterrows():
                 if row.fields["label_type"] in (26, 114):
-                    alternative_names = row.fields["label"] + "\n"
+                    labels["alternative_names"] = (
+                        labels["alternative_names"] + row.fields["label"] + "\n"
+                    )
                 if row.fields["label_type"] == 29:
-                    name_in_arabic = row.fields["label"]
+                    labels["name_in_arabic"] = row.fields["label"]
 
-            return {
-                "alternative_names": alternative_names.strip(),
-                "name_in_arabic": name_in_arabic,
-            }
-
-        def get_temp_entity_data(pk):
-            match = df[(df.pk == pk) & (df.model == "apis_metainfo.tempentityclass")]
-            return match.iloc[0].fields
+            return labels
 
         def get_collection(collection_id):
             match = df[
@@ -87,64 +101,285 @@ class Command(BaseCommand):
                     name=match.iloc[0].fields["name"], parent=parent_skoscol
                 )
 
-        def import_persons():
-            for i, p in tqdm(persons.iterrows(), total=persons.shape[0]):
-                old_data = p.fields
+        def get_all_entity_data(pk, model_name):
+            model_name = model_name
+            base_data = df[(df.model == model_name) & (df.pk == pk)].iloc[0].fields
+            match = df[(df.pk == pk) & (df.model == "apis_metainfo.tempentityclass")]
+            ted = match.iloc[0].fields
+            collections = None
+            text_ids = []
+            if "source" in ted:
+                ted.pop("source")
+            if "collection" in ted:
+                collections = ted["collection"]
+                ted.pop("collection")
+            if "text" in ted:
+                text_ids = ted["text"]
+                ted.pop("text")
 
-                ted = get_temp_entity_data(p.pk)
-                old_data = {**old_data, **ted}
-                # old_data["start_date"] = DateParser.parse_date(old_data["start_date"])
-                # old_data["end_date"] = DateParser.parse_date(old_data["start_date"])
-                old_data = {**old_data, **get_labels(p.pk)}
-                text_id = old_data["text"]
-                old_data.pop("text")
-                if text_id:
-                    old_data = {**old_data, **get_texts(text_id[0])}
-
-                title_ids = old_data.get("title")
-                old_data.pop("title")
-
-                principal_role_pk = old_data.get("principal_role")
-                old_data.pop("principal_role")
-
-                collection_ids = old_data.get("collection")
-                old_data.pop("collection")
-
-                profession_ids = old_data.get("profession")
-                old_data.pop("profession")
-
-                person_data = {
-                    FIELDNAME_MAPPING.get(k, k): v for k, v in old_data.items() if v
+            base_data = {**base_data, **ted, "pk_old": pk}
+            data_new = {k: v for k, v in base_data.items() if v}
+            if model_name in FIELDNAME_MAPPING:
+                data_new = {
+                    FIELDNAME_MAPPING[model_name].get(k, k): v
+                    for k, v in base_data.items()
+                    if v
                 }
-                p, _ = Person.objects.get_or_create(**person_data)
+
+            texts = {}
+            for text_id in text_ids:
+                texts = {**texts, **get_text_field(text_id)}
+
+            labels = get_labels(pk)
+
+            return {
+                "fields": {**data_new, **labels, **texts},
+                "collections": collections,
+            }
+
+        def create_collections(collection_ids, entity):
+            ct = ContentType.objects.get_for_model(entity)
+
+            for collection_id in collection_ids:
+                skoscol = get_collection(collection_id)
+                scco, _ = SkosCollectionContentObject.objects.get_or_create(
+                    collection=skoscol, content_type=ct, object_id=entity.pk
+                )
+
+        def import_persons():
+            MODEL = "apis_entities.person"
+            persons = df[df.model == MODEL]
+            for _, p in tqdm(persons.iterrows(), total=persons.shape[0]):
+                title_ids = None
+                principal_role_pk = None
+                profession_ids = None
+
+                ted = get_all_entity_data(p.pk, MODEL)
+                old_data = ted["fields"]
+
+                if "title" in old_data:
+                    title_ids = old_data.get("title")
+                    old_data.pop("title")
+
+                if "principal_role" in old_data:
+                    principal_role_pk = old_data.get("principal_role")
+                    old_data.pop("principal_role")
+
+                if "profession" in old_data:
+                    profession_ids = old_data.get("profession")
+                    old_data.pop("profession")
+
+                p, _ = Person.objects.get_or_create(**old_data)
 
                 if title_ids:
                     for title_id in title_ids:
-                        title_data = get_title(title_id)
+                        title_data = get_base_vocab_data(title_id)
                         t, _ = Title.objects.get_or_create(**title_data)
                         p.title.add(t)
 
                 if principal_role_pk:
-                    principal_role = get_principal_role(principal_role_pk)
+                    principal_role = get_base_vocab_data(principal_role_pk)
                     pr, _ = PrincipalRole.objects.get_or_create(**principal_role)
                     p.principal_role = pr
-                    p.save()
 
                 if profession_ids:
                     for profession_id in profession_ids:
-                        profession = get_profession(profession_id)
+                        profession = get_base_vocab_data(profession_id)
                         pro, _ = Profession.objects.get_or_create(**profession)
                         p.profession.add(pro)
 
-                if collection_ids:
-                    for collection_id in collection_ids:
-                        skoscol = get_collection(collection_id)
-                        scco, _ = SkosCollectionContentObject.objects.get_or_create(
-                            collection=skoscol, content_type=ct, object_id=p.pk
+                p.save()
+
+                create_collections(ted["collections"], p)
+
+            self.stdout.write(
+                self.style.SUCCESS("Persons have been successfully imported.")
+            )
+
+        def import_places():
+            MODEL = "apis_entities.place"
+            places = df[df.model == MODEL]
+            for _, p in tqdm(places.iterrows(), total=places.shape[0]):
+                place_type_pk = None
+                ted = get_all_entity_data(p.pk, MODEL)
+                old_data = ted["fields"]
+                if "kind" in old_data:
+                    place_type_pk = old_data.get("kind")
+                    old_data.pop("kind")
+
+                p, _ = Place.objects.get_or_create(**old_data)
+
+                if place_type_pk:
+                    place_type_data = get_base_vocab_data(place_type_pk)
+                    place_type, _ = PlaceType.objects.get_or_create(**place_type_data)
+                    p.kind = place_type
+
+                p.save()
+                create_collections(ted["collections"], p)
+
+            self.stdout.write(
+                self.style.SUCCESS("Places have been successfully imported.")
+            )
+
+        def import_institutions():
+            MODEL = "apis_entities.institution"
+            institutions = df[df.model == MODEL]
+            for _, p in tqdm(institutions.iterrows(), total=institutions.shape[0]):
+                i_type_pk = None
+                ted = get_all_entity_data(p.pk, MODEL)
+                old_data = ted["fields"]
+                if "kind" in old_data:
+                    i_type_pk = old_data.get("kind")
+                    old_data.pop("kind")
+
+                if old_data:
+                    p, _ = Institution.objects.get_or_create(**old_data)
+
+                    if i_type_pk:
+                        i_type_data = get_base_vocab_data(i_type_pk)
+                        i_type, _ = InstitutionType.objects.get_or_create(**i_type_data)
+                        p.kind = i_type
+
+                    p.save()
+                create_collections(ted["collections"], p)
+
+            self.stdout.write(
+                self.style.SUCCESS("Institutions have been successfully imported.")
+            )
+
+        def import_events():
+            MODEL = "apis_entities.event"
+            df_subset = df[df.model == MODEL]
+            for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
+                type_pk = None
+                ted = get_all_entity_data(row.pk, MODEL)
+                old_data = ted["fields"]
+                if "kind" in old_data:
+                    type_pk = old_data.get("kind")
+                    old_data.pop("kind")
+
+                if old_data:
+                    p, _ = Event.objects.get_or_create(**old_data)
+
+                    if type_pk:
+                        type_data = get_base_vocab_data(type_pk)
+                        i_type, _ = EventType.objects.get_or_create(**type_data)
+                        p.event_type = i_type
+
+                    p.save()
+                create_collections(ted["collections"], p)
+
+            self.stdout.write(
+                self.style.SUCCESS("Events have been successfully imported.")
+            )
+
+        def import_works():
+            MODEL = "apis_entities.work"
+            df_subset = df[df.model == MODEL]
+            for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
+                type_pk = None
+                subject_heading_ids = None
+                ted = get_all_entity_data(row.pk, MODEL)
+                old_data = ted["fields"]
+                if "kind" in old_data:
+                    type_pk = old_data.get("kind")
+                    old_data.pop("kind")
+                if "subject_headings" in old_data:
+                    subject_heading_ids = old_data.get("subject_headings")
+                    old_data.pop("subject_headings")
+
+                if old_data:
+                    p, _ = Work.objects.get_or_create(**old_data)
+
+                    if type_pk:
+                        type_data = get_base_vocab_data(type_pk)
+                        kind, _ = WorkType.objects.get_or_create(**type_data)
+                        p.kind = kind
+
+                    if subject_heading_ids:
+                        for id in subject_heading_ids:
+                            val = get_base_vocab_data(id)
+                            rec, _ = SubjectHeading.objects.get_or_create(**val)
+                            p.subject_heading.add(rec)
+
+                    p.save()
+
+                create_collections(ted["collections"], p)
+
+            self.stdout.write(
+                self.style.SUCCESS("Works have been successfully imported.")
+            )
+
+        def import_expressions():
+            MODEL = "apis_entities.expression"
+            df_subset = df[df.model == MODEL]
+            for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
+                ted = get_all_entity_data(row.pk, MODEL)
+                old_data = ted["fields"]
+                VOCAB_FIELDS = {"script_title": {}, "script_body": {}}
+                for f in VOCAB_FIELDS.keys():
+                    if not f in old_data:
+                        continue
+                    VOCAB_FIELDS[f] = get_base_vocab_data(old_data[f])
+                    old_data.pop(f)
+
+                language_ids = []
+                if "language" in old_data:
+                    language_ids = old_data.get("language")
+                    old_data.pop("language")
+
+                if old_data:
+                    p, _ = Expression.objects.get_or_create(**old_data)
+
+                    if language_ids:
+                        for l_id in language_ids:
+                            l, _ = Language.objects.get_or_create(
+                                get_base_vocab_data(l_id)
+                            )
+                            p.language.add(l)
+
+                    if VOCAB_FIELDS["script_title"]:
+                        script_type_title, _ = ScriptType.objects.get_or_create(
+                            **VOCAB_FIELDS["script_title"]
                         )
+                        p.script_type_title = script_type_title
+
+                    if VOCAB_FIELDS["script_body"]:
+                        script_type_body, _ = ScriptType.objects.get_or_create(
+                            **VOCAB_FIELDS["script_body"]
+                        )
+                        p.scrip_type_body = script_type_body
+
+                    p.save()
+
+                create_collections(ted["collections"], p)
+
+            self.stdout.write(
+                self.style.SUCCESS("Expressions have been successfully imported.")
+            )
+
+        def import_manuscripts():
+            MODEL = "apis_entities.mnuscript"
+            df_subset = df[df.model == MODEL]
+            self.stdout.write(
+                self.style.SUCCESS("Manuscripts have been successfully imported.")
+            )
+
+        def import_manuscript_parts():
+
+            self.stdout.write(
+                self.style.SUCCESS("Manuscript parts have been successfully imported.")
+            )
 
         import_persons()
+        import_places()
+        import_institutions()
+        import_events()
+        import_works()
+        import_expressions()
+        import_manuscripts()
+        import_manuscript_parts()
 
         self.stdout.write(
-            self.style.SUCCESS("Collections have been successfully imported.")
+            self.style.SUCCESS("Entities have been successfully imported.")
         )
