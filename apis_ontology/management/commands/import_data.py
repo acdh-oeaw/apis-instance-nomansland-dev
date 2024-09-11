@@ -26,6 +26,10 @@ from apis_ontology.models import (
     WorkType,
     Work,
     Expression,
+    Manuscript,
+    ManuscriptPart,
+    ManuscriptPartType,
+    ManuscriptCondition,
 )
 
 TEXT_TYPES = {
@@ -359,13 +363,55 @@ class Command(BaseCommand):
             )
 
         def import_manuscripts():
-            MODEL = "apis_entities.mnuscript"
+            MODEL = "apis_entities.manuscript"
             df_subset = df[df.model == MODEL]
+            for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
+                condition_pks = None
+                ted = get_all_entity_data(row.pk, MODEL)
+                old_data = ted["fields"]
+                if "manuscript_conditions" in old_data:
+                    condition_pks = old_data.get("manuscript_conditions")
+                    old_data.pop("manuscript_conditions")
+
+                p, _ = Manuscript.objects.get_or_create(**old_data)
+
+                if condition_pks:
+                    for pk in condition_pks:
+                        condition_data = get_base_vocab_data(pk)
+                        condition, _ = ManuscriptCondition.objects.get_or_create(
+                            **condition_data
+                        )
+                        p.condition.add(condition)
+
+                p.save()
+                create_collections(ted["collections"], p)
+
             self.stdout.write(
                 self.style.SUCCESS("Manuscripts have been successfully imported.")
             )
 
         def import_manuscript_parts():
+            MODEL = "apis_entities.manuscriptpart"
+            df_subset = df[df.model == MODEL]
+            for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
+                mpart_type_pk = None
+                ted = get_all_entity_data(row.pk, MODEL)
+                old_data = ted["fields"]
+                if "type" in old_data:
+                    mpart_type_pk = old_data.get("type")
+                    old_data.pop("type")
+
+                p, _ = ManuscriptPart.objects.get_or_create(**old_data)
+
+                if mpart_type_pk:
+                    mpart_type_data = get_base_vocab_data(mpart_type_pk)
+                    mpart_type, _ = ManuscriptPartType.objects.get_or_create(
+                        **mpart_type_data
+                    )
+                    p.kind = mpart_type
+
+                p.save()
+                create_collections(ted["collections"], p)
 
             self.stdout.write(
                 self.style.SUCCESS("Manuscript parts have been successfully imported.")
