@@ -304,7 +304,7 @@ class ManuscriptCondition(GenericModel, models.Model):
     name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
-        return self.label
+        return self.name
 
     class Meta:
         verbose_name = _("manuscript condition")
@@ -318,6 +318,7 @@ class Manuscript(VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEnt
     leaf_dimension = models.CharField(max_length=255, blank=True, null=True)
     written_dimension = models.CharField(max_length=255, blank=True, null=True)
     foliation_type = models.CharField(max_length=255, blank=True, null=True)
+    foliation_note = models.CharField(max_length=255, blank=True, null=True)
     condition = models.ManyToManyField(ManuscriptCondition, blank=True)
     illustration_notes = models.TextField(blank=True, null=True)  # ported from text
     diagrams = models.TextField(blank=True, null=True)  # ported from text
@@ -335,7 +336,7 @@ class ManuscriptPartType(GenericModel, models.Model):
     name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
-        return self.label
+        return self.name
 
     class Meta:
         verbose_name = _("manuscript part type ")
@@ -352,6 +353,9 @@ class ManuscriptPart(
         ManuscriptPartType, blank=True, null=True, on_delete=models.SET_NULL
     )
     description = models.TextField(blank=True, null=True)  # ported from text
+
+    def __str__(self):
+        return f"{self.name} ({self.pk})"
 
     class Meta:
         verbose_name = _("manuscript part")
