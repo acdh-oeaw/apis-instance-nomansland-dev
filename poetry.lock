@@ -986,6 +986,17 @@ files = [
 ]
 
 [[package]]
+name = "hijri-converter"
+version = "2.3.1"
+description = "Accurate Hijri-Gregorian dates converter based on the Umm al-Qura calendar"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "hijri-converter-2.3.1.tar.gz", hash = "sha256:069b6789291e0830f4860a79dcd34fb3ceea3b95516ed4010202b9656ba1ab61"},
+    {file = "hijri_converter-2.3.1-py3-none-any.whl", hash = "sha256:c04f072c78e1854a1f474ada253a3377009457221dbc1b14999761728e663662"},
+]
+
+[[package]]
 name = "httpcore"
 version = "1.0.5"
 description = "A minimal low-level HTTP client."
@@ -2929,4 +2940,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "e21aaaf2f3281dffac451ffb550d378cf9043ed25d9ae0b712250418ba455230"
+content-hash = "961af77c570ee440481bd8036cab96b6ebd28e75a2fd13e45671b015aea5b419"
