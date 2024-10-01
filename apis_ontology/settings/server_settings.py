@@ -20,7 +20,7 @@ INSTALLED_APPS += [
 ]
 INSTALLED_APPS.remove("apis_ontology")
 INSTALLED_APPS.insert(0, "apis_ontology")
-
+INSTALLED_APPS = ["apis_core.relations"] + INSTALLED_APPS
 
 LOGGING = {
     "version": 1,

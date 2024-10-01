@@ -2,6 +2,7 @@ import logging
 
 from apis_core.apis_entities.abc import E21_Person, E53_Place
 from apis_core.apis_entities.models import AbstractEntity
+from apis_core.relations.models import Relation
 from apis_core.collections.models import SkosCollection, SkosCollectionContentObject
 from apis_core.generic.abc import GenericModel
 from apis_core.history.models import VersionMixin
@@ -360,3 +361,927 @@ class ManuscriptPart(
     class Meta:
         verbose_name = _("manuscript part")
         verbose_name_plural = _("Manuscript parts")
+
+
+class NomanslandRelationMixin(models.Model, GenericModel):
+
+    CERTAINTY = [
+        ("low", "low"),
+        ("medium", "medium"),
+        ("high", "high"),
+        ("unknown", "unknown"),
+    ]
+    certainty = models.CharField(max_length=7, choices=CERTAINTY, default="unknown")
+
+    class Meta:
+        abstract = True
+
+
+class ACopyOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [15]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.expression"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "original work of"
+
+
+class AncestralCountryOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [98]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "ancestral country of [REVERSE]"
+
+
+class AnnotatedBy(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [282]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.expression"]
+    obj_model = ["apis_ontology.manuscriptpart"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "annotation in"
+
+
+class AttributedTo(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [297]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "attributed to [REVERSE]"
+
+
+class AuthorOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [1]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "authored by"
+
+
+class AuthorOfContent(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [242]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.manuscriptpart"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "text in the note by"
+
+
+class AuthoredBy(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [122]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.expression"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "author of"
+
+
+class BiographerOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [244]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "described by"
+
+
+class BornIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [6]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of birth of"
+
+
+class BoughtIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [4]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.manuscript"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of buying of"
+
+
+class BrotherOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [143]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "brother of [REVERSE]"
+
+
+class BuriedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [102]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of bereavement of"
+
+
+class CaptorOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [272]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Captured by"
+
+
+class CertificateFor(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [299]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.expression"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Certified by"
+
+
+class ClassificationOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [198]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.work"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Classified in"
+
+
+class ColleagueOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [14]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "colleague of"
+
+
+class CommanderOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [24]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "under the command of"
+
+
+class CommentaryOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [196]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.work"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "commentated in"
+
+
+class CommentatorOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [112]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "commented by"
+
+
+class CommentedTheWorkOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [265]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "commented work by"
+
+
+class CommissionerOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [268]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "commissioned for"
+
+
+class ConnectedTo(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [216]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.event"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "connected to [REVERSE]"
+
+
+class Contains(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [52, 155]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.manuscript"]
+    obj_model = ["apis_ontology.expression", "apis_ontology.manuscriptpart"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Contains [REVERSE]"
+
+
+class ContainsCopyOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [16]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.manuscript"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "contains copy of [REVERSE]"
+
+
+class CopiedBy(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [113]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.expression"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "copyist of"
+
+
+class CopiedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [3, 275]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.manuscript"]
+    obj_model = ["apis_ontology.institution", "apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of copy of"
+
+
+class CopyistOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [248]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Copyist of [REVERSE]"
+
+
+class CousinOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [292]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "cousin of"
+
+
+class DedicateeOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [91]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "dedicated to"
+
+
+class DescendantOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [190]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "predecessor of"
+
+
+class DescribedBy(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [245]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "biographer of"
+
+
+class DiedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [9]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of death of"
+
+
+class EditedBy(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [188]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.expression"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "editor of"
+
+
+class Eulogized(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [178]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "eulogized [REVERSE]"
+
+
+class ExecutedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [103]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of execution of"
+
+
+class ExiledFrom(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [226]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Exile place of"
+
+
+class ExplanationOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [197]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.work"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Explained in"
+
+
+class FollowerOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [50]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Master of"
+
+
+class FounderOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [271]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.institution"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "founded by"
+
+
+class GrandNephewOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [189]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "grand-uncle of"
+
+
+class GrandfatherOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [99]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "grandson of"
+
+
+class GreatGrandFatherOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [278]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Great grand-son of"
+
+
+class HeldIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [5]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.manuscript"]
+    obj_model = ["apis_ontology.institution"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "holding place of"
+
+
+class ImprisonedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [105]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of imprisonment of"
+
+
+class InTheLibraryOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [259]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.expression"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "In the library of [REVERSE]"
+
+
+class JudgeIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [307]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Judge in [REVERSE]"
+
+
+class KilledIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [104]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of assassination of"
+
+
+class LivedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [8]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of resicence of"
+
+
+class LocatedAt(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [38]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.institution"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Location place of"
+
+
+class LocatedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [28, 95]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.institution", "apis_ontology.place"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "located in [REVERSE]"
+
+
+class MadePilgrimageTo(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [144]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of pilgrimage of"
+
+
+class MentionedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [301]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "contains the name of"
+
+
+class MentionedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [211]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.manuscriptpart"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "a mention of"
+
+
+class MetWith(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [140]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "met with [REVERSE]"
+
+
+class MurdererOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [294]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "murderered by"
+
+
+class NephewOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [181]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "uncle of"
+
+
+class OwnedBy(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [58]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.manuscript"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "owner of"
+
+
+class OwnerOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [2]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Ownered by"
+
+
+class PartOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [314]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.institution"]
+    obj_model = ["apis_ontology.institution"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "contains"
+
+
+class ParticipatedInTheConquestOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [222]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place conquered by"
+
+
+class ParticipatedInTheFoundingOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [223]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "participated in the founding of [REVERSE]"
+
+
+class PatronOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [11]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "patronised by"
+
+
+class PlaceMentionedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [302]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.place"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Place mentioned in [REVERSE]"
+
+
+class PlaceOfAcquisition(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [231]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.place"]
+    obj_model = ["apis_ontology.manuscriptpart"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "purchased in"
+
+
+class PlaceOfBirth(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [78]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Place of Birth [REVERSE]"
+
+
+class PlaceOfCompositionOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [55]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.place"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Composed in"
+
+
+class PlaceOfCompositionOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [274]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.institution"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "composed at"
+
+
+class PlaceOfCopyOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [195]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.place"]
+    obj_model = ["apis_ontology.expression"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Copied in"
+
+
+class PurchaserOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [230]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.institution"]
+    obj_model = ["apis_ontology.manuscriptpart"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Purchased by"
+
+
+class RivalOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [295]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Rival of [REVERSE]"
+
+
+class RuledOver(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [49]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Ruled by"
+
+
+class RulerOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [185]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.institution"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "rulerd by"
+
+
+class SonOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [10]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "father of"
+
+
+class SpouseOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [177]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "spouse of"
+
+
+class StudiedAt(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [41]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.institution"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of study of"
+
+
+class StudiedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [7]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of study of"
+
+
+class StudiedWith(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [13]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "teacher of"
+
+
+class SubjectOfWork(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [214]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "work about"
+
+
+class SuccessorOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [293]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Succeeded by"
+
+
+class SummaryOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [158]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.work"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "summary of [REVERSE]"
+
+
+class SupplementTo(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [184]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.work"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Supplemented by"
+
+
+class TaughtIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [42]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Place of teaching of"
+
+
+class TeacherAt(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [40]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.institution"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of teaching of"
+
+
+class TeacherOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [257]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "thaught by"
+
+
+class Testrel(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [151]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.manuscript"]
+    obj_model = ["apis_ontology.manuscriptpart"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "testrel [REVERSE]"
+
+
+class TranslationOf(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [291]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.work"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "translated in"
+
+
+class UsedIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [142]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.place"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "used in [REVERSE]"
+
+
+class Visited(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [80]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "visited by"
+
+
+class WorkIn(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [100]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.place"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of work of"
+
+
+class WorkedAt(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [90]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.institution"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of work of"
+
+
+class WorkedFor(Relation, NomanslandRelationMixin, VersionMixin):
+    pk_old = [12]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.person"]
+    obj_model = ["apis_ontology.person"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "boss of"
