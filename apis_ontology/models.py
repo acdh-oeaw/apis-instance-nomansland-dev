@@ -10,6 +10,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from apis_core.utils import DateParser
+from hijri_converter import Hijri
+from datetime import date, datetime
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +39,68 @@ class NomansLandDateMixin(models.Model):
         null=True,
         verbose_name="End",
     )
+
+    def save(self, *args, **kwargs):
+        print("Trying to save date!")
+        skip_date_parsing = getattr(self, "skip_date_parsing", False)
+
+        def get_normalised_date(date_str):
+            """
+            if date ends with H then
+            convert date from to Hijri format
+            to Gregorian format
+            """
+            date_str = date_str.strip()
+            if date_str.endswith("H") or date_str.endswith("h"):
+                hijri_date_str = date_str[:-1]
+                day, month, year = map(int, hijri_date_str.split("-"))
+                gregorian_date = Hijri(year, month, day).to_gregorian()
+                return date(
+                    gregorian_date.year, gregorian_date.month, gregorian_date.day
+                )
+
+            return datetime.strptime(date_str, "%d-%m-%Y").date()
+
+        if not skip_date_parsing:
+            start = None
+            start_start = None
+            start_end = None
+            end = None
+            end_start = None
+            end_end = None
+
+            if self.start_date_written:
+                start, start_start, start_end = DateParser.parse_date(
+                    self.start_date_written
+                )
+                # DateParser returns datetime, but we want dates without time
+                if start:
+                    start = start.date()
+                if start_start:
+                    start_start = start_start.date()
+                if start_end:
+                    start_end = start_end.date()
+
+            if self.end_date_written:
+                end, end_start, end_end = DateParser.parse_date(self.end_date_written)
+                # DateParser returns datetime, but we want dates without time
+                if end:
+                    end = end.date()
+                if end_start:
+                    end_start = end_start.date()
+                if end_end:
+                    end_end = end_end.date()
+
+            self.start_date = start
+            self.start_start_date = start_start
+            self.start_end_date = start_end
+            self.end_date = end
+            self.end_start_date = end_start
+            self.end_end_date = end_end
+
+        super().save(*args, **kwargs)
+
+        return
 
 
 class NomanslandMixin(models.Model):
