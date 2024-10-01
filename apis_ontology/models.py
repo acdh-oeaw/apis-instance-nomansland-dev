@@ -378,7 +378,7 @@ class NomanslandRelationMixin(models.Model, GenericModel):
 
 
 class ACopyOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [15]  # pk of Property in apis_relations
+    relation_type_old = [15]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.expression"]
     obj_model = ["apis_ontology.work"]
 
@@ -388,7 +388,7 @@ class ACopyOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class AncestralCountryOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [98]  # pk of Property in apis_relations
+    relation_type_old = [98]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -398,7 +398,7 @@ class AncestralCountryOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class AnnotatedBy(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [282]  # pk of Property in apis_relations
+    relation_type_old = [282]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.expression"]
     obj_model = ["apis_ontology.manuscriptpart"]
 
@@ -408,7 +408,7 @@ class AnnotatedBy(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class AttributedTo(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [297]  # pk of Property in apis_relations
+    relation_type_old = [297]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.work"]
 
@@ -418,7 +418,7 @@ class AttributedTo(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class AuthorOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [1]  # pk of Property in apis_relations
+    relation_type_old = [1]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.work"]
 
@@ -428,7 +428,7 @@ class AuthorOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class AuthorOfContent(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [242]  # pk of Property in apis_relations
+    relation_type_old = [242]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.manuscriptpart"]
 
@@ -438,7 +438,7 @@ class AuthorOfContent(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class AuthoredBy(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [122]  # pk of Property in apis_relations
+    relation_type_old = [122]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.expression"]
     obj_model = ["apis_ontology.person"]
 
@@ -448,7 +448,7 @@ class AuthoredBy(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class BiographerOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [244]  # pk of Property in apis_relations
+    relation_type_old = [244]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -458,7 +458,7 @@ class BiographerOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class BornIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [6]  # pk of Property in apis_relations
+    relation_type_old = [6]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -468,7 +468,7 @@ class BornIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class BoughtIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [4]  # pk of Property in apis_relations
+    relation_type_old = [4]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.manuscript"]
     obj_model = ["apis_ontology.place"]
 
@@ -478,7 +478,7 @@ class BoughtIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class BrotherOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [143]  # pk of Property in apis_relations
+    relation_type_old = [143]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -488,7 +488,7 @@ class BrotherOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class BuriedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [102]  # pk of Property in apis_relations
+    relation_type_old = [102]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -498,7 +498,7 @@ class BuriedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class CaptorOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [272]  # pk of Property in apis_relations
+    relation_type_old = [272]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -508,7 +508,7 @@ class CaptorOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class CertificateFor(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [299]  # pk of Property in apis_relations
+    relation_type_old = [299]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.expression"]
     obj_model = ["apis_ontology.person"]
 
@@ -518,7 +518,7 @@ class CertificateFor(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class ClassificationOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [198]  # pk of Property in apis_relations
+    relation_type_old = [198]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.work"]
     obj_model = ["apis_ontology.work"]
 
@@ -528,7 +528,7 @@ class ClassificationOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class ColleagueOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [14]  # pk of Property in apis_relations
+    relation_type_old = [14]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -538,7 +538,7 @@ class ColleagueOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class CommanderOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [24]  # pk of Property in apis_relations
+    relation_type_old = [24]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -548,7 +548,7 @@ class CommanderOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class CommentaryOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [196]  # pk of Property in apis_relations
+    relation_type_old = [196]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.work"]
     obj_model = ["apis_ontology.work"]
 
@@ -558,7 +558,7 @@ class CommentaryOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class CommentatorOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [112]  # pk of Property in apis_relations
+    relation_type_old = [112]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.work"]
 
@@ -568,7 +568,7 @@ class CommentatorOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class CommentedTheWorkOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [265]  # pk of Property in apis_relations
+    relation_type_old = [265]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -578,7 +578,7 @@ class CommentedTheWorkOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class CommissionerOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [268]  # pk of Property in apis_relations
+    relation_type_old = [268]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.work"]
 
@@ -588,7 +588,7 @@ class CommissionerOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class ConnectedTo(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [216]  # pk of Property in apis_relations
+    relation_type_old = [216]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.event"]
 
@@ -598,7 +598,7 @@ class ConnectedTo(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class Contains(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [52, 155]  # pk of Property in apis_relations
+    relation_type_old = [52, 155]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.manuscript"]
     obj_model = ["apis_ontology.expression", "apis_ontology.manuscriptpart"]
 
@@ -608,7 +608,7 @@ class Contains(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class ContainsCopyOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [16]  # pk of Property in apis_relations
+    relation_type_old = [16]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.manuscript"]
     obj_model = ["apis_ontology.work"]
 
@@ -618,7 +618,7 @@ class ContainsCopyOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class CopiedBy(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [113]  # pk of Property in apis_relations
+    relation_type_old = [113]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.expression"]
     obj_model = ["apis_ontology.person"]
 
@@ -628,7 +628,7 @@ class CopiedBy(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class CopiedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [3, 275]  # pk of Property in apis_relations
+    relation_type_old = [3, 275]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.manuscript"]
     obj_model = ["apis_ontology.institution", "apis_ontology.place"]
 
@@ -638,7 +638,7 @@ class CopiedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class CopyistOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [248]  # pk of Property in apis_relations
+    relation_type_old = [248]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.work"]
 
@@ -648,7 +648,7 @@ class CopyistOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class CousinOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [292]  # pk of Property in apis_relations
+    relation_type_old = [292]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -658,7 +658,7 @@ class CousinOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class DedicateeOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [91]  # pk of Property in apis_relations
+    relation_type_old = [91]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.work"]
 
@@ -668,7 +668,7 @@ class DedicateeOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class DescendantOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [190]  # pk of Property in apis_relations
+    relation_type_old = [190]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -678,7 +678,7 @@ class DescendantOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class DescribedBy(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [245]  # pk of Property in apis_relations
+    relation_type_old = [245]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -688,7 +688,7 @@ class DescribedBy(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class DiedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [9]  # pk of Property in apis_relations
+    relation_type_old = [9]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -698,7 +698,7 @@ class DiedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class EditedBy(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [188]  # pk of Property in apis_relations
+    relation_type_old = [188]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.expression"]
     obj_model = ["apis_ontology.person"]
 
@@ -708,7 +708,7 @@ class EditedBy(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class Eulogized(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [178]  # pk of Property in apis_relations
+    relation_type_old = [178]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -718,7 +718,7 @@ class Eulogized(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class ExecutedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [103]  # pk of Property in apis_relations
+    relation_type_old = [103]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -728,7 +728,7 @@ class ExecutedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class ExiledFrom(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [226]  # pk of Property in apis_relations
+    relation_type_old = [226]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -738,7 +738,7 @@ class ExiledFrom(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class ExplanationOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [197]  # pk of Property in apis_relations
+    relation_type_old = [197]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.work"]
     obj_model = ["apis_ontology.work"]
 
@@ -748,7 +748,7 @@ class ExplanationOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class FollowerOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [50]  # pk of Property in apis_relations
+    relation_type_old = [50]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -758,7 +758,7 @@ class FollowerOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class FounderOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [271]  # pk of Property in apis_relations
+    relation_type_old = [271]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.institution"]
 
@@ -768,7 +768,7 @@ class FounderOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class GrandNephewOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [189]  # pk of Property in apis_relations
+    relation_type_old = [189]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -778,7 +778,7 @@ class GrandNephewOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class GrandfatherOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [99]  # pk of Property in apis_relations
+    relation_type_old = [99]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -788,7 +788,7 @@ class GrandfatherOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class GreatGrandFatherOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [278]  # pk of Property in apis_relations
+    relation_type_old = [278]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -798,7 +798,7 @@ class GreatGrandFatherOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class HeldIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [5]  # pk of Property in apis_relations
+    relation_type_old = [5]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.manuscript"]
     obj_model = ["apis_ontology.institution"]
 
@@ -808,7 +808,7 @@ class HeldIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class ImprisonedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [105]  # pk of Property in apis_relations
+    relation_type_old = [105]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -818,7 +818,7 @@ class ImprisonedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class InTheLibraryOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [259]  # pk of Property in apis_relations
+    relation_type_old = [259]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.expression"]
     obj_model = ["apis_ontology.person"]
 
@@ -828,7 +828,7 @@ class InTheLibraryOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class JudgeIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [307]  # pk of Property in apis_relations
+    relation_type_old = [307]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -838,7 +838,7 @@ class JudgeIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class KilledIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [104]  # pk of Property in apis_relations
+    relation_type_old = [104]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -848,7 +848,7 @@ class KilledIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class LivedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [8]  # pk of Property in apis_relations
+    relation_type_old = [8]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -858,7 +858,7 @@ class LivedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class LocatedAt(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [38]  # pk of Property in apis_relations
+    relation_type_old = [38]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.institution"]
     obj_model = ["apis_ontology.place"]
 
@@ -868,7 +868,7 @@ class LocatedAt(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class LocatedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [28, 95]  # pk of Property in apis_relations
+    relation_type_old = [28, 95]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.institution", "apis_ontology.place"]
     obj_model = ["apis_ontology.place"]
 
@@ -878,7 +878,7 @@ class LocatedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class MadePilgrimageTo(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [144]  # pk of Property in apis_relations
+    relation_type_old = [144]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -888,7 +888,7 @@ class MadePilgrimageTo(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class MentionedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [301]  # pk of Property in apis_relations
+    relation_type_old = [301]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.work"]
 
@@ -898,7 +898,7 @@ class MentionedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class MentionedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [211]  # pk of Property in apis_relations
+    relation_type_old = [211]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.manuscriptpart"]
 
@@ -908,7 +908,7 @@ class MentionedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class MetWith(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [140]  # pk of Property in apis_relations
+    relation_type_old = [140]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -918,7 +918,7 @@ class MetWith(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class MurdererOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [294]  # pk of Property in apis_relations
+    relation_type_old = [294]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -928,7 +928,7 @@ class MurdererOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class NephewOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [181]  # pk of Property in apis_relations
+    relation_type_old = [181]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -938,7 +938,7 @@ class NephewOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class OwnedBy(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [58]  # pk of Property in apis_relations
+    relation_type_old = [58]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.manuscript"]
     obj_model = ["apis_ontology.person"]
 
@@ -948,7 +948,7 @@ class OwnedBy(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class OwnerOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [2]  # pk of Property in apis_relations
+    relation_type_old = [2]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.work"]
 
@@ -958,7 +958,7 @@ class OwnerOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class PartOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [314]  # pk of Property in apis_relations
+    relation_type_old = [314]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.institution"]
     obj_model = ["apis_ontology.institution"]
 
@@ -968,7 +968,7 @@ class PartOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class ParticipatedInTheConquestOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [222]  # pk of Property in apis_relations
+    relation_type_old = [222]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -978,7 +978,7 @@ class ParticipatedInTheConquestOf(Relation, NomanslandRelationMixin, VersionMixi
 
 
 class ParticipatedInTheFoundingOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [223]  # pk of Property in apis_relations
+    relation_type_old = [223]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -988,7 +988,7 @@ class ParticipatedInTheFoundingOf(Relation, NomanslandRelationMixin, VersionMixi
 
 
 class PatronOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [11]  # pk of Property in apis_relations
+    relation_type_old = [11]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -998,7 +998,7 @@ class PatronOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class PlaceMentionedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [302]  # pk of Property in apis_relations
+    relation_type_old = [302]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.place"]
     obj_model = ["apis_ontology.work"]
 
@@ -1008,7 +1008,7 @@ class PlaceMentionedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class PlaceOfAcquisition(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [231]  # pk of Property in apis_relations
+    relation_type_old = [231]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.place"]
     obj_model = ["apis_ontology.manuscriptpart"]
 
@@ -1018,7 +1018,7 @@ class PlaceOfAcquisition(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class PlaceOfBirth(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [78]  # pk of Property in apis_relations
+    relation_type_old = [78]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -1028,7 +1028,7 @@ class PlaceOfBirth(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class PlaceOfCompositionOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [55]  # pk of Property in apis_relations
+    relation_type_old = [55]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.place"]
     obj_model = ["apis_ontology.work"]
 
@@ -1038,7 +1038,7 @@ class PlaceOfCompositionOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class PlaceOfCompositionOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [274]  # pk of Property in apis_relations
+    relation_type_old = [274]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.institution"]
     obj_model = ["apis_ontology.work"]
 
@@ -1048,7 +1048,7 @@ class PlaceOfCompositionOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class PlaceOfCopyOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [195]  # pk of Property in apis_relations
+    relation_type_old = [195]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.place"]
     obj_model = ["apis_ontology.expression"]
 
@@ -1058,7 +1058,7 @@ class PlaceOfCopyOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class PurchaserOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [230]  # pk of Property in apis_relations
+    relation_type_old = [230]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.institution"]
     obj_model = ["apis_ontology.manuscriptpart"]
 
@@ -1068,7 +1068,7 @@ class PurchaserOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class RivalOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [295]  # pk of Property in apis_relations
+    relation_type_old = [295]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -1078,7 +1078,7 @@ class RivalOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class RuledOver(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [49]  # pk of Property in apis_relations
+    relation_type_old = [49]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -1088,7 +1088,7 @@ class RuledOver(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class RulerOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [185]  # pk of Property in apis_relations
+    relation_type_old = [185]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.institution"]
 
@@ -1098,7 +1098,7 @@ class RulerOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class SonOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [10]  # pk of Property in apis_relations
+    relation_type_old = [10]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -1108,7 +1108,7 @@ class SonOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class SpouseOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [177]  # pk of Property in apis_relations
+    relation_type_old = [177]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -1118,7 +1118,7 @@ class SpouseOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class StudiedAt(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [41]  # pk of Property in apis_relations
+    relation_type_old = [41]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.institution"]
 
@@ -1128,7 +1128,7 @@ class StudiedAt(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class StudiedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [7]  # pk of Property in apis_relations
+    relation_type_old = [7]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -1138,7 +1138,7 @@ class StudiedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class StudiedWith(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [13]  # pk of Property in apis_relations
+    relation_type_old = [13]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -1148,7 +1148,7 @@ class StudiedWith(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class SubjectOfWork(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [214]  # pk of Property in apis_relations
+    relation_type_old = [214]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.work"]
 
@@ -1158,7 +1158,7 @@ class SubjectOfWork(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class SuccessorOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [293]  # pk of Property in apis_relations
+    relation_type_old = [293]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -1168,7 +1168,7 @@ class SuccessorOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class SummaryOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [158]  # pk of Property in apis_relations
+    relation_type_old = [158]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.work"]
     obj_model = ["apis_ontology.work"]
 
@@ -1178,7 +1178,7 @@ class SummaryOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class SupplementTo(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [184]  # pk of Property in apis_relations
+    relation_type_old = [184]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.work"]
     obj_model = ["apis_ontology.work"]
 
@@ -1188,7 +1188,7 @@ class SupplementTo(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class TaughtIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [42]  # pk of Property in apis_relations
+    relation_type_old = [42]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -1198,7 +1198,7 @@ class TaughtIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class TeacherAt(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [40]  # pk of Property in apis_relations
+    relation_type_old = [40]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.institution"]
 
@@ -1208,7 +1208,7 @@ class TeacherAt(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class TeacherOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [257]  # pk of Property in apis_relations
+    relation_type_old = [257]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
@@ -1218,7 +1218,7 @@ class TeacherOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class Testrel(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [151]  # pk of Property in apis_relations
+    relation_type_old = [151]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.manuscript"]
     obj_model = ["apis_ontology.manuscriptpart"]
 
@@ -1228,7 +1228,7 @@ class Testrel(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class TranslationOf(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [291]  # pk of Property in apis_relations
+    relation_type_old = [291]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.work"]
     obj_model = ["apis_ontology.work"]
 
@@ -1238,7 +1238,7 @@ class TranslationOf(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class UsedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [142]  # pk of Property in apis_relations
+    relation_type_old = [142]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.place"]
     obj_model = ["apis_ontology.place"]
 
@@ -1248,7 +1248,7 @@ class UsedIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class Visited(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [80]  # pk of Property in apis_relations
+    relation_type_old = [80]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -1258,7 +1258,7 @@ class Visited(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class WorkIn(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [100]  # pk of Property in apis_relations
+    relation_type_old = [100]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.place"]
 
@@ -1268,7 +1268,7 @@ class WorkIn(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class WorkedAt(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [90]  # pk of Property in apis_relations
+    relation_type_old = [90]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.institution"]
 
@@ -1278,7 +1278,7 @@ class WorkedAt(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class WorkedFor(Relation, NomanslandRelationMixin, VersionMixin):
-    pk_old = [12]  # pk of Property in apis_relations
+    relation_type_old = [12]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
     obj_model = ["apis_ontology.person"]
 
