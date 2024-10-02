@@ -372,6 +372,7 @@ class NomanslandRelationMixin(models.Model, GenericModel):
         ("unknown", "unknown"),
     ]
     certainty = models.CharField(max_length=7, choices=CERTAINTY, default="unknown")
+    pk_old = models.BigIntegerField(blank=True, null=True, editable=False)
 
     class Meta:
         abstract = True
@@ -888,19 +889,9 @@ class MadePilgrimageTo(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class MentionedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    relation_type_old = [301]  # pk of Property in apis_relations
+    relation_type_old = [211, 301]  # pk of Property in apis_relations
     subj_model = ["apis_ontology.person"]
-    obj_model = ["apis_ontology.work"]
-
-    @classmethod
-    def reverse_name(cls) -> str:
-        return "contains the name of"
-
-
-class MentionedIn(Relation, NomanslandRelationMixin, VersionMixin):
-    relation_type_old = [211]  # pk of Property in apis_relations
-    subj_model = ["apis_ontology.person"]
-    obj_model = ["apis_ontology.manuscriptpart"]
+    obj_model = ["apis_ontology.manuscriptpart", "apis_ontology.work"]
 
     @classmethod
     def reverse_name(cls) -> str:
@@ -1028,23 +1019,13 @@ class PlaceOfBirth(Relation, NomanslandRelationMixin, VersionMixin):
 
 
 class PlaceOfCompositionOf(Relation, NomanslandRelationMixin, VersionMixin):
-    relation_type_old = [55]  # pk of Property in apis_relations
-    subj_model = ["apis_ontology.place"]
+    relation_type_old = [55, 274]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.institution", "apis_ontology.place"]
     obj_model = ["apis_ontology.work"]
 
     @classmethod
     def reverse_name(cls) -> str:
         return "Composed in"
-
-
-class PlaceOfCompositionOf(Relation, NomanslandRelationMixin, VersionMixin):
-    relation_type_old = [274]  # pk of Property in apis_relations
-    subj_model = ["apis_ontology.institution"]
-    obj_model = ["apis_ontology.work"]
-
-    @classmethod
-    def reverse_name(cls) -> str:
-        return "composed at"
 
 
 class PlaceOfCopyOf(Relation, NomanslandRelationMixin, VersionMixin):
