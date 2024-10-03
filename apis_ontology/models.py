@@ -132,7 +132,7 @@ class Person(
     bio = models.TextField(blank=True, null=True)  # ported from text
 
     def __str__(self):
-        return f"{self.forename} {self.surname}"
+        return f"{self.forename} {self.surname} ({self.pk})"
 
     class Meta:
         verbose_name = _("person")
@@ -171,7 +171,7 @@ class Place(
         return self
 
     def __str__(self):
-        return self.label
+        return f"{self.label} ({self.pk})"
 
 
 class InstitutionType(GenericModel, models.Model):
@@ -196,7 +196,7 @@ class Institution(VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEn
         verbose_name_plural = _("Institutions")
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.pk})"
 
 
 class EventType(GenericModel, models.Model):
@@ -215,6 +215,9 @@ class Event(VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEntity):
     kind = models.ForeignKey(
         EventType, blank=True, null=True, on_delete=models.SET_NULL
     )
+
+    def __str__(self):
+        return f"{self.name} ({self.pk})"
 
     class Meta:
         verbose_name = _("event")
@@ -248,6 +251,9 @@ class Work(VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEntity):
     kind = models.ForeignKey(WorkType, blank=True, null=True, on_delete=models.SET_NULL)
     subject_heading = models.ManyToManyField(SubjectHeading, blank=True)
     description = models.TextField(blank=True, null=True)  # ported from text
+
+    def __str__(self):
+        return f"{self.name} ({self.pk})"
 
     class Meta:
         verbose_name = _("work")
@@ -296,6 +302,9 @@ class Expression(VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEnt
     language = models.ManyToManyField(Language, blank=True)
     description = models.TextField(blank=True, null=True)  # ported from text
 
+    def __str__(self):
+        return f"{self.title} ({self.pk})"
+
     class Meta:
         verbose_name = _("expression")
         verbose_name_plural = _("expressions")
@@ -327,6 +336,9 @@ class Manuscript(VersionMixin, NomansLandDateMixin, NomanslandMixin, AbstractEnt
     additions = models.TextField(blank=True, null=True)  # ported from text
     seal_description = models.TextField(blank=True, null=True)  # ported from text
     description = models.TextField(blank=True, null=True)  # ported from text
+
+    def __str__(self):
+        return f"{self.name} ({self.pk})"
 
     class Meta:
         verbose_name = _("manuscript")
