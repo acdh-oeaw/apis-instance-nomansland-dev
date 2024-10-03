@@ -47,10 +47,13 @@ TEXT_TYPES = {
 
 
 class Command(BaseCommand):
-    help = "import entities from vanilla APIS in data/dump_3105.json"
+    help = "import entities from vanilla APIS"
+
+    def add_arguments(self, parser):
+        parser.add_argument("dump", type=str, help="dump file name")
 
     def handle(self, *args, **kwargs):
-        df = pd.read_json("data/dump_3105.json")
+        df = pd.read_json(kwargs["dump"])
         FIELDNAME_MAPPING = {
             "apis_entities.person": {"first_name": "forename", "name": "surname"},
             "apis_entities.place": {
@@ -66,7 +69,7 @@ class Command(BaseCommand):
                 (df.model == "apis_vocabularies.vocabsbaseclass") & (df.pk == vocab_pk)
             ]
             if match.shape[0]:
-                return {"name": match.iloc[0].fields["name"]}
+                return {"name": match.iloc[0].fields["name"]}print
             return {}
 
         def get_text_field(text_pk):
@@ -152,6 +155,7 @@ class Command(BaseCommand):
 
         def import_persons():
             MODEL = "apis_entities.person"
+            self.stdout.write("importing persons")
             persons = df[df.model == MODEL]
             for _, p in tqdm(persons.iterrows(), total=persons.shape[0]):
                 title_ids = None
@@ -202,6 +206,7 @@ class Command(BaseCommand):
 
         def import_places():
             MODEL = "apis_entities.place"
+            self.stdout.write("importing places")
             places = df[df.model == MODEL]
             for _, p in tqdm(places.iterrows(), total=places.shape[0]):
                 place_type_pk = None
@@ -227,6 +232,7 @@ class Command(BaseCommand):
 
         def import_institutions():
             MODEL = "apis_entities.institution"
+            self.stdout.write("importing institutions")
             institutions = df[df.model == MODEL]
             for _, p in tqdm(institutions.iterrows(), total=institutions.shape[0]):
                 i_type_pk = None
@@ -253,6 +259,7 @@ class Command(BaseCommand):
 
         def import_events():
             MODEL = "apis_entities.event"
+            self.stdout.write("importing events")
             df_subset = df[df.model == MODEL]
             for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
                 type_pk = None
@@ -279,6 +286,7 @@ class Command(BaseCommand):
 
         def import_works():
             MODEL = "apis_entities.work"
+            self.stdout.write("importing works")
             df_subset = df[df.model == MODEL]
             for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
                 type_pk = None
@@ -316,6 +324,7 @@ class Command(BaseCommand):
 
         def import_expressions():
             MODEL = "apis_entities.expression"
+            self.stdout.write("importing expressions")
             df_subset = df[df.model == MODEL]
             for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
                 ted = get_all_entity_data(row.pk, MODEL)
@@ -364,6 +373,7 @@ class Command(BaseCommand):
 
         def import_manuscripts():
             MODEL = "apis_entities.manuscript"
+            self.stdout.write("importing manuscripts")
             df_subset = df[df.model == MODEL]
             for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
                 condition_pks = None
@@ -392,6 +402,7 @@ class Command(BaseCommand):
 
         def import_manuscript_parts():
             MODEL = "apis_entities.manuscriptpart"
+            self.stdout.write("importing manuscript parts")
             df_subset = df[df.model == MODEL]
             for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
                 mpart_type_pk = None
