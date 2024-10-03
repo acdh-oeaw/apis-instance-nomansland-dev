@@ -69,7 +69,7 @@ class Command(BaseCommand):
                 (df.model == "apis_vocabularies.vocabsbaseclass") & (df.pk == vocab_pk)
             ]
             if match.shape[0]:
-                return {"name": match.iloc[0].fields["name"]}print
+                return {"name": match.iloc[0].fields["name"]}
             return {}
 
         def get_text_field(text_pk):
