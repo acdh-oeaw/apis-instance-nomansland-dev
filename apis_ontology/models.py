@@ -1266,3 +1266,23 @@ class WorkedFor(Relation, NomanslandRelationMixin, VersionMixin):
     @classmethod
     def reverse_name(cls) -> str:
         return "boss of"
+
+
+class PlaceOfAnnotationOf(Relation, NomanslandRelationMixin, VersionMixin):
+    relation_type_old = [325]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.institution"]
+    obj_model = ["apis_ontology.manuscriptpart"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "annotated in"
+
+
+class RefutationOf(Relation, NomanslandRelationMixin, VersionMixin):
+    relation_type_old = [337]  # pk of Property in apis_relations
+    subj_model = ["apis_ontology.work"]
+    obj_model = ["apis_ontology.work"]
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "refuted by"
