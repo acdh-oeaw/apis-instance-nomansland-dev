@@ -90,18 +90,48 @@ reference = "v0.27.0"
 resolved_reference = "3a0ab508cfa1efadd6cafb9c1f7ac4c7b399de04"
 
 [[package]]
+name = "apis-core-rdf"
+version = "0.29.0"
+description = "Base package for the APIS framework"
+optional = false
+python-versions = "<4.0,>=3.11"
+files = [
+    {file = "apis_core_rdf-0.29.0-py3-none-any.whl", hash = "sha256:daf2a17ca9aa0d442cce757c6e7b482787bec081f5e887b8f3198d19d2e55c1f"},
+    {file = "apis_core_rdf-0.29.0.tar.gz", hash = "sha256:d59344f253659faecb7df73b1bc713e48613b76055af856fbf5f015975100dc7"},
+]
+
+[package.dependencies]
+apis-override-select2js = ">=0.1,<0.3"
+crispy-bootstrap4 = ">=2023.1,<2025.0"
+Django = ">5"
+django-admin-csvexport = ">=2.2,<3.0"
+django-autocomplete-light = ">=3.9.4,<3.12.0"
+django-crispy-forms = ">=2,<3"
+django-crum = ">=0.7.9,<0.8.0"
+django-filter = ">=24.1"
+django-model-utils = ">=4.1.1,<6.0.0"
+django-simple-history = ">=3.6"
+django-tables2 = ">=2.3.3,<3.0.0"
+djangorestframework = ">=3.14.0,<4.0.0"
+drf-spectacular = ">=0.26.1,<0.28.0"
+pydot = ">=3.0.2,<4.0.0"
+rdflib = ">=6.0.2,<8.0.0"
+requests = ">=2.25.0,<3.0.0"
+
+[[package]]
 name = "apis-highlighter-ng"
-version = "0.3.2"
+version = "0.5.0"
 description = "Highlighter for the APIS project"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "apis_highlighter_ng-0.3.2-py3-none-any.whl", hash = "sha256:6364f41c1c9aa5f31ad68bf5f6312934d6728668240807ddec8029fee636b151"},
-    {file = "apis_highlighter_ng-0.3.2.tar.gz", hash = "sha256:190718e4e18503a5528335689acf15a304af1db4eab00a42b6c33a539f0072ae"},
+    {file = "apis_highlighter_ng-0.5.0-py3-none-any.whl", hash = "sha256:1b02f66e4117f245e1c0b3e766c2d54af1be89abd2977ff24e3ee6800194a5ef"},
+    {file = "apis_highlighter_ng-0.5.0.tar.gz", hash = "sha256:1fa53105911c16f6585162ea9b6e419eeb3255246b391f0695e4edd9a63e5b82"},
 ]
 
 [package.dependencies]
-Django = ">=4.1,<5.0"
+apis-core-rdf = ">=0.29.0"
+Django = ">4.1"
 
 [[package]]
 name = "apis-override-select2js"
@@ -621,17 +651,17 @@ typing_extensions = ">=3.10.0.0"
 
 [[package]]
 name = "django"
-version = "4.2.16"
+version = "5.1.2"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.10"
 files = [
-    {file = "Django-4.2.16-py3-none-any.whl", hash = "sha256:1ddc333a16fc139fd253035a1606bb24261951bbc3a6ca256717fa06cc41a898"},
-    {file = "Django-4.2.16.tar.gz", hash = "sha256:6f1616c2786c408ce86ab7e10f792b8f15742f7b7b7460243929cb371e7f1dad"},
+    {file = "Django-5.1.2-py3-none-any.whl", hash = "sha256:f11aa87ad8d5617171e3f77e1d5d16f004b79a2cf5d2e1d2b97a6a1f8e9ba5ed"},
+    {file = "Django-5.1.2.tar.gz", hash = "sha256:bd7376f90c99f96b643722eee676498706c9fd7dc759f55ebfaf2c08ebcdf4f0"},
 ]
 
 [package.dependencies]
-asgiref = ">=3.6.0,<4"
+asgiref = ">=3.8.1,<4"
 sqlparse = ">=0.3.1"
 tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 
@@ -2024,6 +2054,25 @@ files = [
 ]
 
 [[package]]
+name = "pydot"
+version = "3.0.2"
+description = "Python interface to Graphviz's Dot"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pydot-3.0.2-py3-none-any.whl", hash = "sha256:99cedaa55d04abb0b2bc56d9981a6da781053dd5ac75c428e8dd53db53f90b14"},
+    {file = "pydot-3.0.2.tar.gz", hash = "sha256:9180da540b51b3aa09fbf81140b3edfbe2315d778e8589a7d0a4a69c41332bae"},
+]
+
+[package.dependencies]
+pyparsing = ">=3.0.9"
+
+[package.extras]
+dev = ["chardet", "parameterized", "ruff"]
+release = ["zest.releaser[recommended]"]
+tests = ["chardet", "parameterized", "pytest", "pytest-cov", "pytest-xdist[psutil]", "ruff", "tox"]
+
+[[package]]
 name = "pygments"
 version = "2.18.0"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -2925,4 +2974,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "1536af01274fcaee048a159197056ef28bb45e8dc0f818ee695112d0214963cc"
+content-hash = "b81ebaf73ed9157a622f669c24c01f2d6ac40e463fba857225055fe361482cac"
