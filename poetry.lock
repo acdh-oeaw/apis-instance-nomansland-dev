@@ -61,50 +61,14 @@ sentry-sdk = ">=1.26.0,<2.0.0"
 whitenoise = ">=5.2.0,<6.0.0"
 
 [[package]]
-name = "apis-core"
-version = "0.27.0"
-description = "Base package for the APIS framework"
-optional = false
-python-versions = "^3.11"
-files = []
-develop = false
-
-[package.dependencies]
-apis-override-select2js = ">=0.1,<0.3"
-crispy-bootstrap4 = ">=2023.1,<2025.0"
-Django = ">=4.1,<6.0"
-django-admin-csvexport = "^2.2"
-django-autocomplete-light = ">=3.9.4,<3.12.0"
-django-crispy-forms = "^2"
-django-crum = "^0.7.9"
-django-filter = ">=24.1"
-django-model-utils = "^4.1.1"
-django-simple-history = ">=3.6"
-django-tables2 = "^2.3.3"
-djangorestframework = "^3.14.0"
-djangorestframework-csv = ">=2.1,<4.0"
-djangorestframework-xml = "^2.0.0"
-drf-spectacular = ">=0.26.1,<0.28.0"
-python-dateutil = "^2.8.2"
-rdflib = ">=6.0.2,<8.0.0"
-requests = "^2.25.0"
-tablib = "^3.5.0"
-
-[package.source]
-type = "git"
-url = "https://github.com/acdh-oeaw/apis-core-rdf"
-reference = "v0.27.0"
-resolved_reference = "3a0ab508cfa1efadd6cafb9c1f7ac4c7b399de04"
-
-[[package]]
 name = "apis-core-rdf"
-version = "0.29.0"
+version = "0.31.0"
 description = "Base package for the APIS framework"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "apis_core_rdf-0.29.0-py3-none-any.whl", hash = "sha256:daf2a17ca9aa0d442cce757c6e7b482787bec081f5e887b8f3198d19d2e55c1f"},
-    {file = "apis_core_rdf-0.29.0.tar.gz", hash = "sha256:d59344f253659faecb7df73b1bc713e48613b76055af856fbf5f015975100dc7"},
+    {file = "apis_core_rdf-0.31.0-py3-none-any.whl", hash = "sha256:12d35a7dc9d490ce2c81df3c3fc9bfce64fd62e013175b964ce850eb745815db"},
+    {file = "apis_core_rdf-0.31.0.tar.gz", hash = "sha256:a3d92eabe3b6255e435406ff825b4bce620eefed338ff83928896f4d7272d4f2"},
 ]
 
 [package.dependencies]
@@ -932,39 +896,6 @@ files = [
 
 [package.dependencies]
 django = ">=4.2"
-
-[[package]]
-name = "djangorestframework-csv"
-version = "3.0.2"
-description = "CSV Tools for Django REST Framework"
-optional = false
-python-versions = "*"
-files = [
-    {file = "djangorestframework-csv-3.0.2.tar.gz", hash = "sha256:b269b692feda1971e1342f395a21d339c6a16d2961ff64357a9a6188f27af10f"},
-    {file = "djangorestframework_csv-3.0.2-py3-none-any.whl", hash = "sha256:d1bcfbaaeaa5145af6bb0985a36a5bbf2f853d9961c722f69c7b0c9c3bcc269a"},
-]
-
-[package.dependencies]
-djangorestframework = "*"
-
-[[package]]
-name = "djangorestframework-xml"
-version = "2.0.0"
-description = "XML support for Django REST Framework"
-optional = false
-python-versions = ">=3.5"
-files = [
-    {file = "djangorestframework-xml-2.0.0.tar.gz", hash = "sha256:35f6c811d0ab8c8466b26db234e16a2ed32d76381715257aebf4c7be2c202ca1"},
-    {file = "djangorestframework_xml-2.0.0-py2.py3-none-any.whl", hash = "sha256:975955fbb0d49ac44a90bdeb33b7923d95b79884d283f983e116c80a936ef4d0"},
-]
-
-[package.dependencies]
-defusedxml = ">=0.6.0"
-
-[package.extras]
-dev = ["Django (>=1.6)", "djangorestframework (>=2.4.3)", "flake8", "mkdocs (>=0.11.1)", "pre-commit", "pytest", "pytest-django", "tox"]
-docs = ["mkdocs (>=0.11.1)"]
-tests = ["Django (>=1.6)", "djangorestframework (>=2.4.3)", "flake8", "pytest", "pytest-django"]
 
 [[package]]
 name = "drf-spectacular"
@@ -3149,26 +3080,6 @@ pure-eval = "*"
 tests = ["cython", "littleutils", "pygments", "pytest", "typeguard"]
 
 [[package]]
-name = "tablib"
-version = "3.6.1"
-description = "Format agnostic tabular data library (XLS, JSON, YAML, CSV, etc.)"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "tablib-3.6.1-py3-none-any.whl", hash = "sha256:c771d38ed1d74350a69873db43e0afb7f1cca0ed2915a7243094463eb6789207"},
-    {file = "tablib-3.6.1.tar.gz", hash = "sha256:040685fde11e9237675f43e985edb94b63250a5e9236f89d561ce6fb1465b839"},
-]
-
-[package.extras]
-all = ["odfpy", "openpyxl (>=2.6.0)", "pandas", "pyyaml", "tabulate", "xlrd", "xlwt"]
-cli = ["tabulate"]
-ods = ["odfpy"]
-pandas = ["pandas"]
-xls = ["xlrd", "xlwt"]
-xlsx = ["openpyxl (>=2.6.0)"]
-yaml = ["pyyaml"]
-
-[[package]]
 name = "terminado"
 version = "0.18.1"
 description = "Tornado websocket backend for the Xterm.js Javascript terminal emulator library."
@@ -3505,4 +3416,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "851d032b8c34d0a29bb698dd15541bf48a5b95cd50aa5448bc6ee997d7362a2f"
+content-hash = "09bb0931ccb1b23fc5179754bec90105ee3f2e3403f31dba175a89fd6543486c"
