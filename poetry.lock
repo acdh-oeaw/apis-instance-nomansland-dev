@@ -21,20 +21,6 @@ test = ["anyio[trio]", "coverage[toml] (>=7)", "exceptiongroup (>=1.2.0)", "hypo
 trio = ["trio (>=0.26.1)"]
 
 [[package]]
-name = "anytree"
-version = "2.12.1"
-description = "Powerful and Lightweight Python Tree Data Structure with various plugins"
-optional = false
-python-versions = ">=3.7.2,<4"
-files = [
-    {file = "anytree-2.12.1-py3-none-any.whl", hash = "sha256:5ea9e61caf96db1e5b3d0a914378d2cd83c269dfce1fb8242ce96589fa3382f0"},
-    {file = "anytree-2.12.1.tar.gz", hash = "sha256:244def434ccf31b668ed282954e5d315b4e066c4940b94aff4a7962d85947830"},
-]
-
-[package.dependencies]
-six = "*"
-
-[[package]]
 name = "apis-acdhch-default-settings"
 version = "1.5.0"
 description = "Default settings for APIS instances at the ACDH-CH"
@@ -62,20 +48,19 @@ whitenoise = ">=5.2.0,<6.0.0"
 
 [[package]]
 name = "apis-core-rdf"
-version = "0.32.0"
+version = "0.33.0"
 description = "Base package for the APIS framework"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "apis_core_rdf-0.32.0-py3-none-any.whl", hash = "sha256:b2b59910fccfc199030487bffcd7f8e75e7cbde97d97780ab8de6d73d9dbed57"},
-    {file = "apis_core_rdf-0.32.0.tar.gz", hash = "sha256:4619b3bb300e057758a95deec4b8894ff61d1859ce6570dfe257cd6d0f6bd432"},
+    {file = "apis_core_rdf-0.33.0-py3-none-any.whl", hash = "sha256:3edf10e45284ee9df817fee9b6ee0d79f3d41c18026c7bb98f6f28e44220c222"},
+    {file = "apis_core_rdf-0.33.0.tar.gz", hash = "sha256:dbcb79ea99f256615353c0d722db32cbf0d8b51003f4fde9d8e22e9caf00d1ee"},
 ]
 
 [package.dependencies]
 apis-override-select2js = ">=0.1,<0.3"
 crispy-bootstrap4 = ">=2023.1,<2025.0"
 Django = ">5"
-django-admin-csvexport = ">=2.2,<3.0"
 django-autocomplete-light = ">=3.9.4,<3.12.0"
 django-crispy-forms = ">=2,<3"
 django-crum = ">=0.7.9,<0.8.0"
@@ -672,21 +657,6 @@ files = [
 django = ">=4.1"
 
 [[package]]
-name = "django-admin-csvexport"
-version = "2.2"
-description = "Django-admin-action to export items as csv-formatted data."
-optional = false
-python-versions = "*"
-files = [
-    {file = "django-admin-csvexport-2.2.tar.gz", hash = "sha256:29567ea1454984434aa1e5053916e7f5b252aa5bf82e8f4a028c571a2b24d7b8"},
-    {file = "django_admin_csvexport-2.2-py3-none-any.whl", hash = "sha256:d228fbcf7b4c4677cdcb26f0979ef663605cd6b934261fd524c9f1fd3722f5a6"},
-]
-
-[package.dependencies]
-Django = ">=2.2"
-django-modeltree = ">=0.3"
-
-[[package]]
 name = "django-allow-cidr"
 version = "0.6.0"
 description = "A Django Middleware to enable use of CIDR IP ranges in ALLOWED_HOSTS."
@@ -822,21 +792,6 @@ files = [
 
 [package.dependencies]
 Django = ">=3.2"
-
-[[package]]
-name = "django-modeltree"
-version = "0.5"
-description = "TODO"
-optional = false
-python-versions = "*"
-files = [
-    {file = "django-modeltree-0.5.tar.gz", hash = "sha256:28d269a4a3c4637c88c74bb8abc4fab1632c0f90ff3bf0e12fe3f45953dbb559"},
-    {file = "django_modeltree-0.5-py3-none-any.whl", hash = "sha256:93c460c44f06feafc3cdf699b567c235944c6f6cb54d90f18de33582523592e1"},
-]
-
-[package.dependencies]
-anytree = "*"
-Django = "*"
 
 [[package]]
 name = "django-reversion"
@@ -3416,4 +3371,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "ce9f45bae82c8a4defa277206edc6003c75541702a4e1492bd9f46e8dc31907e"
+content-hash = "b346cb432ced7c413925a93789ce6392eff367159ed74a284ddd4fdd1c30f9e1"
