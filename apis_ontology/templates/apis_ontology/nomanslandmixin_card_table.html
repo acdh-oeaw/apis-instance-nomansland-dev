@@ -1,0 +1,20 @@
+{% load generic %}
+
+<table class="table table-hover">
+    {% modeldict object as d %}
+
+    {% for key, value in d.items %}
+    {% if value %}
+
+    <tr>
+        <th>
+            {{ key.verbose_name | title}}
+        </th>
+
+        <td>
+            {{ value }}
+        </td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>
