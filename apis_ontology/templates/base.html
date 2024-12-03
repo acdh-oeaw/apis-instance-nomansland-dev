@@ -6,3 +6,16 @@
 Nomansland: Nomads' Manuscripts Landscape
 {% endif %}
 {% endblock title %}
+
+{% block main-menu %}
+<li class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+        aria-expanded="false">
+        About <span class="caret" />
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 'apis:documentation' %}">Data model</a>
+    </div>
+</li>
+{{ block.super }}
+{% endblock main-menu %}
