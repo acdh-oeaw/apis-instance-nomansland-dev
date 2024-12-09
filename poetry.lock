@@ -48,13 +48,13 @@ whitenoise = ">=5.2.0,<6.0.0"
 
 [[package]]
 name = "apis-core-rdf"
-version = "0.33.0"
+version = "0.34.0"
 description = "Base package for the APIS framework"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "apis_core_rdf-0.33.0-py3-none-any.whl", hash = "sha256:3edf10e45284ee9df817fee9b6ee0d79f3d41c18026c7bb98f6f28e44220c222"},
-    {file = "apis_core_rdf-0.33.0.tar.gz", hash = "sha256:dbcb79ea99f256615353c0d722db32cbf0d8b51003f4fde9d8e22e9caf00d1ee"},
+    {file = "apis_core_rdf-0.34.0-py3-none-any.whl", hash = "sha256:f164817b0f0bb1793bf99742adf4e82bc6531a82331677867782c24243cc4c98"},
+    {file = "apis_core_rdf-0.34.0.tar.gz", hash = "sha256:3a0ffb58dd481bbfa3508a6995f1f1827759469166414310c67a77d70b7db06d"},
 ]
 
 [package.dependencies]
@@ -69,7 +69,7 @@ django-model-utils = ">=4.1.1,<6.0.0"
 django-simple-history = ">=3.6"
 django-tables2 = ">=2.3.3,<3.0.0"
 djangorestframework = ">=3.14.0,<4.0.0"
-drf-spectacular = ">=0.26.1,<0.28.0"
+drf-spectacular = ">=0.26.1,<0.29.0"
 pydot = ">=3.0.2,<4.0.0"
 rdflib = ">=6.0.2,<8.0.0"
 requests = ">=2.25.0,<3.0.0"
@@ -3371,4 +3371,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "5503675c2940cc5e75f17505889fbccd9f2eee87d12e96a559daa5dcab0e66b5"
+content-hash = "33e461bc3d2af81af60c7ddb95030a37cba32854e40cde3f5328c5fd5181b934"
