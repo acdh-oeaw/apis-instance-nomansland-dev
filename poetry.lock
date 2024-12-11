@@ -76,13 +76,13 @@ requests = ">=2.25.0,<3.0.0"
 
 [[package]]
 name = "apis-highlighter-ng"
-version = "0.5.0"
+version = "0.5.1"
 description = "Highlighter for the APIS project"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "apis_highlighter_ng-0.5.0-py3-none-any.whl", hash = "sha256:1b02f66e4117f245e1c0b3e766c2d54af1be89abd2977ff24e3ee6800194a5ef"},
-    {file = "apis_highlighter_ng-0.5.0.tar.gz", hash = "sha256:1fa53105911c16f6585162ea9b6e419eeb3255246b391f0695e4edd9a63e5b82"},
+    {file = "apis_highlighter_ng-0.5.1-py3-none-any.whl", hash = "sha256:5030c38953a24cea32fb2057f0e5e2579264e4348d68c43981375a472881009e"},
+    {file = "apis_highlighter_ng-0.5.1.tar.gz", hash = "sha256:b9f77c3bcaac89e33950bc209c2f4b5b1f59ea13aa8b5a6561b789ecaa93cdca"},
 ]
 
 [package.dependencies]
@@ -3372,4 +3372,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "794385bdf7c388c668ac728ab57b235ed575fbb413da7c8435b17bb77eb88e2a"
+content-hash = "54ead7af73cd4c84e2db57aac656ef2ee445e2150c6cf1a4884adb88b28e8c39"
