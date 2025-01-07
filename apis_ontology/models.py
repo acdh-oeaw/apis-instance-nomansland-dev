@@ -11,6 +11,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django_interval.fields import FuzzyDateParserField
 
 logger = logging.getLogger(__name__)
 
@@ -19,24 +20,8 @@ class NomanslandDateMixin(models.Model):
     class Meta:
         abstract = True
 
-    start_date = models.DateField(blank=True, null=True, editable=False)
-    start_start_date = models.DateField(blank=True, null=True, editable=False)
-    start_end_date = models.DateField(blank=True, null=True, editable=False)
-    end_date = models.DateField(blank=True, null=True, editable=False)
-    end_start_date = models.DateField(blank=True, null=True, editable=False)
-    end_end_date = models.DateField(blank=True, null=True, editable=False)
-    start_date_written = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-        verbose_name="Start",
-    )
-    end_date_written = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-        verbose_name="End",
-    )
+    start = FuzzyDateParserField()
+    end = FuzzyDateParserField()
 
 
 class NomanslandMixin(models.Model):
