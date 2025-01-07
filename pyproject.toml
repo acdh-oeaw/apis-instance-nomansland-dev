@@ -17,6 +17,7 @@ django-acdhch-functions = "^0.1.3"
 django-extensions = "^3.2.3"
 pandas = "^2.2.2"
 tqdm = "^4.67.1"
+django-interval = "^0.2.3"
 
 
 [tool.poetry.group.dev.dependencies]
