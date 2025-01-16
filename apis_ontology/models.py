@@ -54,7 +54,7 @@ class NomanslandMixin(models.Model):
     name_in_arabic = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True, verbose_name="Notes")
     published = models.BooleanField(default=False)
-    status = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, blank=True, null=True)
     references = models.TextField(blank=True, null=True)
 
     def nomansland_collections(self):
@@ -379,7 +379,6 @@ class NomanslandRelationMixin(
     models.Model,
     GenericModel,
 ):
-
     CERTAINTY = [
         ("low", "low"),
         ("medium", "medium"),
