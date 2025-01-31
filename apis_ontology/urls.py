@@ -21,3 +21,5 @@ urlpatterns += staticfiles_urlpatterns()
 urlpatterns += [
     path("", include("django_acdhch_functions.urls")),
 ]
+
+urlpatterns += [path("", include("django_interval.urls"))]

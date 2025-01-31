@@ -11,6 +11,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django_interval.fields import FuzzyDateParserField
+from .date_utils import nomansland_dateparser
 
 logger = logging.getLogger(__name__)
 
@@ -19,24 +21,8 @@ class NomanslandDateMixin(models.Model):
     class Meta:
         abstract = True
 
-    start_date = models.DateField(blank=True, null=True, editable=False)
-    start_start_date = models.DateField(blank=True, null=True, editable=False)
-    start_end_date = models.DateField(blank=True, null=True, editable=False)
-    end_date = models.DateField(blank=True, null=True, editable=False)
-    end_start_date = models.DateField(blank=True, null=True, editable=False)
-    end_end_date = models.DateField(blank=True, null=True, editable=False)
-    start_date_written = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-        verbose_name="Start",
-    )
-    end_date_written = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-        verbose_name="End",
-    )
+    start = FuzzyDateParserField(parser=nomansland_dateparser, null=True, blank=True)
+    end = FuzzyDateParserField(parser=nomansland_dateparser, null=True, blank=True)
 
 
 class NomanslandMixin(models.Model):
@@ -111,9 +97,7 @@ class Title(GenericModel, models.Model):
         verbose_name_plural = _("titles")
 
 
-class Person(
-    E21_Person, VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity
-):
+class Person(E21_Person, VersionMixin, NomanslandMixin, AbstractEntity):
     GENDERS = [
         ("male", "Male"),
         ("female", "Female"),
@@ -130,6 +114,12 @@ class Person(
     )
     profession = models.ManyToManyField(Profession, blank=True)
     bio = models.TextField(blank=True, null=True)  # ported from text
+    date_of_birth = FuzzyDateParserField(
+        parser=nomansland_dateparser, null=True, blank=True
+    )
+    date_of_death = FuzzyDateParserField(
+        parser=nomansland_dateparser, null=True, blank=True
+    )
 
     def __str__(self):
         return f"{self.forename} {self.surname} ({self.pk})"
