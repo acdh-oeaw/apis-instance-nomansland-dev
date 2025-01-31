@@ -1,3 +1,4 @@
+import os
 from apis_acdhch_default_settings.settings import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -22,6 +23,7 @@ INSTALLED_APPS.remove("apis_ontology")
 INSTALLED_APPS.insert(0, "apis_ontology")
 INSTALLED_APPS = ["apis_core.relations"] + INSTALLED_APPS
 INSTALLED_APPS.append("apis_core.documentation")
+INSTALLED_APPS.append("apis_bibsonomy")
 
 LOGGING = {
     "version": 1,
@@ -57,3 +59,13 @@ CACHES = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+APIS_BIBSONOMY = [
+    {
+        "type": "zotero",
+        "url": "https://api.zotero.org",
+        "user": os.environ.get("APIS_BIBSONOMY_USER"),
+        "API key": os.environ.get("APIS_BIBSONOMY_PASSWORD"),
+        "group": "2801369",
+    }
+]
