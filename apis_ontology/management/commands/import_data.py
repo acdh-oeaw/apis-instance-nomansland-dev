@@ -1,14 +1,11 @@
 from collections import defaultdict
 from django.core.management.base import BaseCommand
 import pandas as pd
-from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
-from apis_core.apis_relations.models import Property
-import pandas as pd
+
 from tqdm.auto import tqdm
 
 from apis_core.collections.models import SkosCollection, SkosCollectionContentObject
-import apis_ontology
 from apis_ontology.models import (
     Event,
     EventType,
