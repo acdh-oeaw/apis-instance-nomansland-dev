@@ -21,7 +21,7 @@ apis-bibsonomy = "^0.13.1"
 
 
 [tool.poetry.group.dev.dependencies]
-jupyterlab = "^4.3.3"
+jupyterlab = "^4.3.5"
 
 [build-system]
 requires = ["poetry-core"]
