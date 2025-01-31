@@ -123,6 +123,8 @@ class Command(BaseCommand):
             if "text" in ted:
                 text_ids = ted["text"]
                 ted.pop("text")
+            if "tempentityclass_ptr" in ted:
+                ted.pop("tempentityclass_ptr")
 
             base_data = {**base_data, **ted, "pk_old": pk}
             data_new = {k: v for k, v in base_data.items() if v}
@@ -158,47 +160,51 @@ class Command(BaseCommand):
             self.stdout.write("importing persons")
             persons = df[df.model == MODEL]
             for _, p in tqdm(persons.iterrows(), total=persons.shape[0]):
-                title_ids = None
-                principal_role_pk = None
-                profession_ids = None
+                try:
+                    title_ids = None
+                    principal_role_pk = None
+                    profession_ids = None
 
-                ted = get_all_entity_data(p.pk, MODEL)
-                old_data = ted["fields"]
+                    ted = get_all_entity_data(p.pk, MODEL)
+                    old_data = ted["fields"]
 
-                if "title" in old_data:
-                    title_ids = old_data.get("title")
-                    old_data.pop("title")
+                    if "title" in old_data:
+                        title_ids = old_data.get("title")
+                        old_data.pop("title")
 
-                if "principal_role" in old_data:
-                    principal_role_pk = old_data.get("principal_role")
-                    old_data.pop("principal_role")
+                    if "principal_role" in old_data:
+                        principal_role_pk = old_data.get("principal_role")
+                        old_data.pop("principal_role")
 
-                if "profession" in old_data:
-                    profession_ids = old_data.get("profession")
-                    old_data.pop("profession")
+                    if "profession" in old_data:
+                        profession_ids = old_data.get("profession")
+                        old_data.pop("profession")
 
-                p, _ = Person.objects.get_or_create(**old_data)
+                    p, _ = Person.objects.get_or_create(**old_data)
 
-                if title_ids:
-                    for title_id in title_ids:
-                        title_data = get_base_vocab_data(title_id)
-                        t, _ = Title.objects.get_or_create(**title_data)
-                        p.title.add(t)
+                    if title_ids:
+                        for title_id in title_ids:
+                            title_data = get_base_vocab_data(title_id)
+                            t, _ = Title.objects.get_or_create(**title_data)
+                            p.title.add(t)
 
-                if principal_role_pk:
-                    principal_role = get_base_vocab_data(principal_role_pk)
-                    pr, _ = PrincipalRole.objects.get_or_create(**principal_role)
-                    p.principal_role = pr
+                    if principal_role_pk:
+                        principal_role = get_base_vocab_data(principal_role_pk)
+                        pr, _ = PrincipalRole.objects.get_or_create(**principal_role)
+                        p.principal_role = pr
 
-                if profession_ids:
-                    for profession_id in profession_ids:
-                        profession = get_base_vocab_data(profession_id)
-                        pro, _ = Profession.objects.get_or_create(**profession)
-                        p.profession.add(pro)
+                    if profession_ids:
+                        for profession_id in profession_ids:
+                            profession = get_base_vocab_data(profession_id)
+                            pro, _ = Profession.objects.get_or_create(**profession)
+                            p.profession.add(pro)
 
-                p.save()
+                    p.save()
+                    create_collections(ted["collections"], p)
 
-                create_collections(ted["collections"], p)
+                except Exception as e:
+                    print("Error importing row ", p)
+                    print(repr(e))
 
             self.stdout.write(
                 self.style.SUCCESS("Persons have been successfully imported.")
@@ -327,45 +333,49 @@ class Command(BaseCommand):
             self.stdout.write("importing expressions")
             df_subset = df[df.model == MODEL]
             for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
-                ted = get_all_entity_data(row.pk, MODEL)
-                old_data = ted["fields"]
-                VOCAB_FIELDS = {"script_title": {}, "script_body": {}}
-                for f in VOCAB_FIELDS.keys():
-                    if not f in old_data:
-                        continue
-                    VOCAB_FIELDS[f] = get_base_vocab_data(old_data[f])
-                    old_data.pop(f)
+                try:
+                    ted = get_all_entity_data(row.pk, MODEL)
+                    old_data = ted["fields"]
+                    VOCAB_FIELDS = {"script_title": {}, "script_body": {}}
+                    for f in VOCAB_FIELDS.keys():
+                        if not f in old_data:
+                            continue
+                        VOCAB_FIELDS[f] = get_base_vocab_data(old_data[f])
+                        old_data.pop(f)
 
-                language_ids = []
-                if "language" in old_data:
-                    language_ids = old_data.get("language")
-                    old_data.pop("language")
+                    language_ids = []
+                    if "language" in old_data:
+                        language_ids = old_data.get("language")
+                        old_data.pop("language")
 
-                if old_data:
-                    p, _ = Expression.objects.get_or_create(**old_data)
+                    if old_data:
+                        p, _ = Expression.objects.get_or_create(**old_data)
 
-                    if language_ids:
-                        for l_id in language_ids:
-                            l, _ = Language.objects.get_or_create(
-                                get_base_vocab_data(l_id)
+                        if language_ids:
+                            for l_id in language_ids:
+                                l, _ = Language.objects.get_or_create(
+                                    get_base_vocab_data(l_id)
+                                )
+                                p.language.add(l)
+
+                        if VOCAB_FIELDS["script_title"]:
+                            script_type_title, _ = ScriptType.objects.get_or_create(
+                                **VOCAB_FIELDS["script_title"]
                             )
-                            p.language.add(l)
+                            p.script_type_title = script_type_title
 
-                    if VOCAB_FIELDS["script_title"]:
-                        script_type_title, _ = ScriptType.objects.get_or_create(
-                            **VOCAB_FIELDS["script_title"]
-                        )
-                        p.script_type_title = script_type_title
+                        if VOCAB_FIELDS["script_body"]:
+                            script_type_body, _ = ScriptType.objects.get_or_create(
+                                **VOCAB_FIELDS["script_body"]
+                            )
+                            p.scrip_type_body = script_type_body
 
-                    if VOCAB_FIELDS["script_body"]:
-                        script_type_body, _ = ScriptType.objects.get_or_create(
-                            **VOCAB_FIELDS["script_body"]
-                        )
-                        p.scrip_type_body = script_type_body
+                        p.save()
 
-                    p.save()
+                        create_collections(ted["collections"], p)
 
-                create_collections(ted["collections"], p)
+                except Exception as e:
+                    print("Error importing row ", p)
 
             self.stdout.write(
                 self.style.SUCCESS("Expressions have been successfully imported.")
@@ -376,25 +386,28 @@ class Command(BaseCommand):
             self.stdout.write("importing manuscripts")
             df_subset = df[df.model == MODEL]
             for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
-                condition_pks = None
-                ted = get_all_entity_data(row.pk, MODEL)
-                old_data = ted["fields"]
-                if "manuscript_conditions" in old_data:
-                    condition_pks = old_data.get("manuscript_conditions")
-                    old_data.pop("manuscript_conditions")
+                try:
+                    condition_pks = None
+                    ted = get_all_entity_data(row.pk, MODEL)
+                    old_data = ted["fields"]
+                    if "manuscript_conditions" in old_data:
+                        condition_pks = old_data.get("manuscript_conditions")
+                        old_data.pop("manuscript_conditions")
 
-                p, _ = Manuscript.objects.get_or_create(**old_data)
+                    p, _ = Manuscript.objects.get_or_create(**old_data)
 
-                if condition_pks:
-                    for pk in condition_pks:
-                        condition_data = get_base_vocab_data(pk)
-                        condition, _ = ManuscriptCondition.objects.get_or_create(
-                            **condition_data
-                        )
-                        p.condition.add(condition)
+                    if condition_pks:
+                        for pk in condition_pks:
+                            condition_data = get_base_vocab_data(pk)
+                            condition, _ = ManuscriptCondition.objects.get_or_create(
+                                **condition_data
+                            )
+                            p.condition.add(condition)
 
-                p.save()
-                create_collections(ted["collections"], p)
+                    p.save()
+                    create_collections(ted["collections"], p)
+                except Exception as e:
+                    print("Error importing row ", row)
 
             self.stdout.write(
                 self.style.SUCCESS("Manuscripts have been successfully imported.")
@@ -405,24 +418,27 @@ class Command(BaseCommand):
             self.stdout.write("importing manuscript parts")
             df_subset = df[df.model == MODEL]
             for _, row in tqdm(df_subset.iterrows(), total=df_subset.shape[0]):
-                mpart_type_pk = None
-                ted = get_all_entity_data(row.pk, MODEL)
-                old_data = ted["fields"]
-                if "type" in old_data:
-                    mpart_type_pk = old_data.get("type")
-                    old_data.pop("type")
+                try:
+                    mpart_type_pk = None
+                    ted = get_all_entity_data(row.pk, MODEL)
+                    old_data = ted["fields"]
+                    if "type" in old_data:
+                        mpart_type_pk = old_data.get("type")
+                        old_data.pop("type")
 
-                p, _ = ManuscriptPart.objects.get_or_create(**old_data)
+                    p, _ = ManuscriptPart.objects.get_or_create(**old_data)
 
-                if mpart_type_pk:
-                    mpart_type_data = get_base_vocab_data(mpart_type_pk)
-                    mpart_type, _ = ManuscriptPartType.objects.get_or_create(
-                        **mpart_type_data
-                    )
+                    if mpart_type_pk:
+                        mpart_type_data = get_base_vocab_data(mpart_type_pk)
+                        mpart_type, _ = ManuscriptPartType.objects.get_or_create(
+                            **mpart_type_data
+                        )
                     p.kind = mpart_type
 
-                p.save()
-                create_collections(ted["collections"], p)
+                    p.save()
+                    create_collections(ted["collections"], p)
+                except Exception as e:
+                    print("Error importing row ", row)
 
             self.stdout.write(
                 self.style.SUCCESS("Manuscript parts have been successfully imported.")
