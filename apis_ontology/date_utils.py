@@ -127,7 +127,7 @@ def nomansland_dateparser(
                     )
                     if desc == "not after":
                         # to_date will be set to the beginning of the interval
-                        dates.to_date = interval_start
+                        dates.to_date = interval_end
                     elif desc == "after":
                         # from_date will be set one day after the end of the interval
                         dates.from_date = interval_end + timedelta(days=1)

@@ -73,8 +73,13 @@ class ParseHDateTestCase(SimpleTestCase):
 
     def test_not_after(self):
         sort_date, from_date, to_date = nomansland_dateparser("not after 7c")
-        self.assertEqual(to_date, dt.fromisoformat("0600-01-01"))
-        self.assertEqual(sort_date, dt.fromisoformat("0600-01-01"))
+        self.assertEqual(to_date, dt.fromisoformat("0699-12-31"))
+        self.assertEqual(sort_date, dt.fromisoformat("0699-12-31"))
+        self.assertEqual(from_date, None)
+
+        sort_date, from_date, to_date = nomansland_dateparser("not after 1985-04-03")
+        self.assertEqual(to_date, dt.fromisoformat("1985-04-03"))
+        self.assertEqual(sort_date, dt.fromisoformat("1985-04-03"))
         self.assertEqual(from_date, None)
 
     def test_BC(self):
