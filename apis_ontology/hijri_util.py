@@ -24,8 +24,8 @@ def incomplete_hijridate_to_interval(
     (YYYY or YYY or YY or Y)(-MM or M optional)(-DD or D optional)
     """
     hijri_date = hijri_date.strip()
-    before_hijri = hijri_date.endswith("BH")
-    hijri_date = hijri_date.replace("AH", "").replace("BH", "").strip()
+    before_hijri = hijri_date.endswith("bh")
+    hijri_date = hijri_date.replace("ah", "").replace("bh", "").strip()
 
     dates = DateTuple()
     hijri_month = None
