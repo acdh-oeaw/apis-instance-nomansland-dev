@@ -122,9 +122,7 @@ def nomansland_dateparser(
             if groups_desc_range:
                 # before/after type of input
                 for desc, date in groups_desc_range.items():
-                    interval_middle, interval_start, interval_end = (
-                        incomplete_date_to_interval(date)
-                    )
+                    _, interval_start, interval_end = incomplete_date_to_interval(date)
                     if desc == "not after":
                         # to_date will be set to the beginning of the interval
                         dates.to_date = interval_end
@@ -137,7 +135,7 @@ def nomansland_dateparser(
 
                     elif desc == "not before":
                         # from_date will be set to this date
-                        _, dates.from_date, _ = incomplete_date_to_interval(date)
+                        dates.from_date = interval_start
 
                 if dates.from_date and dates.to_date:
                     dates.set_range(dates.from_date, dates.to_date)
