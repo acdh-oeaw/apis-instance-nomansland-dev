@@ -30,29 +30,39 @@ def incomplete_hijridate_to_interval(
     dates = DateTuple()
     hijri_month = None
     hijri_day = None
-    date_parts = hijri_date.split("-")
-    hijri_year = int(date_parts[0]) if not before_hijri else -int(date_parts[0])
-    if len(date_parts) > 1:
-        hijri_month = int(date_parts[1])
-    if len(date_parts) > 2:
-        # complete date
-        hijri_day = int(date_parts[2])
 
-    if not hijri_month:
-        from_date = hijri_to_gregorian(hijri_year, 1, 1)
-        to_date = hijri_to_gregorian(hijri_year, 12, last_day_of_hijri_year(hijri_year))
-
-    elif not hijri_day:
-        from_date = hijri_to_gregorian(hijri_year, hijri_month, 1)
+    if hijri_date.endswith("c"):
+        century = int(hijri_date[:-1]) - 1
+        from_date = hijri_to_gregorian(century * 100, 1, 1)
         to_date = hijri_to_gregorian(
-            hijri_year,
-            hijri_month,
-            last_day_of_hijri_year(hijri_year) if hijri_month == 12 else 29,
+            century * 100 + 99, 12, last_day_of_hijri_year(century * 100 + 99)
         )
-
     else:
-        from_date = hijri_to_gregorian(hijri_year, hijri_month, hijri_day)
-        to_date = from_date
+        date_parts = hijri_date.split("-")
+        hijri_year = int(date_parts[0]) if not before_hijri else -int(date_parts[0])
+        if len(date_parts) > 1:
+            hijri_month = int(date_parts[1])
+        if len(date_parts) > 2:
+            # complete date
+            hijri_day = int(date_parts[2])
+
+        if not hijri_month:
+            from_date = hijri_to_gregorian(hijri_year, 1, 1)
+            to_date = hijri_to_gregorian(
+                hijri_year, 12, last_day_of_hijri_year(hijri_year)
+            )
+
+        elif not hijri_day:
+            from_date = hijri_to_gregorian(hijri_year, hijri_month, 1)
+            to_date = hijri_to_gregorian(
+                hijri_year,
+                hijri_month,
+                last_day_of_hijri_year(hijri_year) if hijri_month == 12 else 29,
+            )
+
+        else:
+            from_date = hijri_to_gregorian(hijri_year, hijri_month, hijri_day)
+            to_date = from_date
 
     dates.set_range(from_date, to_date)
     return dates.tuple()

@@ -42,7 +42,7 @@ def incomplete_date_to_interval(date_str) -> Tuple[datetime, datetime, datetime]
     """
 
     dates = DateTuple()
-    if date_str.endswith("AH"):
+    if date_str.endswith("AH") or date_str.endswith("BH"):
         return incomplete_hijridate_to_interval(date_str)
 
     date_str = date_str.strip()
