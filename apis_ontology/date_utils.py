@@ -8,7 +8,7 @@ from enum import Enum
 from typing import Tuple
 import calendar
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from django_interval.utils import DateTuple
 import re
 
@@ -122,10 +122,15 @@ def nomansland_dateparser(
             if groups_desc_range:
                 # before/after type of input
                 for desc, date in groups_desc_range.items():
+                    _sort_date, _from_date, _to_date = incomplete_date_to_interval(date)
                     if desc == "before" or desc == "not after":
                         # to_date will be set to this date
                         _, dates.to_date, _ = incomplete_date_to_interval(date)
-                    elif desc == "after" or desc == "not before":
+                    elif desc == "after":
+                        # from_date will be set one date AFTER _to_date
+                        dates.from_date = _to_date + timedelta(days=1)
+
+                    elif desc == "not before":
                         # from_date will be set to this date
                         _, dates.from_date, _ = incomplete_date_to_interval(date)
 
