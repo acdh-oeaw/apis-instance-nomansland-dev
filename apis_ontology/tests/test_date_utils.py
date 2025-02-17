@@ -55,8 +55,8 @@ class ParseHDateTestCase(SimpleTestCase):
 
     def test_before(self):
         sort_date, from_date, to_date = nomansland_dateparser("before 7c")
-        self.assertEqual(to_date, dt.fromisoformat("0600-01-01"))
-        self.assertEqual(sort_date, dt.fromisoformat("0600-01-01"))
+        self.assertEqual(to_date, dt.fromisoformat("0599-12-31"))
+        self.assertEqual(sort_date, dt.fromisoformat("0599-12-31"))
         self.assertEqual(from_date, None)
 
     def test_not_before(self):
