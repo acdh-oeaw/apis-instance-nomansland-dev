@@ -98,3 +98,14 @@ class ParseHDateTestCase(SimpleTestCase):
         self.assertIsNone(from_date)
         self.assertIsNone(sort_date)
         self.assertIsNone(to_date)
+
+    def test_flourish_date(self):
+        sort_date, from_date, to_date = nomansland_dateparser("fl. 7c ")
+        self.assertEqual(from_date, dt.fromisoformat("0600-01-01"))
+        self.assertEqual(to_date, dt.fromisoformat("0699-12-31"))
+        self.assertEqual(sort_date, dt.fromisoformat("0649-12-31"))
+
+        sort_date, from_date, to_date = nomansland_dateparser("flourish 7c ")
+        self.assertEqual(from_date, dt.fromisoformat("0600-01-01"))
+        self.assertEqual(to_date, dt.fromisoformat("0699-12-31"))
+        self.assertEqual(sort_date, dt.fromisoformat("0649-12-31"))
