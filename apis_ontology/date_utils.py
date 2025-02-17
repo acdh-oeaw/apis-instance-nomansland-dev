@@ -45,8 +45,14 @@ def incomplete_date_to_interval(date_str) -> Tuple[datetime, datetime, datetime]
     date_str = date_str.replace("fl.", "").replace("flourish", "").strip()
     # TODO: Should we make an assumption of date of birth or death
     # when a flourish date is provided?
-    if date_str.endswith("AH") or date_str.endswith("BH"):
+    if date_str.endswith("ah") or date_str.endswith("bh"):
         return incomplete_hijridate_to_interval(date_str)
+
+    bce = date_str.endswith("bc")
+    if bce:
+        date_str = date_str.replace("bc", "")
+        # TODO: Figure out how to handle BC dates
+        return None, None, None
 
     date_str = date_str.strip()
     if date_str.endswith("c"):
@@ -55,12 +61,6 @@ def incomplete_date_to_interval(date_str) -> Tuple[datetime, datetime, datetime]
         to_date = datetime(century * 100 + 99, 12, 31)
         dates.set_range(from_date, to_date)
         return dates.tuple()
-
-    bce = date_str.endswith("BC")
-    if bce:
-        date_str = date_str.replace("BC", "")
-        # TODO: Figure out how to handle BC dates
-        return None, None, None
 
     date_parts = date_str.split("-")
     year = int(date_parts[0]) if not bce else int(date_parts[0])
@@ -103,7 +103,7 @@ def nomansland_dateparser(
     """
     # https://nomansland.acdh-dev.oeaw.ac.at/apis/entities/entity/manuscript/21153/detail
     # 	- before 496/1102-3v
-    date_string = date_string.strip()
+    date_string = date_string.strip().lower()
     dates = DateTuple()
     try:
         if " - " in date_string:
@@ -116,7 +116,7 @@ def nomansland_dateparser(
         elif date_string.endswith("-"):
             _, dates.from_date, _ = incomplete_date_to_interval(date_string[:-1])
         else:
-            pattern_desc_range = r"\b(before|not after|not before|after)\s+(\S+)"
+            pattern_desc_range = r"\b(before|not after|not before|after)\s+(.+)"
             matches_desc_range = re.finditer(pattern_desc_range, date_string)
             groups_desc_range = {
                 match.group(1): match.group(2) for match in matches_desc_range

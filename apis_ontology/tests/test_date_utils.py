@@ -109,3 +109,22 @@ class ParseHDateTestCase(SimpleTestCase):
         self.assertEqual(from_date, dt.fromisoformat("0600-01-01"))
         self.assertEqual(to_date, dt.fromisoformat("0699-12-31"))
         self.assertEqual(sort_date, dt.fromisoformat("0649-12-31"))
+
+    def test_hijri_date(self):
+        sort_date, from_date, to_date = nomansland_dateparser("700 AH")
+        self.assertEqual(from_date, dt.fromisoformat("1300-09-16"))
+        self.assertEqual(to_date, dt.fromisoformat("1301-09-04"))
+
+    def test_case_insensitive(self):
+        sort_date, from_date, to_date = nomansland_dateparser("7C")
+        self.assertEqual(from_date, dt.fromisoformat("0600-01-01"))
+        self.assertEqual(to_date, dt.fromisoformat("0699-12-31"))
+        self.assertEqual(sort_date, dt.fromisoformat("0649-12-31"))
+
+        sort_date, from_date, to_date = nomansland_dateparser("700 ah")
+        self.assertEqual(from_date, dt.fromisoformat("1300-09-16"))
+        self.assertEqual(to_date, dt.fromisoformat("1301-09-04"))
+
+        sort_date, from_date, to_date = nomansland_dateparser("After 700 ah")
+        self.assertEqual(from_date, dt.fromisoformat("1301-09-05"))
+        self.assertEqual(to_date, None)
