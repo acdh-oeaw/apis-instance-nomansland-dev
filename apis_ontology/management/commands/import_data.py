@@ -112,6 +112,15 @@ class Command(BaseCommand):
             ted = match.iloc[0].fields
             collections = None
             text_ids = []
+            DROP_FIELDS = [
+                "start_date",
+                "end_date",
+                "start_start_date",
+                "end_start_date",
+                "start_end_date",
+                "end_end_date",
+                "tempentityclass_ptr",
+            ]
             if "source" in ted:
                 ted.pop("source")
             if "collection" in ted:
@@ -120,8 +129,16 @@ class Command(BaseCommand):
             if "text" in ted:
                 text_ids = ted["text"]
                 ted.pop("text")
-            if "tempentityclass_ptr" in ted:
-                ted.pop("tempentityclass_ptr")
+            if "start_date_written" in ted:
+                ted["start"] = ted["start_date_written"]
+                ted.pop("start_date_written")
+            if "end_date_written" in ted:
+                ted["end"] = ted["end_date_written"]
+                ted.pop("end_date_written")
+
+            for field in DROP_FIELDS:
+                if field in ted:
+                    ted.pop(field)
 
             base_data = {**base_data, **ted, "pk_old": pk}
             data_new = {k: v for k, v in base_data.items() if v}
@@ -176,6 +193,13 @@ class Command(BaseCommand):
                     if "profession" in old_data:
                         profession_ids = old_data.get("profession")
                         old_data.pop("profession")
+
+                    if "start" in old_data:
+                        old_data["date_of_birth"] = old_data["start"]
+                        old_data.pop("start")
+                    if "end" in old_data:
+                        old_data["date_of_death"] = old_data["end"]
+                        old_data.pop("end")
 
                     p, _ = Person.objects.get_or_create(**old_data)
 
