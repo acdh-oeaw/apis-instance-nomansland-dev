@@ -42,7 +42,7 @@ def incomplete_date_to_interval(date_str) -> Tuple[datetime, datetime, datetime]
     """
 
     dates = DateTuple()
-    BAD_STRINGS = [" ِ"]
+    BAD_STRINGS = [" ِ", " ِِ"]
     for bad_str in BAD_STRINGS:
         date_str = date_str.replace(bad_str, "").strip()
 
@@ -118,6 +118,7 @@ def nomansland_dateparser(
     """
     # https://nomansland.acdh-dev.oeaw.ac.at/apis/entities/entity/manuscript/21153/detail
     # 	- before 496/1102-3v
+    original_date_string = date_string
     date_string = date_string.lower().replace(".", "")
     date_string = re.sub(r"<.*?>", "", date_string).strip()
 
@@ -166,7 +167,12 @@ def nomansland_dateparser(
                 )
 
     except Exception as e:
-        logger.debug("Could not parse date: '%s' due to error: %s", date_string, e)
+        logger.error(
+            "Could not parse date: '%s (%s)' due to error: %s",
+            original_date_string,
+            date_string,
+            e,
+        )
 
     if not dates.sort_date:
         dates.sort_date = dates.from_date or dates.to_date
