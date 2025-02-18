@@ -42,21 +42,36 @@ def incomplete_date_to_interval(date_str) -> Tuple[datetime, datetime, datetime]
     """
 
     dates = DateTuple()
-    date_str = date_str.replace("fl.", "").replace("flourish", "").strip()
+    BAD_STRINGS = [" ِ", " ِِ"]
+    for bad_str in BAD_STRINGS:
+        date_str = date_str.replace(bad_str, "").strip()
+
+    DROP_PREFIXES = ["flourish", "fl", "c."]
     # TODO: Should we make an assumption of date of birth or death
     # when a flourish date is provided?
+
+    for prefix in DROP_PREFIXES:
+        if date_str.startswith(prefix):
+            date_str = date_str[len(prefix) :].strip()
+
     if date_str.endswith("ah") or date_str.endswith("bh"):
         return incomplete_hijridate_to_interval(date_str)
 
+    if date_str.endswith("ce"):
+        date_str = date_str[:-2].strip()
+
+    if date_str.endswith("ad"):
+        date_str = date_str[:-2].strip()
+
     bce = date_str.endswith("bc")
     if bce:
-        date_str = date_str.replace("bc", "")
+        date_str = date_str[:-2].strip()
         # TODO: Figure out how to handle BC dates
         return None, None, None
 
     date_str = date_str.strip()
     if date_str.endswith("c"):
-        century = int(date_str[:-1]) - 1
+        century = int(date_str[:-1].strip()) - 1
         from_date = datetime(century * 100, 1, 1)
         to_date = datetime(century * 100 + 99, 12, 31)
         dates.set_range(from_date, to_date)
@@ -103,7 +118,10 @@ def nomansland_dateparser(
     """
     # https://nomansland.acdh-dev.oeaw.ac.at/apis/entities/entity/manuscript/21153/detail
     # 	- before 496/1102-3v
-    date_string = date_string.strip().lower()
+    original_date_string = date_string
+    date_string = date_string.lower().replace(".", "")
+    date_string = re.sub(r"<.*?>", "", date_string).strip()
+
     dates = DateTuple()
     try:
         if " - " in date_string:
@@ -149,7 +167,12 @@ def nomansland_dateparser(
                 )
 
     except Exception as e:
-        logger.debug("Could not parse date: '%s' due to error: %s", date_string, e)
+        logger.error(
+            "Could not parse date: '%s (%s)' due to error: %s",
+            original_date_string,
+            date_string,
+            e,
+        )
 
     if not dates.sort_date:
         dates.sort_date = dates.from_date or dates.to_date

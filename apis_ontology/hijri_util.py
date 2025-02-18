@@ -26,19 +26,18 @@ def incomplete_hijridate_to_interval(
     hijri_date = hijri_date.strip()
     before_hijri = hijri_date.endswith("bh")
     hijri_date = hijri_date.replace("ah", "").replace("bh", "").strip()
-
     dates = DateTuple()
     hijri_month = None
     hijri_day = None
 
     if hijri_date.endswith("c"):
-        century = int(hijri_date[:-1]) - 1
+        century = int(hijri_date[:-1].strip()) - 1
         from_date = hijri_to_gregorian(century * 100, 1, 1)
         to_date = hijri_to_gregorian(
             century * 100 + 99, 12, last_day_of_hijri_year(century * 100 + 99)
         )
     else:
-        date_parts = hijri_date.split("-")
+        date_parts = [p.strip() for p in hijri_date.split("-")]
         hijri_year = int(date_parts[0]) if not before_hijri else -int(date_parts[0])
         if len(date_parts) > 1:
             hijri_month = int(date_parts[1])
