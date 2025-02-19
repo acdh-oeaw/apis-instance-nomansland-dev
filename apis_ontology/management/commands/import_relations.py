@@ -141,10 +141,10 @@ class Command(BaseCommand):
             for i, row in tqdm(relation_rows.iterrows(), total=relation_rows.shape[0]):
                 RelModel = apps.get_model(get_rel_class(row.fields["relation_type"]))
                 rel_data = {"pk_old": row.pk, **row.fields}
-                subj_key = None
-                obj_key = None
+                subj_key = ""
+                obj_key = ""
                 for subj_model in RelModel.subj_model:
-                    subj_model = subj_model.removeprefix("apis_ontology.")
+                    subj_model = subj_model.__name__.lower()
                     if f"related_{subj_model}A" in rel_data.keys():
                         subj_key = f"related_{subj_model}A"
                         obj_key = f"related_{subj_model}B"
@@ -153,9 +153,9 @@ class Command(BaseCommand):
                         subj_key = f"related_{subj_model}"
                         try:
                             obj_key = [
-                                f"related_{obj_model.removeprefix('apis_ontology.')}"
+                                f"related_{obj_model.__name__.lower()}"
                                 for obj_model in RelModel.obj_model
-                                if f"related_{obj_model.removeprefix('apis_ontology.')}"
+                                if f"related_{obj_model.__name__.lower()}"
                                 in rel_data.keys()
                             ][0]
                             break
@@ -188,7 +188,7 @@ class Command(BaseCommand):
                     }
                     rel, _ = RelModel.objects.get_or_create(**data)
                 except Exception as e:
-                    print(e)
+                    print(repr(e))
                     break
 
         ### handle command

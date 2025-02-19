@@ -384,8 +384,8 @@ class NomanslandRelationMixin(
 
 class ACopyOf(Relation, NomanslandRelationMixin, NomanslandDateMixin, VersionMixin):
     relation_type_old = [15]  # pk of Property in apis_relations
-    subj_model = Expression
-    obj_model = Work
+    subj_model = [Expression]
+    obj_model = [Work]
 
     @classmethod
     def reverse_name(cls) -> str:
@@ -1280,8 +1280,8 @@ class TranslationOf(
 
 class UsedIn(Relation, NomanslandRelationMixin, NomanslandDateMixin, VersionMixin):
     relation_type_old = [142]  # pk of Property in apis_relations
-    subj_model = Place
-    obj_model = Place
+    subj_model = [Place]
+    obj_model = [Place]
 
     @classmethod
     def reverse_name(cls) -> str:
