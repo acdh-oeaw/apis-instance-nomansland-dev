@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
+{% block styles %}
+<link href="{% static 'styles/nomansland.css' %}" rel="stylesheet" />
+{{ block.super }}
+{% endblock styles %}
+
 {% block title %}
 {% if object %}
 {{ object }}
