@@ -25,6 +25,7 @@ INSTALLED_APPS.insert(0, "apis_ontology")
 INSTALLED_APPS = ["apis_core.relations"] + INSTALLED_APPS
 INSTALLED_APPS.append("apis_core.documentation")
 INSTALLED_APPS.append("apis_bibsonomy")
+INSTALLED_APPS.append("debug_toolbar")
 
 LOGGING = {
     "version": 1,
@@ -69,4 +70,8 @@ APIS_BIBSONOMY = [
         "API key": os.environ.get("APIS_BIBSONOMY_PASSWORD"),
         "group": "2801369",
     }
+]
+
+MIDDLEWARE += [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
