@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
+{% block styles %}
+<link href="{% static 'styles/nomansland.css' %}" rel="stylesheet" />
+{{ block.super }}
+{% endblock styles %}
+
 {% block title %}
 {% if object %}
 {{ object }}
@@ -9,7 +15,7 @@ Nomansland: Nomads' Manuscripts Landscape
 
 {% block main-menu %}
 <li class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
         aria-expanded="false">
         About <span class="caret" />
     </a>

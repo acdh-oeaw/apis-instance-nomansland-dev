@@ -12,20 +12,21 @@ CSRF_TRUSTED_ORIGINS = [
     "https://nomansland-dev-main.acdh-ch-dev.oeaw.ac.at",
 ]
 
-INSTALLED_APPS += [
+ADDITIONAL_APPS = [
     "apis_highlighter",
     "django.contrib.postgres",
     "apis_core.collections",
     "apis_core.history",
     "django_acdhch_functions",
     "django_interval",
+    "apis_core.documentation",
+    "apis_bibsonomy",
+    "debug_toolbar",
 ]
-INSTALLED_APPS.remove("apis_ontology")
-INSTALLED_APPS.insert(0, "apis_ontology")
-INSTALLED_APPS = ["apis_core.relations"] + INSTALLED_APPS
-INSTALLED_APPS.append("apis_core.documentation")
-INSTALLED_APPS.append("apis_bibsonomy")
-INSTALLED_APPS.append("debug_toolbar")
+
+for app in ADDITIONAL_APPS:
+    if app not in INSTALLED_APPS:
+        INSTALLED_APPS.append(app)
 
 LOGGING = {
     "version": 1,
