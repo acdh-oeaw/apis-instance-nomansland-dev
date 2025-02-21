@@ -21,7 +21,6 @@ ADDITIONAL_APPS = [
     "django_interval",
     "apis_core.documentation",
     "apis_bibsonomy",
-    "debug_toolbar",
 ]
 
 for app in ADDITIONAL_APPS:
@@ -71,8 +70,4 @@ APIS_BIBSONOMY = [
         "API key": os.environ.get("APIS_BIBSONOMY_PASSWORD"),
         "group": "2801369",
     }
-]
-
-MIDDLEWARE += [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
