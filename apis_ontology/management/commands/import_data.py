@@ -201,7 +201,8 @@ class Command(BaseCommand):
                         old_data["date_of_death"] = old_data["end"]
                         old_data.pop("end")
 
-                    p, _ = Person.objects.get_or_create(**old_data)
+                    p, _ = Person.objects.get_or_create(pk_old=old_data["pk_old"])
+                    p.__dict__.update(**old_data)
 
                     if title_ids:
                         for title_id in title_ids:
@@ -243,7 +244,8 @@ class Command(BaseCommand):
                     place_type_pk = old_data.get("kind")
                     old_data.pop("kind")
 
-                p, _ = Place.objects.get_or_create(**old_data)
+                p, _ = Place.objects.get_or_create(pk_old=old_data["pk_old"])
+                p.__dict__.update(**old_data)
 
                 if place_type_pk:
                     place_type_data = get_base_vocab_data(place_type_pk)
@@ -270,8 +272,8 @@ class Command(BaseCommand):
                     old_data.pop("kind")
 
                 if old_data:
-                    p, _ = Institution.objects.get_or_create(**old_data)
-
+                    p, _ = Institution.objects.get_or_create(pk_old=old_data["pk_old"])
+                    p.__dict__.update(**old_data)
                     if i_type_pk:
                         i_type_data = get_base_vocab_data(i_type_pk)
                         i_type, _ = InstitutionType.objects.get_or_create(**i_type_data)
@@ -297,7 +299,8 @@ class Command(BaseCommand):
                     old_data.pop("kind")
 
                 if old_data:
-                    p, _ = Event.objects.get_or_create(**old_data)
+                    p, _ = Event.objects.get_or_create(pk_old=old_data["pk_old"])
+                    p.__dict__.update(**old_data)
 
                     if type_pk:
                         type_data = get_base_vocab_data(type_pk)
@@ -328,7 +331,8 @@ class Command(BaseCommand):
                     old_data.pop("subject_headings")
 
                 if old_data:
-                    p, _ = Work.objects.get_or_create(**old_data)
+                    p, _ = Work.objects.get_or_create(pk_old=old_data["pk_old"])
+                    p.__dict__.update(**old_data)
 
                     if type_pk:
                         type_data = get_base_vocab_data(type_pk)
@@ -370,7 +374,10 @@ class Command(BaseCommand):
                         old_data.pop("language")
 
                     if old_data:
-                        p, _ = Expression.objects.get_or_create(**old_data)
+                        p, _ = Expression.objects.get_or_create(
+                            pk_old=old_data["pk_old"]
+                        )
+                        p.__dict__.update(**old_data)
 
                         if language_ids:
                             for l_id in language_ids:
@@ -415,7 +422,8 @@ class Command(BaseCommand):
                         condition_pks = old_data.get("manuscript_conditions")
                         old_data.pop("manuscript_conditions")
 
-                    p, _ = Manuscript.objects.get_or_create(**old_data)
+                    p, _ = Manuscript.objects.get_or_create(pk_old=old_data["pk_old"])
+                    p.__dict__.update(**old_data)
 
                     if condition_pks:
                         for pk in condition_pks:
@@ -447,8 +455,10 @@ class Command(BaseCommand):
                         mpart_type_pk = old_data.get("type")
                         old_data.pop("type")
 
-                    p, _ = ManuscriptPart.objects.get_or_create(**old_data)
-
+                    p, _ = ManuscriptPart.objects.get_or_create(
+                        pk_old=old_data["pk_old"]
+                    )
+                    p.__dict__.update(**old_data)
                     if mpart_type_pk:
                         mpart_type_data = get_base_vocab_data(mpart_type_pk)
                         mpart_type, _ = ManuscriptPartType.objects.get_or_create(
