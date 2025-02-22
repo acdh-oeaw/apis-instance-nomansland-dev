@@ -392,7 +392,9 @@ class ACopyOf(Relation, NomanslandRelationMixin, NomanslandDateMixin, VersionMix
         return "original work of"
 
 
-class AncestralCountryOf(Relation, NomanslandRelationMixin, VersionMixin):
+class AncestralCountryOf(
+    Relation, NomanslandRelationMixin, NomanslandDateMixin, VersionMixin
+):
     relation_type_old = [98]  # pk of Property in apis_relations
     subj_model = [Person]
     obj_model = [Place]
