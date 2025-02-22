@@ -168,6 +168,14 @@ class Command(BaseCommand):
                     obj_model_name = f"apis_ontology.{obj_key.removeprefix('related_').removesuffix('B')}"
                     subj = apps.get_model(subj_model_name).objects.get(pk_old=subj_pk)
                     obj = apps.get_model(obj_model_name).objects.get(pk_old=obj_pk)
+                    temp_entity_match = (
+                        df[
+                            (df.pk == row.pk)
+                            & (df.model == "apis_metainfo.tempentityclass")
+                        ]
+                        .iloc[0]
+                        .fields
+                    )
                     data = {
                         "subj_object_id": subj.pk,
                         "obj_object_id": obj.pk,
@@ -185,6 +193,8 @@ class Command(BaseCommand):
                             app_label="apis_ontology",
                             model=obj_model_name.split(".")[-1],
                         ),
+                        "start": temp_entity_match.get("start_date_written"),
+                        "end": temp_entity_match.get("end_date_written"),
                     }
                     rel, _ = RelModel.objects.get_or_create(**data)
                 except Exception as e:
