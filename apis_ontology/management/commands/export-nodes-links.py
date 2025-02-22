@@ -25,7 +25,7 @@ class Command(BaseCommand):
 
         nodes = []
         links = []
-        for rel in tqdm(Relation.objects.all()):
+        for rel in tqdm(Relation.objects.select_subclasses().all()):
             nodes.append(
                 {
                     "id": rel.subj.pk,
