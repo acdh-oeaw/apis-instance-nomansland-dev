@@ -1,7 +1,15 @@
 from apis_core.apis_entities.tables import AbstractEntityTable
 from django_tables2.tables import Column
 
-from apis_ontology.models import Event, Expression, Manuscript, ManuscriptPart, Person
+from apis_ontology.models import (
+    Event,
+    Expression,
+    Institution,
+    Manuscript,
+    ManuscriptPart,
+    Person,
+    Place,
+)
 
 
 class NomanslandMixinTable(AbstractEntityTable):
@@ -50,7 +58,7 @@ class EventTable(NomanslandMixinTable):
 
 class InstitutionTable(NomanslandMixinTable):
     class Meta(NomanslandMixinTable.Meta):
-        model = Event
+        model = Institution
         fields = ["name"]
 
     name = Column(
@@ -121,3 +129,17 @@ class PersonTable(NomanslandMixinTable):
             ("-" if is_descending else "") + "date_of_death_date_sort"
         )
         return queryset, True
+
+
+class PlaceTable(NomanslandMixinTable):
+    class Meta(NomanslandMixinTable.Meta):
+        model = Place
+        fields = ["label", "latitude", "longitude"]
+
+    label = Column(
+        linkify=lambda record: record.get_absolute_url(),
+        empty_values=[],
+    )
+
+    def value_place(self, record):
+        return getattr(record, "place", "")
