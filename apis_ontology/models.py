@@ -272,6 +272,29 @@ class ScriptType(GenericModel, models.Model):
         verbose_name_plural = _("Script type")
 
 
+class ExpressionQuerySet(models.QuerySet):
+    def with_manuscript(self):
+        return self.annotate(
+            # Subquery to get the manuscript related to the Work through Contains
+            manuscript_id=models.Subquery(
+                Contains.objects.filter(obj_object_id=models.OuterRef("id")).values(
+                    "subj_object_id"
+                )[:1]
+            ),
+            # Subquery to get the manuscript name based on the manuscript_id from above
+            manuscript_name=models.Subquery(
+                Manuscript.objects.filter(id=models.OuterRef("manuscript_id")).values(
+                    "name"
+                )[:1]
+            ),
+        )
+
+
+class ExpressionManager(models.Manager):
+    def get_queryset(self):
+        return ExpressionQuerySet(self.model, using=self._db).with_manuscript()
+
+
 class Expression(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity):
     title = models.CharField(max_length=255, blank=True, null=True)
     locus = models.CharField(max_length=255, blank=True, null=True)
@@ -298,6 +321,8 @@ class Expression(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEnt
     class Meta:
         verbose_name = _("expression")
         verbose_name_plural = _("expressions")
+
+    objects = ExpressionManager()
 
 
 class ManuscriptCondition(GenericModel, models.Model):
