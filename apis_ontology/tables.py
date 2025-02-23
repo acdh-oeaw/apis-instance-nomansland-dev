@@ -1,7 +1,7 @@
 from apis_core.apis_entities.tables import AbstractEntityTable
 from django_tables2.tables import Column
 
-from apis_ontology.models import Expression
+from apis_ontology.models import Expression, Manuscript
 
 
 class NomanslandMixinTable(AbstractEntityTable):
@@ -47,4 +47,20 @@ class ExpressionTable(NomanslandMixinTable):
     )
 
     def value_title(self, record):
-        return getattr(record, "title", getattr(record, "title", ""))
+        return getattr(record, "title", "")
+
+
+class ManuscriptTable(NomanslandMixinTable):
+    class Meta(NomanslandMixinTable.Meta):
+        model = Manuscript
+        exclude = NomanslandMixinTable.Meta.exclude + ["desc"]
+        fields = ["identifier", "name", "start", "extent"]
+        sequence = fields + ["..."]
+
+    identifier = Column(
+        linkify=lambda record: record.get_absolute_url(),
+        empty_values=[],
+    )
+
+    def value_identifier(self, record):
+        return getattr(record, "identifier", "")
