@@ -1,7 +1,7 @@
 from apis_core.apis_entities.tables import AbstractEntityTable
 from django_tables2.tables import Column
 
-from apis_ontology.models import Expression, Manuscript, ManuscriptPart, Person
+from apis_ontology.models import Event, Expression, Manuscript, ManuscriptPart, Person
 
 
 class NomanslandMixinTable(AbstractEntityTable):
@@ -10,11 +10,20 @@ class NomanslandMixinTable(AbstractEntityTable):
     class Meta(AbstractEntityTable.Meta):
         exclude = [
             "id",
+            "desc",
             "delete",
             "noduplicate",
         ]
-        fields = ["desc"]
+        fields = []
         sequence = fields + ["...", "view", "edit"]
+
+    id = Column(
+        linkify=lambda record: record.get_absolute_url(),
+        empty_values=[],
+    )
+
+    def value_id(self, record):
+        return getattr(record, "id", "")
 
     def order_start(self, queryset, is_descending):
         queryset = queryset.order_by(("-" if is_descending else "") + "start_date_sort")
@@ -25,9 +34,24 @@ class NomanslandMixinTable(AbstractEntityTable):
         return queryset, True
 
 
+class EventTable(NomanslandMixinTable):
+    class Meta(NomanslandMixinTable.Meta):
+        model = Event
+        fields = ["name"]
+
+    name = Column(
+        linkify=lambda record: record.get_absolute_url(),
+        empty_values=[],
+    )
+
+    def value_name(self, record):
+        return getattr(record, "name", "")
+
+
 class ExpressionTable(NomanslandMixinTable):
     class Meta(NomanslandMixinTable.Meta):
         model = Expression
+        exclude = ["desc"]
         fields = ["title", "locus", "language"]
 
     title = Column(
