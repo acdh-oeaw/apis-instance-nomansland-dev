@@ -1,7 +1,7 @@
 from apis_core.apis_entities.tables import AbstractEntityTable
 from django_tables2.tables import Column
 
-from apis_ontology.models import Expression, Manuscript
+from apis_ontology.models import Expression, Manuscript, ManuscriptPart, Person
 
 
 class NomanslandMixinTable(AbstractEntityTable):
@@ -10,15 +10,11 @@ class NomanslandMixinTable(AbstractEntityTable):
     class Meta(AbstractEntityTable.Meta):
         exclude = [
             "id",
-            "view",
-            "edit",
             "delete",
             "noduplicate",
         ]
-        sequence = [
-            "desc",
-            "...",
-        ]
+        fields = ["desc"]
+        sequence = fields + ["...", "view", "edit"]
 
     def order_start(self, queryset, is_descending):
         queryset = queryset.order_by(("-" if is_descending else "") + "start_date_sort")
@@ -32,14 +28,7 @@ class NomanslandMixinTable(AbstractEntityTable):
 class ExpressionTable(NomanslandMixinTable):
     class Meta(NomanslandMixinTable.Meta):
         model = Expression
-        exclude = NomanslandMixinTable.Meta.exclude + ["desc"]
         fields = ["title", "locus", "language"]
-        sequence = [
-            "title",
-            "locus",
-            "language",
-            "...",
-        ]
 
     title = Column(
         linkify=lambda record: record.get_absolute_url(),
@@ -53,9 +42,7 @@ class ExpressionTable(NomanslandMixinTable):
 class ManuscriptTable(NomanslandMixinTable):
     class Meta(NomanslandMixinTable.Meta):
         model = Manuscript
-        exclude = NomanslandMixinTable.Meta.exclude + ["desc"]
         fields = ["identifier", "name", "start", "extent"]
-        sequence = fields + ["..."]
 
     identifier = Column(
         linkify=lambda record: record.get_absolute_url(),
@@ -68,10 +55,31 @@ class ManuscriptTable(NomanslandMixinTable):
 
 class ManuscriptPartTable(NomanslandMixinTable):
     class Meta(NomanslandMixinTable.Meta):
-        model = Manuscript
-        exclude = NomanslandMixinTable.Meta.exclude
-        fields = ["desc", "identifier", "name", "locus", "kind"]
-        sequence = fields + ["..."]
+        model = ManuscriptPart
+        fields = ["identifier", "name", "locus", "kind"]
 
-    def value_desc(self, record):
-        return getattr(record, "id", "")
+
+class PersonTable(NomanslandMixinTable):
+    class Meta(NomanslandMixinTable.Meta):
+        model = Person
+        fields = ["surname", "forename", "date_of_birth", "date_of_death"]
+
+    surname = Column(
+        linkify=lambda record: record.get_absolute_url(),
+        empty_values=[],
+    )
+
+    def value_surname(self, record):
+        return getattr(record, "surname", "")
+
+    def order_date_of_birth(self, queryset, is_descending):
+        queryset = queryset.order_by(
+            ("-" if is_descending else "") + "date_of_birth_date_sort"
+        )
+        return queryset, True
+
+    def order_date_of_death(self, queryset, is_descending):
+        queryset = queryset.order_by(
+            ("-" if is_descending else "") + "date_of_death_date_sort"
+        )
+        return queryset, True
