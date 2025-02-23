@@ -382,7 +382,7 @@ class Command(BaseCommand):
                         if language_ids:
                             for l_id in language_ids:
                                 l, _ = Language.objects.get_or_create(
-                                    get_base_vocab_data(l_id)
+                                    **get_base_vocab_data(l_id)
                                 )
                                 p.language.add(l)
 
@@ -396,7 +396,7 @@ class Command(BaseCommand):
                             script_type_body, _ = ScriptType.objects.get_or_create(
                                 **VOCAB_FIELDS["script_body"]
                             )
-                            p.scrip_type_body = script_type_body
+                            p.script_type_body = script_type_body
 
                         p.save()
 
