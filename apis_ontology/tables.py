@@ -48,6 +48,20 @@ class EventTable(NomanslandMixinTable):
         return getattr(record, "name", "")
 
 
+class InstitutionTable(NomanslandMixinTable):
+    class Meta(NomanslandMixinTable.Meta):
+        model = Event
+        fields = ["name"]
+
+    name = Column(
+        linkify=lambda record: record.get_absolute_url(),
+        empty_values=[],
+    )
+
+    def value_name(self, record):
+        return getattr(record, "name", "")
+
+
 class ExpressionTable(NomanslandMixinTable):
     class Meta(NomanslandMixinTable.Meta):
         model = Expression
