@@ -64,3 +64,14 @@ class ManuscriptTable(NomanslandMixinTable):
 
     def value_identifier(self, record):
         return getattr(record, "identifier", "")
+
+
+class ManuscriptPartTable(NomanslandMixinTable):
+    class Meta(NomanslandMixinTable.Meta):
+        model = Manuscript
+        exclude = NomanslandMixinTable.Meta.exclude
+        fields = ["desc", "identifier", "name", "locus", "kind"]
+        sequence = fields + ["..."]
+
+    def value_desc(self, record):
+        return getattr(record, "id", "")
