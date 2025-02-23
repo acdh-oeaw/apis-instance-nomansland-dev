@@ -9,6 +9,7 @@ from apis_ontology.models import (
     ManuscriptPart,
     Person,
     Place,
+    Work,
 )
 
 
@@ -141,5 +142,19 @@ class PlaceTable(NomanslandMixinTable):
         empty_values=[],
     )
 
-    def value_place(self, record):
+    def value_label(self, record):
+        return getattr(record, "label", "")
+
+
+class WorkTable(NomanslandMixinTable):
+    class Meta(NomanslandMixinTable.Meta):
+        model = Work
+        fields = ["name"]
+
+    name = Column(
+        linkify=lambda record: record.get_absolute_url(),
+        empty_values=[],
+    )
+
+    def value_name(self, record):
         return getattr(record, "place", "")
