@@ -5,6 +5,8 @@ from apis_ontology.models import Expression
 
 
 class NomanslandMixinTable(AbstractEntityTable):
+    paginate_by = 100
+
     class Meta(AbstractEntityTable.Meta):
         exclude = [
             "id",
@@ -18,12 +20,19 @@ class NomanslandMixinTable(AbstractEntityTable):
             "...",
         ]
 
-    paginate_by = 100
+    def order_start(self, queryset, is_descending):
+        queryset = queryset.order_by(("-" if is_descending else "") + "start_date_sort")
+        return queryset, True
+
+    def order_end(self, queryset, is_descending):
+        queryset = queryset.order_by(("-" if is_descending else "") + "end_date_sort")
+        return queryset, True
 
 
 class ExpressionTable(NomanslandMixinTable):
     class Meta(NomanslandMixinTable.Meta):
         model = Expression
+        exclude = NomanslandMixinTable.Meta.exclude + ["desc"]
         fields = ["title", "locus", "language"]
         sequence = [
             "title",
