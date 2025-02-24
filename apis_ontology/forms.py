@@ -42,15 +42,17 @@ class ExpressionForm(NomanslandEntityMixinForm):
 
 
 class InstitutionForm(NomanslandEntityMixinForm):
-    field_order = ["name", "start", "end", "kind", "status"]
-
-    class Meta(NomanslandEntityMixinForm.Meta):
-        exclude = NomanslandEntityMixinForm.Meta.exclude + [
-            "alternative_names",
-            "name_in_arabic",
-            "notes",
-            "references",
-        ]
+    field_order = [
+        "name",
+        "name_in_arabic",
+        "alternative_names",
+        "start",
+        "end",
+        "kind",
+        "status",
+        "references",
+        "notes",
+    ]
 
 
 class ManuscriptPartForm(NomanslandEntityMixinForm):
