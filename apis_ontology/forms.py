@@ -55,6 +55,34 @@ class InstitutionForm(NomanslandEntityMixinForm):
     ]
 
 
+class ManuscriptForm(NomanslandEntityMixinForm):
+    field_order = [
+        "identifier",
+        "name",
+        "name_in_arabic",
+        "start",
+        "extent",
+        "leaf_dimension",
+        "written_dimension",
+        "foliation_type",
+        "foliation_note",
+        "condition",
+        "end",
+        "status",
+        "illustration_notes",
+        "diagrams",
+        "marginal_annotations",
+        "additions",
+        "seal_description",
+        "description",
+        "references",
+        "notes",
+    ]
+
+    class Meta(NomanslandEntityMixinForm.Meta):
+        exclude = NomanslandEntityMixinForm.Meta.exclude + ["alternative_names"]
+
+
 class ManuscriptPartForm(NomanslandEntityMixinForm):
     field_order = [
         "identifier",
