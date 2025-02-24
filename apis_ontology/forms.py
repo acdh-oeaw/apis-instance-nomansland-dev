@@ -87,21 +87,17 @@ class ManuscriptPartForm(NomanslandEntityMixinForm):
     field_order = [
         "identifier",
         "name",
+        "name_in_arabic",
+        "alternative_names",
         "locus",
         "kind",
         "start",
         "end",
         "status",
         "description",
+        "references",
+        "notes",
     ]
-
-    class Meta(NomanslandEntityMixinForm.Meta):
-        exclude = NomanslandEntityMixinForm.Meta.exclude + [
-            "alternative_names",
-            "name_in_arabic",
-            "notes",
-            "references",
-        ]
 
 
 class PersonForm(NomanslandEntityMixinForm):
