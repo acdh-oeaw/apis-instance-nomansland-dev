@@ -53,24 +53,15 @@ class InstitutionForm(NomanslandEntityMixinForm):
         ]
 
 
-class ManuscriptForm(NomanslandEntityMixinForm):
+class ManuscriptPartForm(NomanslandEntityMixinForm):
     field_order = [
         "identifier",
         "name",
+        "locus",
+        "kind",
         "start",
-        "extent",
-        "leaf_dimension",
-        "written_dimension",
-        "foliation_type",
-        "foliation_note",
-        "condition",
         "end",
         "status",
-        "illustration_notes",
-        "diagrams",
-        "marginal_annotations",
-        "additions",
-        "seal_description",
         "description",
     ]
 
