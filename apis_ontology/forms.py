@@ -1,4 +1,4 @@
-from apis_core.generic.forms import GenericModelForm
+from apis_core.generic.forms import GenericFilterSetForm, GenericModelForm
 from django import forms
 
 
@@ -160,3 +160,21 @@ class WorkForm(NomanslandEntityMixinForm):
         exclude = NomanslandEntityMixinForm.Meta.exclude + [
             "notes",
         ]
+
+
+class RelationFilterSetForm(GenericFilterSetForm):
+    columns_exclude = [
+        "subj_object_id",
+        "obj_object_id",
+        "subj_content_type",
+        "obj_content_type",
+        "start_date_sort",
+        "end_date_sort",
+        # useful to see interval date fields until they are corrected
+        # "start_date_from",
+        # "start_date_to",
+        # "end_date_from",
+        # "end_date_to",
+        "relation_ptr",
+        "pk_old",
+    ]
