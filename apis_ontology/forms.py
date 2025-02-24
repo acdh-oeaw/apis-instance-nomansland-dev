@@ -79,8 +79,8 @@ class PersonForm(NomanslandEntityMixinForm):
         "title",
         "forename",
         "surname",
-        "alternative_names",
         "name_in_arabic",
+        "alternative_names",
         "gender",
         "date_of_birth",
         "date_of_death",
@@ -99,14 +99,34 @@ class PersonForm(NomanslandEntityMixinForm):
 class PlaceForm(NomanslandEntityMixinForm):
     field_order = [
         "label",
-        "alternative_names",
         "name_in_arabic",
+        "alternative_names",
         "latitude",
         "longitude",
         "status",
         "kind",
         "start",
         "end",
+        "references",
+    ]
+
+    class Meta(NomanslandEntityMixinForm.Meta):
+        exclude = NomanslandEntityMixinForm.Meta.exclude + [
+            "notes",
+        ]
+
+
+class WorkForm(NomanslandEntityMixinForm):
+    field_order = [
+        "name",
+        "name_in_arabic",
+        "alternative_names",
+        "start",
+        "end",
+        "status",
+        "kind",
+        "subject_heading",
+        "description",
         "references",
     ]
 
