@@ -1,3 +1,4 @@
+from apis_core.apis_entities.filtersets import AbstractEntityFilterSetForm
 from apis_core.generic.forms import GenericFilterSetForm, GenericModelForm
 from django import forms
 
@@ -176,5 +177,20 @@ class RelationFilterSetForm(GenericFilterSetForm):
         # "end_date_from",
         # "end_date_to",
         "relation_ptr",
+        "pk_old",
+    ]
+
+
+class EntityFilterSetForm(AbstractEntityFilterSetForm):
+    columns_exclude = AbstractEntityFilterSetForm.columns_exclude + [
+        "start_date_sort",
+        "end_date_sort",
+        "date_of_birth_date_sort",
+        "date_of_death_date_sort",
+        # useful to see interval date fields until they are corrected
+        # "start_date_from",
+        # "start_date_to",
+        # "end_date_from",
+        # "end_date_to",
         "pk_old",
     ]
