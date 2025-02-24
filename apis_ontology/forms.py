@@ -8,13 +8,7 @@ class NomanslandEntityMixinForm(GenericModelForm):
 
 
 class EventForm(NomanslandEntityMixinForm):
-    field_order = [
-        "name",
-        "start",
-        "end",
-        "status",
-        "kind",
-    ]
+    field_order = ["name", "start", "end", "kind", "status"]
 
     class Meta(NomanslandEntityMixinForm.Meta):
         exclude = NomanslandEntityMixinForm.Meta.exclude + [
@@ -44,4 +38,16 @@ class ExpressionForm(NomanslandEntityMixinForm):
             "references",
             "start",
             "status",
+        ]
+
+
+class InstitutionForm(NomanslandEntityMixinForm):
+    field_order = ["name", "start", "end", "kind", "status"]
+
+    class Meta(NomanslandEntityMixinForm.Meta):
+        exclude = NomanslandEntityMixinForm.Meta.exclude + [
+            "alternative_names",
+            "name_in_arabic",
+            "notes",
+            "references",
         ]
