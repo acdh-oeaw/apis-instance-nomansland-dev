@@ -190,3 +190,11 @@ class NomanslandRelationMixinTable(GenericTable):
 
     def value_obj(self, value):
         return str(value)
+
+    def order_start(self, queryset, is_descending):
+        queryset = queryset.order_by(("-" if is_descending else "") + "start_date_sort")
+        return queryset, True
+
+    def order_end(self, queryset, is_descending):
+        queryset = queryset.order_by(("-" if is_descending else "") + "end_date_sort")
+        return queryset, True
