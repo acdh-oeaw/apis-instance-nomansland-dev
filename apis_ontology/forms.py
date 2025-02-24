@@ -94,3 +94,23 @@ class PersonForm(NomanslandEntityMixinForm):
         "notes",
         "references",
     ]
+
+
+class PlaceForm(NomanslandEntityMixinForm):
+    field_order = [
+        "label",
+        "alternative_names",
+        "name_in_arabic",
+        "latitude",
+        "longitude",
+        "status",
+        "kind",
+        "start",
+        "end",
+        "references",
+    ]
+
+    class Meta(NomanslandEntityMixinForm.Meta):
+        exclude = NomanslandEntityMixinForm.Meta.exclude + [
+            "notes",
+        ]
