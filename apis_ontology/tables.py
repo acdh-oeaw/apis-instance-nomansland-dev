@@ -1,4 +1,7 @@
+from datetime import datetime
 from apis_core.apis_entities.tables import AbstractEntityTable
+from apis_core.generic.tables import GenericTable
+from django.utils.html import format_html
 from django_tables2.tables import Column
 
 from apis_ontology.models import (
@@ -158,3 +161,40 @@ class WorkTable(NomanslandMixinTable):
 
     def value_name(self, record):
         return getattr(record, "place", "")
+
+
+class NomanslandRelationMixinTable(GenericTable):
+    paginate_by = 100
+    export_filename = (
+        f"nomansland_relations_export_{datetime.now().strftime('%Y%m%d_%H%M')}"
+    )
+
+    class Meta(GenericTable.Meta):
+        fields = ["subj", "obj"]
+        exclude = ["desc", "delete"]
+        sequence = ("subj", "obj", "...", "view", "edit")
+
+    subj = Column(verbose_name="Subject", orderable=False)
+    obj = Column(verbose_name="Object", orderable=False)
+
+    def render_subj(self, value):
+        url = value.get_absolute_url()
+        return format_html('<a href="{}" target="_blank">{}</a>', url, value)
+
+    def value_subj(self, value):
+        return str(value)
+
+    def render_obj(self, value):
+        url = value.get_absolute_url()
+        return format_html('<a href="{}" target="_blank">{}</a>', url, value)
+
+    def value_obj(self, value):
+        return str(value)
+
+    def order_start(self, queryset, is_descending):
+        queryset = queryset.order_by(("-" if is_descending else "") + "start_date_sort")
+        return queryset, True
+
+    def order_end(self, queryset, is_descending):
+        queryset = queryset.order_by(("-" if is_descending else "") + "end_date_sort")
+        return queryset, True
