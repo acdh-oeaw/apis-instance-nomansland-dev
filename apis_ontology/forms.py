@@ -72,3 +72,25 @@ class ManuscriptPartForm(NomanslandEntityMixinForm):
             "notes",
             "references",
         ]
+
+
+class PersonForm(NomanslandEntityMixinForm):
+    field_order = [
+        "title",
+        "forename",
+        "surname",
+        "alternative_names",
+        "name_in_arabic",
+        "gender",
+        "date_of_birth",
+        "date_of_death",
+        "profession",
+        "principal_role",
+        "laqab_kunya",
+        "fathers_name",
+        "grandfathers_name",
+        "status",
+        "bio",
+        "notes",
+        "references",
+    ]
