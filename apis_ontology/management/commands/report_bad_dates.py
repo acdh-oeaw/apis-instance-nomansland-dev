@@ -29,7 +29,7 @@ class Command(BaseCommand):
                         ):
                             bad_dates.append(
                                 {
-                                    "object": f"[{str(obj)}]({BASE_URL + obj.get_absolute_url()})",
+                                    "object": f"[{str(obj)}]({BASE_URL + obj.get_edit_url()})",
                                     "field": f.name,
                                     "value": getattr(obj, f.name),
                                 }
@@ -38,7 +38,7 @@ class Command(BaseCommand):
         if bad_dates:
             import pandas as pd
 
-            pd.DataFrame(bad_dates).to_markdown("bad_dates.md")
+            pd.DataFrame(bad_dates).to_markdown("bad_dates.md", index=False)
             print(f"{len(bad_dates)} bad dates found. See bad_dates.md for details.")
 
         else:
