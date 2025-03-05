@@ -98,6 +98,7 @@ class Title(GenericModel, models.Model):
 
 
 class Person(E21_Person, VersionMixin, NomanslandMixin, AbstractEntity):
+    _default_search_fields = ["forename", "surname"]
     GENDERS = [
         ("male", "Male"),
         ("female", "Female"),
@@ -145,6 +146,7 @@ class PlaceType(GenericModel, models.Model):
 class Place(
     E53_Place, VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity
 ):
+    _default_search_fields = ["label"]
     class_uri = "http://id.loc.gov/ontologies/bibframe/Place"
     kind = models.ForeignKey(
         PlaceType, blank=True, null=True, on_delete=models.SET_NULL
@@ -176,6 +178,7 @@ class InstitutionType(GenericModel, models.Model):
 
 
 class Institution(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity):
+    _default_search_fields = ["name"]
     name = models.CharField(max_length=255)
     kind = models.ForeignKey(
         InstitutionType, blank=True, null=True, on_delete=models.SET_NULL
@@ -201,6 +204,7 @@ class EventType(GenericModel, models.Model):
 
 
 class Event(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity):
+    _default_search_fields = ["name"]
     name = models.CharField(max_length=255)
     kind = models.ForeignKey(
         EventType, blank=True, null=True, on_delete=models.SET_NULL
@@ -237,6 +241,7 @@ class SubjectHeading(GenericModel, models.Model):
 
 
 class Work(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity):
+    _default_search_fields = ["name"]
     name = models.CharField(max_length=255)
     kind = models.ForeignKey(WorkType, blank=True, null=True, on_delete=models.SET_NULL)
     subject_heading = models.ManyToManyField(SubjectHeading, blank=True)
@@ -296,6 +301,7 @@ class ExpressionManager(models.Manager):
 
 
 class Expression(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity):
+    _default_search_fields = ["title"]
     title = models.CharField(max_length=255, blank=True, null=True)
     locus = models.CharField(max_length=255, blank=True, null=True)
     script_type_title = models.ForeignKey(
@@ -337,6 +343,7 @@ class ManuscriptCondition(GenericModel, models.Model):
 
 
 class Manuscript(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity):
+    _default_search_fields = ["name", "identifier", "description", "notes", "additions"]
     name = models.CharField(max_length=255, blank=True, null=True)
     identifier = models.CharField(max_length=255, blank=True, null=True)
     extent = models.CharField(max_length=255, blank=True, null=True)
