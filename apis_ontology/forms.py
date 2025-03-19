@@ -25,6 +25,7 @@ class ExpressionForm(NomanslandEntityMixinForm):
         "title",
         "locus",
         "language",
+        "start",
         "end",
         "script_type_title",
         "script_type_body",
@@ -37,7 +38,6 @@ class ExpressionForm(NomanslandEntityMixinForm):
             "name_in_arabic",
             "notes",
             "references",
-            "start",
             "status",
         ]
 
