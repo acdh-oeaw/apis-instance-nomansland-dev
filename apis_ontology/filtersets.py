@@ -5,6 +5,8 @@ from django.db import models
 from django.db.models import Q, CharField, TextField
 from apis_ontology.forms import RelationFilterSetForm, EntityFilterSetForm
 from django.contrib.postgres.search import SearchVector, SearchQuery
+from django_interval.fields import FuzzyDateParserField
+from django_interval.filters import YearIntervalRangeFilter
 
 
 def generic_search_filter(queryset, name, value, fields=None):
@@ -82,6 +84,7 @@ class NomanslandMixinFilterSet(AbstractEntityFilterSet):
                     "lookup_expr": "unaccent__icontains",
                 },
             },
+            FuzzyDateParserField: {"filter_class": YearIntervalRangeFilter},
         }
 
     def __init__(self, *args, **kwargs):
