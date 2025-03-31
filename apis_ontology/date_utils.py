@@ -173,6 +173,7 @@ def nomansland_dateparser(
             date_string,
             e,
         )
+        raise ValueError(f"Could not parse date: {original_date_string}")
 
     if not dates.sort_date:
         dates.sort_date = dates.from_date or dates.to_date

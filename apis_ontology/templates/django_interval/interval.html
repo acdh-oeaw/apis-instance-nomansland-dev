@@ -1,0 +1,10 @@
+{# This file overrides the default template from django_interval. #}
+{% if error %}
+  {{ error }}
+{% else %}
+  {% if to_date == from_date %}
+    {{ to_date|date|default:"" }}
+  {% else %}
+    {{ from_date|date|default:"unknown" }} - {{ to_date|date|default:"unknown"}}
+  {% endif %}
+{% endif %}
