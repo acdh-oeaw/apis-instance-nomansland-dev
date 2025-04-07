@@ -9,6 +9,8 @@ from typing import Tuple
 import calendar
 import logging
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
+
 from django_interval.utils import DateTuple
 import re
 
@@ -29,6 +31,25 @@ def last_day_of_month(year, month):
     return last_day
 
 
+FLOURISH = "fl"
+CIRCA = "c"
+
+
+def approximate_date(given_date, prefix):
+
+    if prefix == CIRCA:
+        # if the date is circa, we need to set the range of ± 10 years
+        from_date = given_date - relativedelta(years=10)
+        to_date = given_date + relativedelta(years=10)
+    elif prefix == FLOURISH:
+        # if the date is flourish, we need to set the range of ± 20 years
+        from_date = given_date - relativedelta(years=20)
+        to_date = given_date + relativedelta(years=20)
+    else:
+        raise ValueError("Unknown prefix", prefix)
+    return from_date, to_date
+
+
 def incomplete_date_to_interval(date_str) -> Tuple[datetime, datetime, datetime]:
     """
     returns start and end dates in ISO format
@@ -46,17 +67,21 @@ def incomplete_date_to_interval(date_str) -> Tuple[datetime, datetime, datetime]
     for bad_str in BAD_STRINGS:
         date_str = date_str.replace(bad_str, "").strip()
 
-    DROP_PREFIXES = ["flourish", "fl", "c."]
-    # TODO: Should we make an assumption of date of birth or death
-    # when a flourish date is provided?
-
+    DROP_PREFIXES = [FLOURISH, CIRCA]
+    date_prefix = ""
     for prefix in DROP_PREFIXES:
         if date_str.startswith(prefix):
             date_str = date_str[len(prefix) :].strip()
-
+            date_prefix = prefix
+            break
     if date_str.endswith("ah") or date_str.endswith("bh"):
-        return incomplete_hijridate_to_interval(date_str)
+        sort_date, from_date, to_date = incomplete_hijridate_to_interval(date_str)
 
+        if date_prefix:
+            from_date, to_date = approximate_date(from_date, date_prefix)
+
+        dates.set_range(from_date, to_date)
+        return dates.tuple()
     if date_str.endswith("ce"):
         date_str = date_str[:-2].strip()
 
@@ -96,6 +121,9 @@ def incomplete_date_to_interval(date_str) -> Tuple[datetime, datetime, datetime]
     else:
         from_date = datetime(year, month, day)
         to_date = from_date
+
+    if date_prefix:
+        from_date, to_date = approximate_date(from_date, date_prefix)
 
     dates.set_range(from_date, to_date)
     return dates.tuple()
