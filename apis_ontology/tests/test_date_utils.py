@@ -100,15 +100,17 @@ class ParseHDateTestCase(SimpleTestCase):
         self.assertIsNone(to_date)
 
     def test_flourish_date(self):
-        sort_date, from_date, to_date = nomansland_dateparser("fl. 7c")
-        self.assertEqual(from_date, dt.fromisoformat("0600-01-01"))
-        self.assertEqual(to_date, dt.fromisoformat("0699-12-31"))
-        self.assertEqual(sort_date, dt.fromisoformat("0649-12-31"))
+        sort_date, from_date, to_date = nomansland_dateparser("fl. 1780")
+        self.assertEqual(from_date, dt.fromisoformat("1760-01-01"))
+        self.assertEqual(to_date, dt.fromisoformat("1800-01-01"))
 
-        sort_date, from_date, to_date = nomansland_dateparser("flourish 7c ")
-        self.assertEqual(from_date, dt.fromisoformat("0600-01-01"))
-        self.assertEqual(to_date, dt.fromisoformat("0699-12-31"))
-        self.assertEqual(sort_date, dt.fromisoformat("0649-12-31"))
+        sort_date, from_date, to_date = nomansland_dateparser("fl. 1780-05")
+        self.assertEqual(from_date, dt.fromisoformat("1760-05-01"))
+        self.assertEqual(to_date, dt.fromisoformat("1800-05-01"))
+
+        sort_date, from_date, to_date = nomansland_dateparser("fl. 1780-05-11")
+        self.assertEqual(from_date, dt.fromisoformat("1760-05-11"))
+        self.assertEqual(to_date, dt.fromisoformat("1800-05-11"))
 
     def test_hijri_date(self):
         sort_date, from_date, to_date = nomansland_dateparser("700 AH")
@@ -128,3 +130,16 @@ class ParseHDateTestCase(SimpleTestCase):
         sort_date, from_date, to_date = nomansland_dateparser("After 700 ah")
         self.assertEqual(from_date, dt.fromisoformat("1301-09-05"))
         self.assertEqual(to_date, None)
+
+    def test_circa_dates(self):
+        sort_date, from_date, to_date = nomansland_dateparser("c. 1780")
+        self.assertEqual(from_date, dt.fromisoformat("1770-01-01"))
+        self.assertEqual(to_date, dt.fromisoformat("1790-01-01"))
+
+        sort_date, from_date, to_date = nomansland_dateparser("c. 1780-05")
+        self.assertEqual(from_date, dt.fromisoformat("1770-05-01"))
+        self.assertEqual(to_date, dt.fromisoformat("1790-05-01"))
+
+        sort_date, from_date, to_date = nomansland_dateparser("c. 1780-05-11")
+        self.assertEqual(from_date, dt.fromisoformat("1770-05-11"))
+        self.assertEqual(to_date, dt.fromisoformat("1790-05-11"))
