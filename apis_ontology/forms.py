@@ -1,6 +1,4 @@
-from apis_core.apis_entities.filtersets import AbstractEntityFilterSetForm
 from apis_core.generic.forms import GenericFilterSetForm, GenericModelForm
-from django import forms
 
 
 class NomanslandEntityMixinForm(GenericModelForm):
@@ -181,8 +179,8 @@ class RelationFilterSetForm(GenericFilterSetForm):
     ]
 
 
-class EntityFilterSetForm(AbstractEntityFilterSetForm):
-    columns_exclude = AbstractEntityFilterSetForm.columns_exclude + [
+class EntityFilterSetForm(GenericFilterSetForm):
+    columns_exclude = GenericFilterSetForm.columns_exclude + [
         "start_date_sort",
         "end_date_sort",
         "date_of_birth_date_sort",
