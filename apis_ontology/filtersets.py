@@ -1,10 +1,8 @@
-from apis_core.apis_entities.filtersets import AbstractEntityFilterSet
-from apis_core.generic.filtersets import django_filters
+from apis_core.generic.filtersets import GenericFilterSet, django_filters
 from apis_core.relations.filtersets import RelationFilterSet
 from django.db import models
 from django.db.models import Q, CharField, TextField
 from apis_ontology.forms import RelationFilterSetForm, EntityFilterSetForm
-from django.contrib.postgres.search import SearchVector, SearchQuery
 from django_interval.fields import FuzzyDateParserField
 from django_interval.filters import YearIntervalRangeFilter
 
@@ -52,10 +50,10 @@ def generic_search_filter(queryset, name, value, fields=None):
     return queryset.filter(q_objects)
 
 
-class NomanslandMixinFilterSet(AbstractEntityFilterSet):
-    class Meta(AbstractEntityFilterSet.Meta):
+class NomanslandMixinFilterSet(GenericFilterSet):
+    class Meta(GenericFilterSet.Meta):
         form = EntityFilterSetForm
-        exclude = AbstractEntityFilterSet.Meta.exclude + [
+        exclude = [
             "date_of_birth_date_sort",
             "date_of_birth_date_from",
             "date_of_birth_date_to",
