@@ -125,6 +125,7 @@ class NomanslandRelationMixinFilterSet(RelationFilterSet):
                     "lookup_expr": "icontains",
                 },
             },
+            FuzzyDateParserField: {"filter_class": YearIntervalRangeFilter},
         }
 
     def __init__(self, *args, **kwargs):
