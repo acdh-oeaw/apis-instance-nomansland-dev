@@ -128,8 +128,7 @@ class Person(E21_Person, VersionMixin, NomanslandMixin, AbstractEntity):
     class Meta:
         verbose_name = _("person")
         verbose_name_plural = _("Persons")
-
-    # TODO AH date filter
+        ordering = ["pk"]
 
 
 class PlaceType(GenericModel, models.Model):
@@ -155,6 +154,7 @@ class Place(
     class Meta:
         verbose_name = _("place")
         verbose_name_plural = _("Places")
+        ordering = ["pk"]
 
     def save(self, *args, **kwargs):
         if isinstance(self.latitude, float) and isinstance(self.longitude, float):
@@ -187,6 +187,7 @@ class Institution(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEn
     class Meta:
         verbose_name = _("institution")
         verbose_name_plural = _("Institutions")
+        ordering = ["pk"]
 
     def __str__(self):
         return f"{self.name} ({self.pk})"
@@ -216,6 +217,7 @@ class Event(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity):
     class Meta:
         verbose_name = _("event")
         verbose_name_plural = _("Events")
+        ordering = ["pk"]
 
 
 class WorkType(GenericModel, models.Model):
@@ -253,6 +255,7 @@ class Work(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity):
     class Meta:
         verbose_name = _("work")
         verbose_name_plural = _("Works")
+        ordering = ["pk"]
 
 
 class Language(GenericModel, models.Model):
@@ -327,6 +330,7 @@ class Expression(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEnt
     class Meta:
         verbose_name = _("expression")
         verbose_name_plural = _("expressions")
+        ordering = ["pk"]
 
     objects = ExpressionManager()
 
@@ -365,6 +369,7 @@ class Manuscript(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEnt
     class Meta:
         verbose_name = _("manuscript")
         verbose_name_plural = _("Manuscripts")
+        ordering = ["pk"]
 
 
 class ManuscriptPartType(GenericModel, models.Model):
@@ -381,6 +386,8 @@ class ManuscriptPartType(GenericModel, models.Model):
 class ManuscriptPart(
     VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity
 ):
+    _default_search_fields = ["name", "identifier"]
+
     name = models.CharField(max_length=255, blank=True)
     identifier = models.CharField(max_length=255)
     locus = models.CharField(max_length=255, blank=True)
@@ -390,11 +397,12 @@ class ManuscriptPart(
     description = models.TextField(blank=True, null=True)  # ported from text
 
     def __str__(self):
-        return f"{self.name} ({self.pk})"
+        return f"{self.identifier} ({self.pk})"
 
     class Meta:
         verbose_name = _("manuscript part")
         verbose_name_plural = _("Manuscript parts")
+        ordering = ["pk"]
 
 
 class NomanslandRelationMixin(
@@ -417,6 +425,7 @@ class NomanslandRelationMixin(
 
     class Meta:
         abstract = True
+        ordering = ["pk"]
 
 
 class ACopyOf(NomanslandRelationMixin):
