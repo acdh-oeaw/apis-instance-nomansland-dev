@@ -16,7 +16,6 @@ ADDITIONAL_APPS = [
     "django.contrib.postgres",
     "apis_core.collections",
     "apis_core.history",
-    "django_acdhch_functions",
     "django_interval",
     "apis_core.documentation",
     "apis_bibsonomy",
