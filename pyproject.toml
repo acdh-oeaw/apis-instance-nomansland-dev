@@ -1,27 +1,33 @@
-[tool.poetry]
+[project]
 name = "nomansland-dev"
 version = "0.1.0"
-description = ""
-authors = ["Saranya Balasubramanian <saranya.balasubramanian@oeaw.ac.at>"]
+description = "APIS instance for the project Nomansland"
+authors = [
+    { name = "Saranya Balasubramanian", email = "saranya.balasubramanian@oeaw.ac.at" }
+]
 readme = "README.md"
-packages = [{include = "apis_ontology"}]
+requires-python = ">=3.11"
+dependencies = [
+    "apis-core-rdf==0.42.6",
+    "apis-acdhch-default-settings==2.4.0",
+    "psycopg2>=2.9.10,<3.0.0",
+    "django-reversion>=5.0.12,<6.0.0",
+    "django-extensions>=3.2.3,<4.0.0",
+    "pandas>=2.2.2,<3.0.0",
+    "tqdm>=4.67.1,<5.0.0",
+    "apis-bibsonomy>=0.13.1,<1.0.0",
+    "django-interval>=0.5.1,<1.0.0",
+    "tabulate>=0.9.0,<1.0.0"
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-apis-core-rdf = "0.42.6"
-apis-acdhch-default-settings = "2.4.0"
-psycopg2 = "^2.9.10"
-django-reversion = "^5.0.12"
-django-extensions = "^3.2.3"
-pandas = "^2.2.2"
-tqdm = "^4.67.1"
-apis-bibsonomy = "^0.13.1"
-django-interval = "^0.5.1"
-tabulate = "^0.9.0"
+[project.optional-dependencies]
+dev = [
+    "jupyterlab>=4.3.3,<5.0.0"
+]
 
-[tool.poetry.group.dev.dependencies]
-jupyterlab = "^4.3.3"
+[tool.hatch.build.targets.wheel]
+packages = ["apis_ontology"]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

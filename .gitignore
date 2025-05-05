@@ -5,3 +5,4 @@ tmp/
 *local*
 *__pycache__*
 pyrightconfig.json
+uv.lock
