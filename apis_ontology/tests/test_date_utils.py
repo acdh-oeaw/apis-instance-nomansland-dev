@@ -112,10 +112,36 @@ class ParseHDateTestCase(SimpleTestCase):
         self.assertEqual(from_date, dt.fromisoformat("1760-05-11"))
         self.assertEqual(to_date, dt.fromisoformat("1800-05-11"))
 
+        sort_date, from_date, to_date = nomansland_dateparser("fl. 700 ah")
+        self.assertEqual(from_date, dt.fromisoformat("1280-09-16"))
+        self.assertEqual(to_date, dt.fromisoformat("1320-09-16"))
+
     def test_hijri_date(self):
         sort_date, from_date, to_date = nomansland_dateparser("700 AH")
         self.assertEqual(from_date, dt.fromisoformat("1300-09-16"))
         self.assertEqual(to_date, dt.fromisoformat("1301-09-04"))
+        sort_date, from_date, to_date = nomansland_dateparser("56 AH")  # leap year
+        self.assertEqual(from_date, dt.fromisoformat("0675-11-25"))
+        self.assertEqual(to_date, dt.fromisoformat("0676-11-13"))
+        sort_date, from_date, to_date = nomansland_dateparser("9c AH")  # Hijri century
+        self.assertEqual(from_date, dt.fromisoformat("1397-09-24"))
+        self.assertEqual(to_date, dt.fromisoformat("1494-09-30"))
+        sort_date, from_date, to_date = nomansland_dateparser(
+            "900-4 AH"
+        )  # Hijri year-month
+        self.assertEqual(from_date, dt.fromisoformat("1494-12-30"))
+        self.assertEqual(to_date, dt.fromisoformat("1495-01-27"))
+        sort_date, from_date, to_date = nomansland_dateparser(
+            "900-4-5 AH"
+        )  # Hijri year-month
+        self.assertEqual(from_date, dt.fromisoformat("1495-01-03"))
+        self.assertEqual(to_date, dt.fromisoformat("1495-01-03"))
+        sort_date, from_date, to_date = nomansland_dateparser(
+            "1090-1-1 AH"
+        )  # Recent Hijri date
+        #
+        self.assertEqual(from_date, dt.fromisoformat("1679-02-12"))
+        self.assertEqual(to_date, dt.fromisoformat("1679-02-12"))
 
     def test_case_insensitive(self):
         sort_date, from_date, to_date = nomansland_dateparser("7C")
@@ -143,3 +169,19 @@ class ParseHDateTestCase(SimpleTestCase):
         sort_date, from_date, to_date = nomansland_dateparser("c. 1780-05-11")
         self.assertEqual(from_date, dt.fromisoformat("1770-05-11"))
         self.assertEqual(to_date, dt.fromisoformat("1790-05-11"))
+
+    def test_ce_dates(self):
+        sort_date, from_date, to_date = nomansland_dateparser("300 ce")
+        self.assertEqual(from_date, dt.fromisoformat("0300-01-01"))
+        self.assertEqual(to_date, dt.fromisoformat("0300-12-31"))
+        self.assertEqual(sort_date, dt.fromisoformat("0300-07-02"))
+
+    def test_ad_dates(self):
+        sort_date, from_date, to_date = nomansland_dateparser("300 ad")
+        self.assertEqual(from_date, dt.fromisoformat("0300-01-01"))
+        self.assertEqual(to_date, dt.fromisoformat("0300-12-31"))
+        self.assertEqual(sort_date, dt.fromisoformat("0300-07-02"))
+
+    def test_bad_input(self):
+        with self.assertRaises(ValueError):
+            nomansland_dateparser("not a date")

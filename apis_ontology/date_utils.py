@@ -25,7 +25,7 @@ class DateType(Enum):
     END_DATE = "end_date"
 
 
-def last_day_of_month(year, month):
+def _last_day_of_month(year, month):
     """Return the last day of the month for the given year and month."""
     _, last_day = calendar.monthrange(year, month)
     return last_day
@@ -35,18 +35,19 @@ FLOURISH = "fl"
 CIRCA = "c"
 
 
-def approximate_date(given_date, prefix):
+def _approximate_date(given_date, prefix):
 
+    years_delta = 0
     if prefix == CIRCA:
         # if the date is circa, we need to set the range of ± 10 years
-        from_date = given_date - relativedelta(years=10)
-        to_date = given_date + relativedelta(years=10)
+        years_delta = 10
     elif prefix == FLOURISH:
         # if the date is flourish, we need to set the range of ± 20 years
-        from_date = given_date - relativedelta(years=20)
-        to_date = given_date + relativedelta(years=20)
-    else:
-        raise ValueError("Unknown prefix", prefix)
+        years_delta = 20
+
+    from_date = given_date - relativedelta(years=years_delta)
+    to_date = given_date + relativedelta(years=years_delta)
+
     return from_date, to_date
 
 
@@ -78,7 +79,7 @@ def incomplete_date_to_interval(date_str) -> Tuple[datetime, datetime, datetime]
         sort_date, from_date, to_date = incomplete_hijridate_to_interval(date_str)
 
         if date_prefix:
-            from_date, to_date = approximate_date(from_date, date_prefix)
+            from_date, to_date = _approximate_date(from_date, date_prefix)
 
         dates.set_range(from_date, to_date)
         return dates.tuple()
@@ -117,13 +118,13 @@ def incomplete_date_to_interval(date_str) -> Tuple[datetime, datetime, datetime]
         to_date = datetime(year, 12, 31)
     elif not day:
         from_date = datetime(year, month, 1)
-        to_date = datetime(year, month, last_day_of_month(year, month))
+        to_date = datetime(year, month, _last_day_of_month(year, month))
     else:
         from_date = datetime(year, month, day)
         to_date = from_date
 
     if date_prefix:
-        from_date, to_date = approximate_date(from_date, date_prefix)
+        from_date, to_date = _approximate_date(from_date, date_prefix)
 
     dates.set_range(from_date, to_date)
     return dates.tuple()
@@ -201,7 +202,7 @@ def nomansland_dateparser(
             date_string,
             e,
         )
-        raise ValueError(f"Could not parse date: {original_date_string}")
+        raise e
 
     if not dates.sort_date:
         dates.sort_date = dates.from_date or dates.to_date
