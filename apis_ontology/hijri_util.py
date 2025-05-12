@@ -9,7 +9,7 @@ from typing import Tuple
 from django_interval.utils import DateTuple
 
 
-def last_day_of_hijri_year(hijri_year):
+def _last_day_of_hijri_year(hijri_year):
     is_leap_year = (11 * hijri_year + 14) % 30 == 0
     if is_leap_year:
         return 30
@@ -34,7 +34,7 @@ def incomplete_hijridate_to_interval(
         century = int(hijri_date[:-1].strip()) - 1
         from_date = hijri_to_gregorian(century * 100, 1, 1)
         to_date = hijri_to_gregorian(
-            century * 100 + 99, 12, last_day_of_hijri_year(century * 100 + 99)
+            century * 100 + 99, 12, _last_day_of_hijri_year(century * 100 + 99)
         )
     else:
         date_parts = [p.strip() for p in hijri_date.split("-")]
@@ -48,7 +48,7 @@ def incomplete_hijridate_to_interval(
         if not hijri_month:
             from_date = hijri_to_gregorian(hijri_year, 1, 1)
             to_date = hijri_to_gregorian(
-                hijri_year, 12, last_day_of_hijri_year(hijri_year)
+                hijri_year, 12, _last_day_of_hijri_year(hijri_year)
             )
 
         elif not hijri_day:
@@ -56,7 +56,7 @@ def incomplete_hijridate_to_interval(
             to_date = hijri_to_gregorian(
                 hijri_year,
                 hijri_month,
-                last_day_of_hijri_year(hijri_year) if hijri_month == 12 else 29,
+                _last_day_of_hijri_year(hijri_year) if hijri_month == 12 else 29,
             )
 
         else:
