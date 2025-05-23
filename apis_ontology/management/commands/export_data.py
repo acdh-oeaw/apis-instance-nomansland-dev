@@ -43,20 +43,28 @@ class Command(BaseCommand):
             )
 
         for rel in Relation.objects.all().select_subclasses():
-            relations.append(
-                {
-                    "pk": rel.pk,
-                    "name": rel.name(),
-                    "name_reverse": rel.reverse_name(),
-                    "source": rel.subj_object_id,
-                    "target": rel.obj_object_id,
-                    "start": rel.start,
-                    "end": rel.end,
-                    "start_date": rel.start_date_sort,
-                    "end_date": rel.end_date_sort,
-                    "certainty": rel.certainty,
-                }
-            )
+            try:
+                relations.append(
+                    {
+                        "pk": rel.pk,
+                        "name": rel.name(),
+                        "name_reverse": rel.reverse_name(),
+                        "source": rel.subj_object_id,
+                        "source_type": prettify_class_name(rel.subj.__class__.__name__),
+                        "target": rel.obj_object_id,
+                        "target_type": prettify_class_name(rel.obj.__class__.__name__),
+                        "start": rel.start,
+                        "end": rel.end,
+                        "start_date": rel.start_date_sort,
+                        "end_date": rel.end_date_sort,
+                        "certainty": rel.certainty,
+                    }
+                )
+            except Exception as e:
+                self.stdout.write(
+                    self.style.ERROR(f"Error processing relation {rel}: {e}")
+                )
+                continue
 
         pd.DataFrame(entities).to_csv(f"entities.csv", index=False)
         pd.DataFrame(relations).to_csv(f"relations.csv", index=False)
