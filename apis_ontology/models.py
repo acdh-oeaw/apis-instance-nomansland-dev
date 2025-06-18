@@ -651,7 +651,21 @@ class ConnectedTo(NomanslandRelationMixin):
 class Contains(NomanslandRelationMixin):
     relation_type_old = [52, 155]  # pk of Property in apis_relations
     subj_model = Manuscript
-    obj_model = [Expression, ManuscriptPart]
+    obj_model = Expression
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Contains [REVERSE]"
+
+
+class ContainsManuscriptPart(NomanslandRelationMixin):
+    relation_type_old = [52, 155]  # pk of Property in apis_relations
+    subj_model = Manuscript
+    obj_model = ManuscriptPart
+
+    @classmethod
+    def name(cls) -> str:
+        return "contains"
 
     @classmethod
     def reverse_name(cls) -> str:
@@ -681,7 +695,21 @@ class CopiedBy(NomanslandRelationMixin):
 class CopiedIn(NomanslandRelationMixin):
     relation_type_old = [3, 275]  # pk of Property in apis_relations
     subj_model = Manuscript
-    obj_model = [Institution, Place]
+    obj_model = Institution
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "place of copy of"
+
+
+class CopiedInPlace(NomanslandRelationMixin):
+    relation_type_old = [3, 275]  # pk of Property in apis_relations
+    subj_model = Manuscript
+    obj_model = Place
+
+    @classmethod
+    def name(cls) -> str:
+        return "copied in"
 
     @classmethod
     def reverse_name(cls) -> str:
@@ -920,8 +948,22 @@ class LocatedAt(NomanslandRelationMixin):
 
 class LocatedIn(NomanslandRelationMixin):
     relation_type_old = [28, 95]  # pk of Property in apis_relations
-    subj_model = [Institution, Place]
+    subj_model = Place
     obj_model = Place
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "located in [REVERSE]"
+
+
+class InstitutionLocatedIn(NomanslandRelationMixin):
+    relation_type_old = [28, 95]  # pk of Property in apis_relations
+    subj_model = Institution
+    obj_model = Place
+
+    @classmethod
+    def name(cls) -> str:
+        return "located in"
 
     @classmethod
     def reverse_name(cls) -> str:
@@ -941,7 +983,21 @@ class MadePilgrimageTo(NomanslandRelationMixin):
 class MentionedIn(NomanslandRelationMixin):
     relation_type_old = [211, 301]  # pk of Property in apis_relations
     subj_model = Person
-    obj_model = [ManuscriptPart, Work]
+    obj_model = ManuscriptPart
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "a mention of"
+
+
+class MentionedInWork(NomanslandRelationMixin):
+    relation_type_old = [211, 301]  # pk of Property in apis_relations
+    subj_model = Person
+    obj_model = Work
+
+    @classmethod
+    def name(cls) -> str:
+        return "mentioned in"
 
     @classmethod
     def reverse_name(cls) -> str:
@@ -1070,7 +1126,17 @@ class PlaceOfBirth(NomanslandRelationMixin):
 
 class PlaceOfCompositionOf(NomanslandRelationMixin):
     relation_type_old = [55, 274]  # pk of Property in apis_relations
-    subj_model = [Institution, Place]
+    subj_model = Place
+    obj_model = Work
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "Composed in"
+
+
+class InstitutionOfCompositionOf(NomanslandRelationMixin):
+    relation_type_old = [55, 274]  # pk of Property in apis_relations
+    subj_model = Institution
     obj_model = Work
 
     @classmethod
