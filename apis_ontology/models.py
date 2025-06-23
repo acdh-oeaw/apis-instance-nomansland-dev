@@ -276,18 +276,13 @@ class ScriptType(GenericModel, models.Model):
 
 class ExpressionQuerySet(models.QuerySet):
     def with_manuscript(self):
+        contains = Contains.objects.filter(obj_object_id=models.OuterRef("id"))
         return self.annotate(
-            # Subquery to get the manuscript related to the Work through Contains
-            manuscript_id=models.Subquery(
-                Contains.objects.filter(obj_object_id=models.OuterRef("id")).values(
-                    "subj_object_id"
-                )[:1]
-            ),
-            # Subquery to get the manuscript name based on the manuscript_id from above
+            manuscript_id=models.Subquery(contains.values("subj_object_id")[:1]),
             manuscript_name=models.Subquery(
-                Manuscript.objects.filter(id=models.OuterRef("manuscript_id")).values(
-                    "name"
-                )[:1]
+                Manuscript.objects.filter(
+                    id=models.Subquery(contains.values("subj_object_id")[:1])
+                ).values("name")[:1]
             ),
         )
 
