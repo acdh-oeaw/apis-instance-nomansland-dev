@@ -27,13 +27,13 @@ class ExpressionForm(NomanslandEntityMixinForm):
         "end",
         "script_type_title",
         "script_type_body",
+        "name_in_arabic",
         "description",
     ]
 
     class Meta(NomanslandEntityMixinForm.Meta):
         exclude = NomanslandEntityMixinForm.Meta.exclude + [
             "alternative_names",
-            "name_in_arabic",
             "notes",
             "references",
             "status",
