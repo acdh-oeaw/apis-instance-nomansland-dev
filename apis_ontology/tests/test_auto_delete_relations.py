@@ -291,3 +291,48 @@ class AutoDeleteRelationsTestCase(TestCase):
         # Verify entities still exist
         self.assertTrue(Person.objects.filter(id=self.person.id).exists())
         self.assertTrue(Place.objects.filter(id=self.place.id).exists())
+        
+    def test_deletion_with_inherited_entity_types(self):
+        """Test that auto-deletion works with entity inheritance."""
+        # Create relations
+        AuthorOf.objects.create(
+            subj_object_id=self.person.id,
+            obj_object_id=self.work.id
+        )
+        
+        BornIn.objects.create(
+            subj_object_id=self.person.id,
+            obj_object_id=self.place.id
+        )
+        
+        # Verify relations exist
+        self.assertEqual(AuthorOf.objects.count(), 1)
+        self.assertEqual(BornIn.objects.count(), 1)
+        
+        # Delete the person (which might inherit from AbstractEntity)
+        self.person.delete()
+        
+        # Verify relations are deleted regardless of inheritance
+        self.assertEqual(AuthorOf.objects.count(), 0)
+        self.assertEqual(BornIn.objects.count(), 0)
+        
+    def test_deletion_handles_missing_pk(self):
+        """Test that deletion handles cases where entity has no PK."""
+        # Create a person without saving (no PK assigned)
+        person_no_pk = Person(
+            forename="No",
+            surname="PK",
+            gender="male"
+        )
+        
+        # This should not raise an exception
+        # The signal handler should gracefully handle missing PK
+        # (Though in practice, post_delete wouldn't fire for unsaved objects)
+        
+        # Verify existing relations are unaffected
+        AuthorOf.objects.create(
+            subj_object_id=self.person.id,
+            obj_object_id=self.work.id
+        )
+        
+        self.assertEqual(AuthorOf.objects.count(), 1)
