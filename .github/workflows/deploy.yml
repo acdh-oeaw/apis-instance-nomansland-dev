@@ -11,7 +11,7 @@ on:
 
 jobs:
   deploy:
-    uses: acdh-oeaw/prosnet-workflows/.github/workflows/deploy-apis-instance.yml@v0.5.2
+    uses: acdh-oeaw/prosnet-workflows/.github/workflows/deploy-apis-instance.yml@v0.6.0
     secrets: inherit
     with:
       apis-base-container-ref: v0.6.4
