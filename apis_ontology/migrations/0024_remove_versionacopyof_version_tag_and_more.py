@@ -4,7 +4,7 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
+    atomic = False
     dependencies = [
         ("apis_ontology", "0023_containsmanuscriptpart_copiedinplace_and_more"),
     ]
