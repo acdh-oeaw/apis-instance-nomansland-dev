@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "script type",
                 "verbose_name_plural": "Script type",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.AlterModelOptions(
             name="expression",

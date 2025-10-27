@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "event type",
                 "verbose_name_plural": "Event types",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="Expression",
@@ -124,7 +124,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "institution type",
                 "verbose_name_plural": "Institution types",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="Language",
@@ -144,7 +144,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "language",
                 "verbose_name_plural": "Languages",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="Manuscript",
@@ -235,7 +235,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "manuscript condition",
                 "verbose_name_plural": "manuscript conditions",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="ManuscriptPartType",
@@ -255,7 +255,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "manuscript part type ",
                 "verbose_name_plural": "manuscript part types",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="Person",
@@ -360,7 +360,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "place type",
                 "verbose_name_plural": "Place types",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="PrincipalRole",
@@ -380,7 +380,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "principal role",
                 "verbose_name_plural": "Principal roles",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="Profession",
@@ -400,7 +400,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "principal role",
                 "verbose_name_plural": "Principal roles",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="SubjectHeading",
@@ -420,7 +420,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "subject heading",
                 "verbose_name_plural": "Subject headings",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="Title",
@@ -441,7 +441,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "principal role",
                 "verbose_name_plural": "Principal roles",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="VersionExpression",
@@ -558,7 +558,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -678,7 +677,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -823,7 +821,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -926,7 +923,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -947,7 +943,7 @@ class Migration(migrations.Migration):
                 "verbose_name": "work type",
                 "verbose_name_plural": "Work types",
             },
-            bases=(apis_core.generic.abc.GenericModel, models.Model),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="Work",
@@ -1228,7 +1224,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1452,7 +1447,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1626,7 +1620,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1800,7 +1793,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
