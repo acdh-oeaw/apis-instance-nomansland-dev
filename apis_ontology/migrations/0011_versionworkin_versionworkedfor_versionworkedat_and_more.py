@@ -111,7 +111,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -206,7 +205,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -301,7 +299,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -396,7 +393,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -491,7 +487,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -586,7 +581,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -681,7 +675,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -776,7 +769,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -871,7 +863,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -966,7 +957,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1061,7 +1051,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1156,7 +1145,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1251,7 +1239,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1346,7 +1333,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1441,7 +1427,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1536,7 +1521,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1631,7 +1615,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1726,7 +1709,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1821,7 +1803,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -1916,7 +1897,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -2011,7 +1991,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -2106,7 +2085,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -2201,7 +2179,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -2296,7 +2273,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -2391,7 +2367,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -2486,7 +2461,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -2581,7 +2555,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -2676,7 +2649,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -2771,7 +2743,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -2866,7 +2837,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -2961,7 +2931,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -3056,7 +3025,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -3151,7 +3119,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -3246,7 +3213,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -3341,7 +3307,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -3436,7 +3401,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -3531,7 +3495,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -3626,7 +3589,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -3721,7 +3683,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -3816,7 +3777,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -3911,7 +3871,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -4006,7 +3965,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -4101,7 +4059,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -4196,7 +4153,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -4291,7 +4247,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -4386,7 +4341,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -4481,7 +4435,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -4576,7 +4529,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -4671,7 +4623,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -4766,7 +4717,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -4861,7 +4811,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -4956,7 +4905,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -5051,7 +4999,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -5146,7 +5093,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -5241,7 +5187,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -5336,7 +5281,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -5431,7 +5375,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -5526,7 +5469,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -5621,7 +5563,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -5716,7 +5657,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -5811,7 +5751,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -5906,7 +5845,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -6001,7 +5939,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -6096,7 +6033,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -6191,7 +6127,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -6286,7 +6221,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -6381,7 +6315,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -6476,7 +6409,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -6571,7 +6503,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -6666,7 +6597,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -6761,7 +6691,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -6856,7 +6785,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -6951,7 +6879,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -7046,7 +6973,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -7141,7 +7067,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -7236,7 +7161,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -7331,7 +7255,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -7426,7 +7349,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -7521,7 +7443,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -7616,7 +7537,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -7711,7 +7631,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -7806,7 +7725,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -7901,7 +7819,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -7996,7 +7913,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -8091,7 +8007,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -8186,7 +8101,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -8281,7 +8195,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -8376,7 +8289,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
         migrations.CreateModel(
@@ -8471,7 +8383,6 @@ class Migration(migrations.Migration):
             bases=(
                 simple_history.models.HistoricalChanges,
                 models.Model,
-                apis_core.generic.abc.GenericModel,
             ),
         ),
     ]

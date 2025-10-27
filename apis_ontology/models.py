@@ -398,7 +398,6 @@ class NomanslandRelationMixin(
     VersionMixin,
     Relation,
     NomanslandDateMixin,
-    GenericModel,
 ):
     subj_model = None
     obj_model = None
