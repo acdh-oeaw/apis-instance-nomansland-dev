@@ -23,5 +23,10 @@ Nomansland: Nomads' Manuscripts Landscape
         <a class="dropdown-item" href="{% url 'apis:documentation' %}">Data model</a>
     </div>
 </li>
-{{ block.super }}
+        {{ block.super }}
+        <form class="d-flex align-items-center flex-fill" method="get" action="/search">
+            <input class="form-control form-control-sm me-2" type="search" name="search" placeholder="Search"
+                   aria-label="Search">
+            <button  class="btn btn-outline-success btn-sm" type="submit" name="submit">Search</button>
+        </form>
 {% endblock main-menu %}
