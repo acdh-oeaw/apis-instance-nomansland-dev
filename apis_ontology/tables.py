@@ -1,5 +1,4 @@
 from datetime import datetime
-from apis_core.apis_entities.tables import AbstractEntityTable
 from apis_core.generic.tables import GenericTable
 from django.utils.html import format_html
 from django_tables2.tables import Column
@@ -16,10 +15,10 @@ from apis_ontology.models import (
 )
 
 
-class NomanslandMixinTable(AbstractEntityTable):
+class NomanslandMixinTable(GenericTable):
     paginate_by = 100
 
-    class Meta(AbstractEntityTable.Meta):
+    class Meta(GenericTable.Meta):
         exclude = [
             "id",
             "desc",
