@@ -1,4 +1,5 @@
 from apis_core.generic.filtersets import GenericFilterSet, django_filters
+from apis_core.apis_entities.filtersets import AbstractEntityFilterSet
 from apis_core.relations.filtersets import RelationFilterSet
 from django.db import models
 from django.db.models import Q, CharField, TextField
@@ -50,7 +51,7 @@ def generic_search_filter(queryset, name, value, fields=None):
     return queryset.filter(q_objects)
 
 
-class NomanslandMixinFilterSet(GenericFilterSet):
+class NomanslandMixinFilterSet(AbstractEntityFilterSet):
     class Meta(GenericFilterSet.Meta):
         form = EntityFilterSetForm
         exclude = [
