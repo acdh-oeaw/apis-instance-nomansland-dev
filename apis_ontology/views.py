@@ -1,4 +1,5 @@
 from django.views.generic.edit import FormView
+
 from apis_ontology.forms import SearchForm
 from apis_ontology.search_utils import search
 
