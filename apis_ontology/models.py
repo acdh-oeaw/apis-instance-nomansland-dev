@@ -2,15 +2,16 @@ import logging
 
 from apis_core.apis_entities.abc import E21_Person, E53_Place
 from apis_core.apis_entities.models import AbstractEntity
-from apis_core.relations.models import Relation
 from apis_core.collections.models import SkosCollection, SkosCollectionContentObject
 from apis_core.generic.abc import GenericModel
 from apis_core.history.models import VersionMixin
+from apis_core.relations.models import Relation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django_interval.fields import FuzzyDateParserField
+
 from .date_utils import nomansland_dateparser
 
 logger = logging.getLogger(__name__)
@@ -139,7 +140,7 @@ class PlaceType(GenericModel, models.Model):
 class Place(
     E53_Place, VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity
 ):
-    _default_search_fields = ["label"]
+    _default_search_fields = ["label", "alternative_names"]
     class_uri = "http://id.loc.gov/ontologies/bibframe/Place"
     kind = models.ForeignKey(
         PlaceType, blank=True, null=True, on_delete=models.SET_NULL
@@ -172,7 +173,7 @@ class InstitutionType(GenericModel, models.Model):
 
 
 class Institution(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEntity):
-    _default_search_fields = ["name"]
+    _default_search_fields = ["name", "alternative_names"]
     name = models.CharField(max_length=255)
     kind = models.ForeignKey(
         InstitutionType, blank=True, null=True, on_delete=models.SET_NULL
