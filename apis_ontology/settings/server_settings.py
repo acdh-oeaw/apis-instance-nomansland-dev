@@ -69,3 +69,5 @@ APIS_BIBSONOMY = [
         "group": "2801369",
     }
 ]
+
+AUDITLOG_LOGENTRY_MODEL = os.environ.get("AUDITLOG_LOGENTRY_MODEL", "auditlog.LogEntry")
