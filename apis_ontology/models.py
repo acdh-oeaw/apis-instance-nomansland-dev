@@ -1391,3 +1391,21 @@ class RefutationOf(NomanslandRelationMixin):
     @classmethod
     def reverse_name(cls) -> str:
         return "refuted by"
+
+
+class ManuscriptPartReadInPlace(NomanslandRelationMixin):
+    subj_model = ManuscriptPart
+    obj_model = Place
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "was the place of reading of"
+
+
+class ManuscriptPartHappenedInPlace(NomanslandRelationMixin):
+    subj_model = ManuscriptPart
+    obj_model = Place
+
+    @classmethod
+    def reverse_name(cls) -> str:
+        return "was the place of occurence of"
