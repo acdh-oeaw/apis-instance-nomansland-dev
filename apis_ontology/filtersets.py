@@ -1,11 +1,15 @@
-from apis_core.generic.filtersets import GenericFilterSet, django_filters
 from apis_core.apis_entities.filtersets import AbstractEntityFilterSet
+from apis_core.generic.filtersets import GenericFilterSet, django_filters
 from apis_core.relations.filtersets import RelationFilterSet
+from django import forms
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import Q, CharField, TextField
-from apis_ontology.forms import RelationFilterSetForm, EntityFilterSetForm
+from django.db.models import CharField, Q, TextField
 from django_interval.fields import FuzzyDateParserField
 from django_interval.filters import YearIntervalRangeFilter
+
+from apis_ontology.forms import EntityFilterSetForm, RelationFilterSetForm
+from apis_ontology.models import AuthorOf, Work
 
 
 def generic_search_filter(queryset, name, value, fields=None):
@@ -97,6 +101,35 @@ class NomanslandMixinFilterSet(AbstractEntityFilterSet):
                 filter.label = filter.label.replace("unaccent contains", "")
         self.filters["search"] = django_filters.CharFilter(
             method=generic_search_filter, label="Search"
+        )
+
+
+class WorkFilterSet(NomanslandMixinFilterSet):
+    """FilterSet for `Work` model with a 'without_authors' checkbox."""
+
+    class Meta(NomanslandMixinFilterSet.Meta):
+        pass
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.filters["without_authors"] = django_filters.BooleanFilter(
+            method=self.filter_without_authors,
+            label="Works without authors",
+            widget=forms.CheckboxInput(),
+            initial=False,
+        )
+
+    def filter_without_authors(self, queryset, name, value):
+        """Return Works that have no related `AuthorOf` relation when checked."""
+        if not value:
+            return queryset
+
+        ct = ContentType.objects.get_for_model(Work)
+        subq = AuthorOf.objects.filter(
+            obj_object_id=models.OuterRef("pk"), obj_content_type=ct
+        )
+        return queryset.annotate(_has_author=models.Exists(subq)).filter(
+            _has_author=False
         )
 
 
