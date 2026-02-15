@@ -1,8 +1,12 @@
 import os
+import logging
 from django.contrib.auth.signals import user_logged_in
+from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import Group
+from django.apps import apps
 
+logger = logging.getLogger(__name__)
 
 
 @receiver(user_logged_in)
@@ -11,3 +15,88 @@ def add_to_group(sender, user, request, **kwargs):
     g1, _ = Group.objects.get_or_create(name='editors')
     if user.username in user_list:
         g1.user_set.add(user)
+
+
+@receiver(post_delete)
+def autodelete_relations(sender, instance, **kwargs):
+    """
+    Automatically delete all relations where the deleted entity is either 
+    subject or object when an entity is deleted.
+    """
+    # Only process entities from the apis_ontology app
+    if sender._meta.app_label != 'apis_ontology':
+        return
+        
+    # Skip if the deleted instance is already a relation 
+    # (to avoid recursive deletion)
+    if hasattr(sender, 'subj_model') and hasattr(sender, 'obj_model'):
+        return
+        
+    try:
+        # Get all relation models from the apis_ontology app
+        relation_models = []
+        for model in apps.get_app_config('apis_ontology').get_models():
+            if (hasattr(model, 'subj_model') and hasattr(model, 'obj_model') and 
+                model.subj_model is not None and model.obj_model is not None):
+                relation_models.append(model)
+        
+        deleted_entity_id = instance.pk
+        if deleted_entity_id is None:
+            logger.warning(f"Cannot auto-delete relations for {sender.__name__} - no primary key")
+            return
+            
+        deleted_count = 0
+        
+        # Delete relations where the entity is the subject
+        for relation_model in relation_models:
+            try:
+                # Check if sender is the subject model or a subclass of it
+                if (relation_model.subj_model == sender or 
+                    (hasattr(sender, '__mro__') and relation_model.subj_model in sender.__mro__)):
+                    
+                    relations_as_subject = relation_model.objects.filter(
+                        subj_object_id=deleted_entity_id
+                    )
+                    count = relations_as_subject.count()
+                    if count > 0:
+                        relations_as_subject.delete()
+                        deleted_count += count
+                        logger.info(
+                            f"Deleted {count} {relation_model.__name__} relations "
+                            f"where {sender.__name__}({deleted_entity_id}) was subject"
+                        )
+            except Exception as e:
+                logger.error(
+                    f"Error deleting subject relations for {relation_model.__name__}: {e}"
+                )
+        
+        # Delete relations where the entity is the object  
+        for relation_model in relation_models:
+            try:
+                # Check if sender is the object model or a subclass of it
+                if (relation_model.obj_model == sender or 
+                    (hasattr(sender, '__mro__') and relation_model.obj_model in sender.__mro__)):
+                    
+                    relations_as_object = relation_model.objects.filter(
+                        obj_object_id=deleted_entity_id
+                    )
+                    count = relations_as_object.count()
+                    if count > 0:
+                        relations_as_object.delete()
+                        deleted_count += count
+                        logger.info(
+                            f"Deleted {count} {relation_model.__name__} relations "
+                            f"where {sender.__name__}({deleted_entity_id}) was object"
+                        )
+            except Exception as e:
+                logger.error(
+                    f"Error deleting object relations for {relation_model.__name__}: {e}"
+                )
+        
+        if deleted_count > 0:
+            logger.info(
+                f"Total: Deleted {deleted_count} relations when "
+                f"{sender.__name__}({deleted_entity_id}) was deleted"
+            )
+    except Exception as e:
+        logger.error(f"Error in autodelete_relations for {sender.__name__}: {e}")
