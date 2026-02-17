@@ -7,6 +7,8 @@ from apis_core.apis_entities.api_views import GetEntityGeneric
 
 from apis_ontology.views import SearchView, map_view
 
+from .views import GraphView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("apis/", include("apis_core.urls", namespace="apis")),
@@ -17,6 +19,11 @@ urlpatterns = [
     path("apis_bibsonomy/", include("apis_bibsonomy.urls", namespace="bibsonomy")),
     path("search", SearchView.as_view(), name="search"),
     path("map", map_view, name="map"),
+    path(
+        "graph/",
+        GraphView.as_view(),
+        name="graph_view",
+    ),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
