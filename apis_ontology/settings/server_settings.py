@@ -19,6 +19,7 @@ ADDITIONAL_APPS = [
     "django_interval",
     "apis_core.documentation",
     "apis_bibsonomy",
+    "django_cosmograph",
 ]
 
 for app in ADDITIONAL_APPS:
