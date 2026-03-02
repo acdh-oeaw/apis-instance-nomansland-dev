@@ -9,7 +9,7 @@ from django_interval.fields import FuzzyDateParserField
 from django_interval.filters import YearIntervalRangeFilter
 
 from apis_ontology.forms import EntityFilterSetForm, RelationFilterSetForm
-from apis_ontology.models import AuthorOf, Work
+from apis_ontology.models import AuthorOf, Person, Work
 
 
 def generic_search_filter(queryset, name, value, fields=None):
@@ -114,7 +114,7 @@ class WorkFilterSet(NomanslandMixinFilterSet):
         super().__init__(*args, **kwargs)
         self.filters["without_authors"] = django_filters.BooleanFilter(
             method=self.filter_without_authors,
-            label="Works without authors",
+            label="Only works without authors",
             widget=forms.CheckboxInput(),
             initial=False,
         )
@@ -130,6 +130,51 @@ class WorkFilterSet(NomanslandMixinFilterSet):
         )
         return queryset.annotate(_has_author=models.Exists(subq)).filter(
             _has_author=False
+        )
+
+
+class PersonFilterSet(NomanslandMixinFilterSet):
+    """FilterSet for `Person` model."""
+
+    class Meta(NomanslandMixinFilterSet.Meta):
+        pass
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.filters["is_author"] = django_filters.BooleanFilter(
+            method=self.filter_only_authors,
+            label="Only authors",
+            widget=forms.CheckboxInput(),
+            initial=False,
+        )
+        self.filters["empty_bio"] = django_filters.BooleanFilter(
+            method=self.filter_empty_bio,
+            label="Only empty bio",
+            widget=forms.CheckboxInput(),
+            initial=False,
+        )
+
+    def filter_only_authors(self, queryset, name, value):
+        """Return Persons that are authors of at least one Work when checked."""
+        if not value:
+            return queryset
+
+        ct = ContentType.objects.get_for_model(Person)
+        subq = AuthorOf.objects.filter(
+            subj_object_id=models.OuterRef("pk"), subj_content_type=ct
+        )
+        return queryset.annotate(_has_author=models.Exists(subq)).filter(
+            _has_author=False
+        )
+
+    def filter_empty_bio(self, queryset, name, value):
+        """Return Persons that have no bio when checked."""
+        if not value:
+            return queryset
+
+        # return if the bio is blank or null or contains only whitespace
+        return queryset.filter(
+            Q(bio__isnull=True) | Q(bio__exact="") | Q(bio__regex=r"^\s*$")
         )
 
 
