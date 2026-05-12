@@ -42,6 +42,7 @@ class NomanslandMixin(models.Model):
     published = models.BooleanField(default=False)
     status = models.CharField(max_length=100, blank=True, null=True)
     references = models.TextField(blank=True, null=True)
+    hidden_import_log = models.CharField(max_length=255, blank=True, null=True, editable=False)
 
     def nomansland_collections(self):
         parent = SkosCollection.objects.get(name="nomansland")
@@ -313,7 +314,6 @@ class Expression(VersionMixin, NomanslandDateMixin, NomanslandMixin, AbstractEnt
     )
     language = models.ManyToManyField(Language, blank=True)
     description = models.TextField(blank=True, null=True)  # ported from text
-
     def __str__(self):
         return f"{self.title} ({self.pk})"
 
