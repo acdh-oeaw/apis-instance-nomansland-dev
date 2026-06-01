@@ -438,6 +438,19 @@ class GraphSearchSnapshot(models.Model):
     def build_payload(cls):
         nodes = []
 
+        def get_relation_labels(relation):
+            if hasattr(relation, "name") and callable(relation.name):
+                label = relation.name()
+            else:
+                label = relation.__class__.__name__
+
+            if hasattr(relation, "reverse_name") and callable(relation.reverse_name):
+                reverse_label = relation.reverse_name()
+            else:
+                reverse_label = f"{label} [REVERSE]"
+
+            return label, reverse_label
+
         def add_nodes(qs, group):
             for obj in qs.only("id"):
                 nodes.append({"id": obj.id, "label": str(obj), "group": group})
@@ -452,15 +465,24 @@ class GraphSearchSnapshot(models.Model):
         add_nodes(Event.objects.only("id"), "event")
 
         node_ids = {n["id"] for n in nodes}
-        links = [
-            {"source": source, "target": target}
-            for source, target in Relation.objects.exclude(
-                subj_object_id__isnull=True, obj_object_id__isnull=True
-            )
+        links = []
+        relations = (
+            Relation.objects.select_subclasses()
+            .exclude(subj_object_id__isnull=True, obj_object_id__isnull=True)
             .filter(subj_object_id__in=node_ids, obj_object_id__in=node_ids)
-            .values_list("subj_object_id", "obj_object_id")
             .iterator(chunk_size=5000)
-        ]
+        )
+        for relation in relations:
+            label, reverse_label = get_relation_labels(relation)
+            links.append(
+                {
+                    "source": relation.subj_object_id,
+                    "target": relation.obj_object_id,
+                    "label": label,
+                    "reverse_label": reverse_label,
+                    "group": f"{label}|{reverse_label}",
+                }
+            )
 
         nodes = cls._assign_node_sizes(nodes, links)
         return nodes, links
