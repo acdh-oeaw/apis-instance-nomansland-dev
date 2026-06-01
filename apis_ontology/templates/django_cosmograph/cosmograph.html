@@ -3,22 +3,30 @@
 {% block dc_content %}
 <div class="container-fluid py-2">
     <form method="get" class="row g-2 align-items-center justify-content-center mb-2">
+        <input type="hidden" name="show_unconnected" value="{{ graph_show_unconnected|yesno:'1,0' }}">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6">
             <input
                 type="search"
                 name="q"
                 value="{{ graph_query }}"
                 class="form-control form-control-sm"
-                placeholder="Filter nodes by label, group, or id"
+                placeholder="Filter nodes and links"
                 aria-label="Filter graph"
             >
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary btn-sm">Filter</button>
         </div>
+        <div class="col-auto">
+            {% if graph_show_unconnected %}
+            <button type="submit" name="show_unconnected" value="0" class="btn btn-outline-dark btn-sm">Hide Unconnected</button>
+            {% else %}
+            <button type="submit" name="show_unconnected" value="1" class="btn btn-outline-dark btn-sm">Show Unconnected</button>
+            {% endif %}
+        </div>
         {% if graph_query %}
         <div class="col-auto">
-            <a href="?" class="btn btn-outline-secondary btn-sm">Clear</a>
+            <a href="?show_unconnected={{ graph_show_unconnected|yesno:'1,0' }}" class="btn btn-outline-secondary btn-sm">Clear</a>
         </div>
         {% endif %}
     </form>

@@ -34,9 +34,26 @@ def map_view(request):
 class GraphView(CosmographView):
     # TODO: How do I restrict the view based on user permissions
 
+    def _show_unconnected_nodes(self):
+        value = self.request.GET.get("show_unconnected", "1").strip().lower()
+        return value not in {"0", "false", "no", "off"}
+
+    def _apply_unconnected_visibility(self, nodes, links):
+        if self._show_unconnected_nodes():
+            return nodes, links
+
+        linked_node_ids = {
+            endpoint
+            for link in links
+            for endpoint in (link.get("source"), link.get("target"))
+            if endpoint is not None
+        }
+        return [node for node in nodes if node.get("id") in linked_node_ids], links
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["graph_query"] = self.request.GET.get("q", "").strip()
+        context["graph_show_unconnected"] = self._show_unconnected_nodes()
         return context
 
     def _filter_nodes_links(self, nodes, links):
@@ -92,6 +109,23 @@ class GraphView(CosmographView):
             if node.get("id") in visible_node_ids and node not in filtered_nodes:
                 filtered_nodes.append(node)
 
+        # Cosmograph can fail to place linkless nodes in a visible region.
+        # Give them deterministic coordinates on a small circle as a fallback.
+        linked_node_ids = {
+            endpoint
+            for link in filtered_links
+            for endpoint in (link.get("source"), link.get("target"))
+            if endpoint is not None
+        }
+        linkless_nodes = [n for n in filtered_nodes if n.get("id") not in linked_node_ids]
+        if linkless_nodes:
+            radius = max(20.0, len(linkless_nodes) * 3.0)
+            for index, node in enumerate(linkless_nodes):
+                if "x" in node and "y" in node:
+                    continue
+                angle = (2.0 * math.pi * index) / len(linkless_nodes)
+                node["x"] = round(radius * math.cos(angle), 3)
+                node["y"] = round(radius * math.sin(angle), 3)
 
         return filtered_nodes, filtered_links
 
@@ -101,6 +135,7 @@ class GraphView(CosmographView):
         if cached_data:
             nodes, links = json.loads(cached_data)
             nodes, links = self._filter_nodes_links(nodes, links)
+            nodes, links = self._apply_unconnected_visibility(nodes, links)
             logger.debug(
                 f"Loaded graph from cache with {len(nodes)} nodes and {len(links)} links"
             )
@@ -120,4 +155,5 @@ class GraphView(CosmographView):
         # Cache nodes and links as a JSON string for 24 hours
         cache.set(cache_key, json.dumps((nodes, links)), 86400)
 
-        return self._filter_nodes_links(nodes, links)
+        nodes, links = self._filter_nodes_links(nodes, links)
+        return self._apply_unconnected_visibility(nodes, links)
