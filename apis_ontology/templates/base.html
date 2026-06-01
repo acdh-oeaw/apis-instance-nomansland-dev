@@ -24,6 +24,9 @@ Nomansland: Nomads' Manuscripts Landscape
     </div>
 </li>
         {{ block.super }}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'graph_view' %}">Network</a>
+        </li>
         <form class="d-flex align-items-center flex-fill" method="get" action="/search">
             <input class="form-control form-control-sm me-2" type="search" name="search" placeholder="Search"
                    aria-label="Search">
