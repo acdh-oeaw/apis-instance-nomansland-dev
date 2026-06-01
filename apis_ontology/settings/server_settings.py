@@ -73,3 +73,5 @@ APIS_BIBSONOMY = [
 
 AUDITLOG_LOGENTRY_MODEL = os.environ.get("AUDITLOG_LOGENTRY_MODEL", "auditlog.LogEntry")
 DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
+
+CSP_SCRIPT_SRC = (*CSP_DEFAULT_SRC, "'unsafe-eval'") # TODO: get rid of 'unsafe-eval' after django_cosmograph update
