@@ -1,4 +1,5 @@
 import logging
+import math
 
 from apis_core.apis_entities.abc import E21_Person, E53_Place
 from apis_core.apis_entities.models import AbstractEntity
@@ -6,6 +7,7 @@ from apis_core.collections.models import SkosCollection, SkosCollectionContentOb
 from apis_core.generic.abc import GenericModel
 from apis_core.history.models import VersionMixin
 from apis_core.relations.models import Relation
+from django.core.cache import cache
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
@@ -393,6 +395,90 @@ class ManuscriptPart(
         verbose_name = _("manuscript part")
         verbose_name_plural = _("Manuscript parts")
         ordering = ["pk"]
+
+
+class GraphSearchSnapshot(models.Model):
+    DEFAULT_KEY = "global"
+    CACHE_KEY = "graph_nodes_links_snapshot"
+
+    key = models.CharField(max_length=64, unique=True, default=DEFAULT_KEY)
+    nodes = models.JSONField(default=list, blank=True)
+    links = models.JSONField(default=list, blank=True)
+    node_count = models.PositiveIntegerField(default=0, editable=False)
+    link_count = models.PositiveIntegerField(default=0, editable=False)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("graph search snapshot")
+        verbose_name_plural = _("Graph search snapshots")
+
+    def __str__(self):
+        return f"{self.key} ({self.node_count} nodes / {self.link_count} links)"
+
+    @staticmethod
+    def _assign_node_sizes(nodes, links, max_size=6, base_size=4, scale=10):
+        degree = {}
+
+        for link in links:
+            source = link.get("source")
+            target = link.get("target")
+            if source:
+                degree[source] = degree.get(source, 0) + 1
+            if target:
+                degree[target] = degree.get(target, 0) + 1
+
+        for node in nodes:
+            d = degree.get(node["id"], 0)
+            size = base_size + max_size * (math.atan(d / scale) / (math.pi / 2))
+            node["size"] = round(size, 2)
+
+        return nodes
+
+    @classmethod
+    def build_payload(cls):
+        nodes = []
+
+        def add_nodes(qs, group):
+            for obj in qs.only("id"):
+                nodes.append({"id": obj.id, "label": str(obj), "group": group})
+
+        add_nodes(Person.objects.only("id"), "person")
+        add_nodes(Place.objects.only("id"), "place")
+        add_nodes(Work.objects.only("id"), "work")
+        add_nodes(Institution.objects.only("id"), "institution")
+        add_nodes(Manuscript.objects.only("id"), "manuscript")
+        add_nodes(ManuscriptPart.objects.only("id"), "manuscriptpart")
+        add_nodes(Expression.objects.only("id"), "expression")
+        add_nodes(Event.objects.only("id"), "event")
+
+        node_ids = {n["id"] for n in nodes}
+        links = [
+            {"source": source, "target": target}
+            for source, target in Relation.objects.exclude(
+                subj_object_id__isnull=True, obj_object_id__isnull=True
+            )
+            .filter(subj_object_id__in=node_ids, obj_object_id__in=node_ids)
+            .values_list("subj_object_id", "obj_object_id")
+            .iterator(chunk_size=5000)
+        ]
+
+        nodes = cls._assign_node_sizes(nodes, links)
+        return nodes, links
+
+    @classmethod
+    def rebuild(cls):
+        nodes, links = cls.build_payload()
+        snapshot, _ = cls.objects.update_or_create(
+            key=cls.DEFAULT_KEY,
+            defaults={
+                "nodes": nodes,
+                "links": links,
+                "node_count": len(nodes),
+                "link_count": len(links),
+            },
+        )
+        cache.delete(cls.CACHE_KEY)
+        return snapshot
 
 
 class NomanslandRelationMixin(
