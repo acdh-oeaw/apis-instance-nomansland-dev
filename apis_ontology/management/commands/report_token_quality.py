@@ -65,6 +65,24 @@ class Command(BaseCommand):
             ),
         )
         parser.add_argument(
+            "--typo-max-token-count",
+            type=int,
+            default=0,
+            help=(
+                "Exclude typo suggestions where the source token frequency is above this "
+                "absolute count (default: 0 = disabled)"
+            ),
+        )
+        parser.add_argument(
+            "--typo-max-token-share",
+            type=float,
+            default=0.0,
+            help=(
+                "Exclude typo suggestions where the source token accounts for more than this "
+                "share of all tokens, e.g. 0.01 for 1 percent (default: 0.0 = disabled)"
+            ),
+        )
+        parser.add_argument(
             "--variant-min-total",
             type=int,
             default=2,
@@ -82,6 +100,8 @@ class Command(BaseCommand):
         max_distance = options["max_distance"]
         min_token_length = options["min_token_length"]
         frequency_ratio = options["frequency_ratio"]
+        typo_max_token_count = options["typo_max_token_count"]
+        typo_max_token_share = options["typo_max_token_share"]
         variant_min_total = options["variant_min_total"]
 
         if top_limit <= 0:
@@ -96,6 +116,10 @@ class Command(BaseCommand):
             raise ValueError("--min-token-length must be greater than 0")
         if frequency_ratio <= 1:
             raise ValueError("--frequency-ratio must be greater than 1")
+        if typo_max_token_count < 0:
+            raise ValueError("--typo-max-token-count must be greater or equal to 0")
+        if not (0.0 <= typo_max_token_share <= 1.0):
+            raise ValueError("--typo-max-token-share must be between 0.0 and 1.0")
         if variant_min_total <= 1:
             raise ValueError("--variant-min-total must be greater than 1")
 
@@ -117,6 +141,8 @@ class Command(BaseCommand):
             min_token_length=min_token_length,
             canonical_min_count=canonical_min_count,
             frequency_ratio=frequency_ratio,
+            typo_max_token_count=typo_max_token_count,
+            typo_max_token_share=typo_max_token_share,
         )
         spelling_standardization_map = self._build_spelling_standardization_map(
             spelling_variant_counts=spelling_variant_counts,
@@ -143,6 +169,8 @@ class Command(BaseCommand):
             max_distance=max_distance,
             min_token_length=min_token_length,
             frequency_ratio=frequency_ratio,
+            typo_max_token_count=typo_max_token_count,
+            typo_max_token_share=typo_max_token_share,
             variant_min_total=variant_min_total,
         )
 
@@ -208,6 +236,8 @@ class Command(BaseCommand):
                         normalized_token = self._normalize_token(raw_token)
                         if not normalized_token:
                             continue
+                        if self._is_numeric_token(normalized_token):
+                            continue
                         token_counts[normalized_token] += 1
                         raw_variant_counts[normalized_token][raw_token] += 1
                         spelling_key = self._spelling_key(normalized_token)
@@ -248,7 +278,10 @@ class Command(BaseCommand):
         min_token_length,
         canonical_min_count,
         frequency_ratio,
+        typo_max_token_count,
+        typo_max_token_share,
     ):
+        total_token_count = sum(token_counts.values())
         canonical_tokens = [
             token for token, count in token_counts.items() if count >= canonical_min_count
         ]
@@ -263,6 +296,12 @@ class Command(BaseCommand):
         for token, token_count in token_counts.items():
             if len(token) < min_token_length:
                 continue
+            if typo_max_token_count and token_count > typo_max_token_count:
+                continue
+            if typo_max_token_share and total_token_count:
+                token_share = token_count / total_token_count
+                if token_share > typo_max_token_share:
+                    continue
 
             best_candidate = None
             best_distance = None
@@ -326,6 +365,8 @@ class Command(BaseCommand):
                     seen = set()
                     for raw_token in self._tokenize(value):
                         normalized_token = self._normalize_token(raw_token)
+                        if not normalized_token or self._is_numeric_token(normalized_token):
+                            continue
                         if normalized_token in typo_map:
                             typo_info = typo_map[normalized_token]
                             message = (
@@ -383,6 +424,8 @@ class Command(BaseCommand):
         max_distance,
         min_token_length,
         frequency_ratio,
+        typo_max_token_count,
+        typo_max_token_share,
         variant_min_total,
     ):
         now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -401,6 +444,8 @@ class Command(BaseCommand):
             f"- Typo max Levenshtein distance: {max_distance}",
             f"- Typo minimum token length: {min_token_length}",
             f"- Typo minimum frequency ratio: {frequency_ratio}",
+            f"- Typo max source token count: {typo_max_token_count or 'disabled'}",
+            f"- Typo max source token share: {typo_max_token_share or 'disabled'}",
             f"- Alternate spelling family minimum total count: {variant_min_total}",
             "",
             "## Potential Issues By Record",
@@ -453,6 +498,9 @@ class Command(BaseCommand):
 
     def _escape_md(self, text):
         return str(text).replace("|", "\\|").replace("\n", " ")
+
+    def _is_numeric_token(self, token):
+        return unicodedata.normalize("NFKC", token).isdecimal()
 
     def _levenshtein_distance_lte(self, source, target, max_distance):
         if abs(len(source) - len(target)) > max_distance:
