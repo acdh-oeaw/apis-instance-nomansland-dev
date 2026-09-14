@@ -1,5 +1,5 @@
 from apis_core.generic.forms import GenericFilterSetForm, GenericModelForm
-from apis_core.apis_entities.forms import E53_PlaceForm
+from apis_core.entities.forms import E53_PlaceForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django import forms

@@ -1,7 +1,8 @@
 import logging
 import math
 
-from apis_core.apis_entities.abc import E21_Person, E53_Place
+from apis_core.entities.abc import Entity
+from apis_core.entities.abc import E21_Person, E53_Place
 from apis_core.apis_entities.models import AbstractEntity
 from apis_core.collections.models import SkosCollection, SkosCollectionContentObject
 from apis_core.generic.abc import GenericModel
@@ -27,7 +28,7 @@ class NomanslandDateMixin(models.Model):
     end = FuzzyDateParserField(parser=nomansland_dateparser, null=True, blank=True)
 
 
-class NomanslandMixin(models.Model):
+class NomanslandMixin(Entity):
     class Meta:
         abstract = True
 
