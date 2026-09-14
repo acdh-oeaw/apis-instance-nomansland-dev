@@ -26,7 +26,7 @@ class NomanslandMixinTable(GenericTable):
             "noduplicate",
         ]
         fields = []
-        sequence = fields + ["...", "view", "edit"]
+        sequence = fields + ["...", "actions"]
 
     id = Column(
         linkify=lambda record: record.get_absolute_url(),
@@ -171,7 +171,7 @@ class NomanslandRelationMixinTable(GenericTable):
     class Meta(GenericTable.Meta):
         fields = ["subj", "obj"]
         exclude = ["desc", "delete"]
-        sequence = ("subj", "obj", "...", "view", "edit")
+        sequence = ("subj", "obj", "...", "actions")
 
     subj = Column(verbose_name="Subject", orderable=False)
     obj = Column(verbose_name="Object", orderable=False)
