@@ -1,4 +1,4 @@
-from apis_core.apis_entities.filtersets import AbstractEntityFilterSet
+from apis_core.entities.filtersets import EntityFilterSet
 from apis_core.generic.filtersets import GenericFilterSet, django_filters
 from apis_core.relations.filtersets import RelationFilterSet
 from django import forms
@@ -55,7 +55,7 @@ def generic_search_filter(queryset, name, value, fields=None):
     return queryset.filter(q_objects)
 
 
-class NomanslandMixinFilterSet(AbstractEntityFilterSet):
+class NomanslandMixinFilterSet(EntityFilterSet):
     class Meta(GenericFilterSet.Meta):
         form = EntityFilterSetForm
         exclude = [
