@@ -32,3 +32,11 @@ urlpatterns += [path("", include("django_interval.urls"))]
 urlpatterns += [
     path("", include("apis_acdhch_django_auditlog.urls")),
 ]
+
+
+urlpatterns += [
+    path(
+        "advanced-search/",
+        include("apis_advanced_search.urls"),
+    ),
+]
