@@ -20,6 +20,7 @@ ADDITIONAL_APPS = [
     "apis_core.documentation",
     "apis_bibsonomy",
     "django_cosmograph",
+    "apis_advanced_search",
 ]
 
 for app in ADDITIONAL_APPS:
