@@ -14,24 +14,6 @@ Nomansland: Nomads' Manuscripts Landscape
 {% endblock title %}
 
 {% block main-menu %}
-<li class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
-        aria-expanded="false">
-        About <span class="caret" />
-    </a>
-    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{% url 'apis:documentation' %}">Data model</a>
-    </div>
-</li>
-        {{ block.super }}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'graph_view' %}">Network</a>
-        </li>
-        <form class="d-flex align-items-center flex-fill" method="get" action="/search">
-            <input class="form-control form-control-sm me-2" type="search" name="search" placeholder="Search"
-                   aria-label="Search">
-            <button  class="btn btn-outline-success btn-sm" type="submit" name="submit">Search</button>
-        </form>
 {% endblock main-menu %}
 
 {% block content %}
